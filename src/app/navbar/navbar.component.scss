@@ -1,0 +1,124 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  /* Contenedor para el menú y breadcrumb */
+  .menu-and-breadcrumb {
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+
+    .menu-icon i {
+      font-size: 1.5rem; /* Tamaño aumentado */
+      color: #947cff;
+      cursor: pointer;
+      margin-right: 1rem; /* Espacio entre el icono y el breadcrumb */
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+
+      .breadcrumb-item-first {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #451bff;
+      }
+
+      .breadcrumb-item {
+        font-size: 1.1rem;
+        color: #451bff;
+      }
+
+      .breadcrumb-separator {
+        margin: 0 0.5rem;
+        font-size: 1rem;
+        color: #451bff;
+      }
+    }
+  }
+
+  /* Información del usuario */
+  .user-info {
+    display: flex;
+    align-items: center;
+    position: relative; /* Para el menú desplegable */
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-right: 0.8rem;
+
+      .username {
+        font-size: 1rem;
+        color: #451bff;
+        font-weight: bold;
+      }
+
+      .role {
+        font-size: 0.875rem;
+        color: #451bff;
+      }
+    }
+
+    .user-avatar-menu {
+      display: flex;
+      align-items: center;
+
+      .circle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: #e1daff;
+        border: 2px solid #451bff;
+        border-radius: 50%;
+        color: #451bff;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      .dropdown-icon {
+        font-size: 1rem; /* Aumentado para visibilidad */
+        color: #451bff;
+        margin-left: 0.5rem;
+        cursor: pointer;
+      }
+
+      /* Menú desplegable */
+      .dropdown-menu {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 0.5rem 0.8rem;
+        z-index: 10;
+
+        ul {
+          list-style: initial;
+          padding: 1rem;
+          margin: 0;
+
+          li {
+            padding: 0.5rem;
+            color: #451bff;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #e1daff;
+            }
+          }
+        }
+      }
+    }
+  }
+}

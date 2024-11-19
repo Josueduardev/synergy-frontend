@@ -1,0 +1,72 @@
+.sidebar {
+  width: 250px;
+  background-color: white; /* Fondo blanco */
+  border-right: 1px solid #ccc;
+  padding: 1rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  height: 100vh; /* Asegura altura completa */
+
+  &.hidden {
+    width: 0;
+    padding: 0;
+    border-right: none;
+  }
+
+  /* Encabezado */
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #e1daff; /* Fondo del encabezado */
+    border: 2px solid #451Bff;
+    padding: 0.2rem;
+    border-radius: 2px;
+    margin-bottom: 1rem;
+
+    .logo-circle {
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: #451Bff;
+      font-weight: bold;
+      margin-right: 0.5rem;
+      margin-left: 1rem;
+    }
+
+    .logo-text {
+      font-size: 0.7rem;
+      font-weight: bold;
+      color: #451Bff;
+    }
+  }
+
+  /* Menú */
+  .sidebar-menu {
+    margin-top: 3.5rem;
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 1.5rem;
+
+      a {
+        display: block;
+        padding: 0.2rem 1rem;
+        color: #451Bff;
+        text-decoration: none;
+        background-color: #e1daff; /* Fondo de los enlaces */
+        border-radius: 2px;
+
+        &:hover {
+          background-color: #d4c7ff; /* Color de fondo en hover */
+        }
+      }
+    }
+  }
+}
