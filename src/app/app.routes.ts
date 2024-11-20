@@ -1,15 +1,27 @@
 import { Routes } from '@angular/router';
 import { HomePage } from '../pages/home/home.page';
 import { SolicitudesPage } from '../pages/solicitudes/solicitudes.page';
+import { LoginPage } from '../pages/auth/login/login.page';
+import { SharedComponent } from '../components/shared/shared.component';
 
 
 export const routes: Routes = [
   {
-    path: 'home',
-    component: HomePage
+    path: '',
+    component: SharedComponent,
+    children:[
+      {
+        path:'home',
+        component: HomePage
+      },
+      {
+        path: 'solicitudes',
+        component: SolicitudesPage
+      },
+    ]
   },
   {
-    path: 'solicitudes',
-    component: SolicitudesPage
-  },
+    path: 'login',
+    component: LoginPage
+  }
 ];
