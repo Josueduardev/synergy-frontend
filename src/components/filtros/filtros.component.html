@@ -1,0 +1,34 @@
+<div class="filtros-container">
+  <!-- Campo de búsqueda -->
+  <input
+    type="text"
+    pInputText
+    placeholder="Buscar"
+    class="filter-input search-input"
+  />
+
+  <!-- Campo de fecha "Desde" -->
+  <p-calendar
+    placeholder="Desde"
+    [showIcon]="false"
+    dateFormat="dd/mm/yy"
+  ></p-calendar>
+
+  <!-- Campo de fecha "Hasta" -->
+  <p-calendar
+    placeholder="Hasta"
+    [showIcon]="false"
+    dateFormat="dd/mm/yy"
+  ></p-calendar>
+
+  <!-- Botón de filtrar -->
+  <button
+    pButton
+    type="button"
+    label="Filtrar"
+    iconPos="right"
+    icon="pi pi-filter"
+    class="filter-button"
+    (click)="onOpenAdvancedFilters()"
+  ></button>
+</div>
