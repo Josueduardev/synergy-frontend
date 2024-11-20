@@ -1,0 +1,86 @@
+.filtros-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espaciado entre elementos */
+
+  /* Estilo general para los inputs */
+  .filter-input {
+    background-color: #e1daff; /* Fondo */
+    color: #451bff; /* Texto */
+    border: 2px solid #451bff; /* Borde */
+    border-radius: 30px;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    height: 35px; /* Altura uniforme */
+    width: 200px; /* Ancho estándar */
+
+    &::placeholder {
+      color: #451bff; /* Placeholder */
+      font-weight: bold;
+    }
+  }
+
+  /* Estilo para el campo "Buscar" */
+  .search-input {
+    font-size: 0.8rem; /* Tamaño de fuente */
+    width: 300px; /* Ancho original */
+  }
+
+  /* Ajuste de estilos para p-calendar */
+  ::ng-deep .p-calendar {
+    width: 200px !important; /* Ancho estándar */
+    display: flex; /* Asegura el comportamiento de flexbox */
+    align-items: center; /* Centra los elementos verticalmente */
+  }
+
+  ::ng-deep .p-calendar .p-inputtext {
+    background-color: #e1daff !important; /* Fondo */
+    color: #451bff !important; /* Texto */
+    border: 2px solid #451bff !important; /* Borde */
+    border-radius: 30px !important;
+    padding: 0.5rem !important;
+    font-size: 0.8rem !important;
+    height: 35px !important; /* Altura uniforme */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    box-sizing: border-box; /* Incluye borde en el cálculo del ancho */
+  }
+
+  ::ng-deep .p-calendar .p-inputtext::placeholder {
+    color: #451bff !important; /* Placeholder */
+    font-weight: bold;
+  }
+
+  /* Botón de filtrar */
+  .filter-button {
+    background-color: #451bff; /* Fondo */
+    color: #fff; /* Texto */
+    border: none;
+    border-radius: 30px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    height: 35px; /* Altura uniforme */
+    white-space: nowrap; /* Evita que el texto se ajuste */
+
+    i {
+      margin-left: 0.5rem; /* Espaciado entre texto e icono */
+    }
+
+    &:hover {
+      background-color: #3813cc; /* Color más oscuro al pasar el cursor */
+    }
+  }
+
+  /* Estilo responsivo para pantallas pequeñas */
+  @media (max-width: 768px) {
+    gap: 0.5rem; /* Reduce el espaciado */
+    flex-direction: column; /* Apila los elementos en filas verticales */
+
+    .filter-input,
+    .search-input,
+    .filter-button,
+    ::ng-deep .p-calendar {
+      width: 100% !important; /* Toma todo el ancho disponible */
+    }
+  }
+}
