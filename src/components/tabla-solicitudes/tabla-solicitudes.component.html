@@ -1,0 +1,41 @@
+<p-table
+  [value]="solicitudes.slice(first, first + rows)"
+  [responsiveLayout]="'stack'"
+  [rows]="rows"
+  styleClass="tabla-paginada"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th *ngFor="let col of cols">{{ col.header }}</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-solicitud>
+    <tr>
+      <td>{{ solicitud.cliente | uppercase }}</td>
+      <td>{{ solicitud.correo | uppercase }}</td>
+      <td>{{ solicitud.nrc | uppercase }}</td>
+      <td>{{ solicitud.encargado | uppercase }}</td>
+      <td>{{ solicitud.telefono | uppercase }}</td>
+      <td>{{ solicitud.monto | currency: 'USD' }}</td>
+      <td>{{ solicitud.interes | uppercase }}</td>
+      <td>
+        <button
+          pButton
+          type="button"
+          label="VER SOLICITUD"
+          class="button-info"
+          (onClick)="verSolicitud(solicitud)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-paginator
+  [rows]="rows"
+  [totalRecords]="totalRecords"
+  [first]="first"
+  [rowsPerPageOptions]="[10, 20, 30]"
+  (onPageChange)="onPageChange($event)"
+  styleClass="paginacion-derecha"
+></p-paginator>

@@ -1,0 +1,95 @@
+/* tabla-solicitudes.component.scss */
+
+/* Ajustar la tabla para usar todo el ancho */
+p-table {
+  width: 100%;
+}
+
+/* Encabezados de la tabla */
+p-table th {
+  text-align: left;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: #00000013; /* Color de fondo personalizado */
+  color: #00000093; /* Texto blanco */
+  padding: 1rem 0.5rem;
+}
+
+/* Celdas del cuerpo de la tabla */
+p-table td {
+  font-weight: bold;
+  text-align: left;
+  font-size: 0.82rem;
+  padding: 0.5rem;
+  color: #0000007f; /* Texto oscuro */
+  word-wrap: break-word; /* Ajustar texto largo */
+  white-space: normal; /* Permitir que el texto se ajuste */
+  text-transform: uppercase; /* Convertir texto a mayúsculas */
+}
+
+/* Botón personalizado */
+
+ .button-info {
+  background-color: #FBBC05;
+  border: none;
+  font-weight: bold;
+  color: #ffffff;
+  border-radius: 5px !important;
+  padding: 0.2rem 0.8rem !important;
+  font-size: 0.6rem !important;
+  cursor: pointer;
+  height: 1.5rem !important; /* Altura uniforme */
+  white-space: nowrap; /* Evita que el texto se ajuste */
+
+  &:hover {
+    background-color: #888888; /* Color más oscuro al pasar el cursor */
+  }
+}
+
+/* Estilos personalizados para la paginación */
+.p-paginator {
+  display: flex;
+  justify-content: flex-end; /* Alinear a la derecha */
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.p-paginator .p-paginator-prev,
+.p-paginator .p-paginator-next {
+  background-color: #FBBC05; /* Fondo personalizado */
+  color: #ffffff; /* Texto blanco */
+  border-radius: 50%; /* Bordes redondeados */
+  font-size: 1rem; /* Tamaño de íconos */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+
+.p-paginator .p-paginator-prev:hover,
+.p-paginator .p-paginator-next:hover {
+  background-color: #888888; /* Fondo oscuro al pasar el cursor */
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  font-weight: bold;
+  color: #007bff; /* Azul oscuro */
+  margin: 0 0.3rem;
+  cursor: pointer;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color: #FBBC05; /* Fondo personalizado */
+  color: #ffffff; /* Texto blanco */
+  border-radius: 50%; /* Botón circular */
+  padding: 0.3rem 0.6rem;
+}
+
+.p-paginator .p-paginator-ellipsis {
+  margin: 0 0.5rem;
+  color: #6c757d; /* Gris claro */
+}

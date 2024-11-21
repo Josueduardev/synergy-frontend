@@ -10,15 +10,20 @@ export const routes: Routes = [
   {
     path: '',
     component: SharedComponent,
-    children:[
+    children: [
       {
-        path:'home',
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full' // Redirección predeterminada
+      },
+      {
+        path: 'home',
         component: HomePage
       },
       {
         path: 'solicitudes',
         component: SolicitudesPage
-      },
+      }
     ]
   },
   {
@@ -30,3 +35,4 @@ export const routes: Routes = [
     component: SolicitudProntoPagoPage
   },
 ];
+
