@@ -3,6 +3,7 @@ import { HomePage } from '../pages/home/home.page';
 import { SolicitudesPage } from '../pages/solicitudes/solicitudes.page';
 import { LoginPage } from '../pages/auth/login/login.page';
 import { SharedComponent } from '../components/shared/shared.component';
+import { SolicitudProntoPagoPage } from '../pages/landingpages/solicitud-prontopago/solicitud-prontopago.page';
 
 
 export const routes: Routes = [
@@ -23,5 +24,9 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginPage
-  }
+  },
+  {
+    path: 'landing',
+    component: SolicitudProntoPagoPage
+  },
 ];
