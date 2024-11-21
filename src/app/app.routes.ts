@@ -3,6 +3,7 @@ import { HomePage } from '../pages/home/home.page';
 import { SolicitudesPage } from '../pages/solicitudes/solicitudes.page';
 import { LoginPage } from '../pages/auth/login/login.page';
 import { SharedComponent } from '../components/shared/shared.component';
+import { SolicitudProntoPagoPage } from '../pages/landingpages/solicitud-prontopago/solicitud-prontopago.page';
 
 
 export const routes: Routes = [
@@ -30,8 +31,8 @@ export const routes: Routes = [
     component: LoginPage
   },
   {
-    path: '**',
-    redirectTo: 'home' // Ruta comodín para URLs no válidas
-  }
+    path: 'landing',
+    component: SolicitudProntoPagoPage
+  },
 ];
 
