@@ -1,34 +1,72 @@
 <div class="filtros-container">
   <!-- Campo de búsqueda -->
-  <input
-    type="text"
-    pInputText
-    placeholder="Buscar"
-    class="filter-input search-input"
-  />
+  <div class="search-container">
+    <i class="pi pi-search search-icon"></i>
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="searchText"
+      placeholder="Buscar cliente, correo NCR emisor..."
+      (input)="buscar()"
+    />
+  </div>
 
-  <!-- Campo de fecha "Desde" -->
-  <p-calendar
-    placeholder="Desde"
-    [showIcon]="false"
-    dateFormat="dd/mm/yy"
-  ></p-calendar>
-
-  <!-- Campo de fecha "Hasta" -->
-  <p-calendar
-    placeholder="Hasta"
-    [showIcon]="false"
-    dateFormat="dd/mm/yy"
-  ></p-calendar>
+  <!-- Campo de rango de fechas con ícono -->
+  <div class="calendar-container">
+    <i class="pi pi-calendar calendar-icon"></i>
+    <p-calendar
+      [(ngModel)]="rangoFechas"
+      selectionMode="range"
+      dateFormat="MM dd"
+      placeholder="Seleccionar rango de fechas"
+      [monthNavigator]="true"
+      [yearNavigator]="true"
+      yearRange="2000:2030"
+      [locale]="{
+        firstDayOfWeek: 1,
+        dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+        dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        monthNames: [
+          'enero',
+          'febrero',
+          'marzo',
+          'abril',
+          'mayo',
+          'junio',
+          'julio',
+          'agosto',
+          'septiembre',
+          'octubre',
+          'noviembre',
+          'diciembre'
+        ],
+        monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+        today: 'Hoy',
+        clear: 'Limpiar'
+      }"
+    ></p-calendar>
+  </div>
 
   <!-- Botón de filtrar -->
   <button
     pButton
     type="button"
     label="Filtrar"
-    iconPos="right"
     icon="pi pi-filter"
     class="filter-button"
-    (click)="onOpenAdvancedFilters()"
-  ></button>
+    (click)="filtrarPorRango()"
+  >
+  </button>
+
+  <!-- Botón de desembolsar -->
+  <button
+    pButton
+    type="button"
+    label="Desembolsar"
+    icon="pi pi-wallet"
+    class="desembolsar-button"
+    (click)="desembolsar()"
+  >
+  </button>
 </div>

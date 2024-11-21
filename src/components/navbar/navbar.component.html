@@ -1,12 +1,10 @@
 <div class="navbar">
   <!-- Menú y Breadcrumb -->
   <div class="menu-and-breadcrumb">
-    <!-- Icono de menú hamburguesa -->
     <div class="menu-icon" (click)="onToggleSidebar()">
       <i class="pi pi-bars"></i>
     </div>
 
-    <!-- Breadcrumb -->
     <div class="breadcrumb">
       <span class="breadcrumb-item-first">SYNERGY</span>
       <ng-container *ngFor="let breadcrumb of breadcrumbs; let isLast = last">
@@ -14,10 +12,6 @@
           <span class="breadcrumb-separator"><i class="pi pi-angle-right"></i></span>
           <span class="breadcrumb-item">{{ breadcrumb.label }}</span>
         </ng-container>
-        <!-- <ng-container *ngIf="isLast">
-          <span class="breadcrumb-separator">></span>
-          <span class="breadcrumb-item" style="font-weight: bold;">{{ breadcrumb.label }}</span>
-        </ng-container> -->
       </ng-container>
     </div>
   </div>
@@ -32,7 +26,7 @@
     <!-- Avatar del usuario y el icono de menú desplegable -->
     <div class="user-avatar-menu">
       <div class="user-avatar">
-        <div class="circle">{{ userInitial }}</div>
+        <img src="assets/user.jpg" alt="User Avatar" />
       </div>
       <i
         class="pi pi-chevron-down dropdown-icon"

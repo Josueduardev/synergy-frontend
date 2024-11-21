@@ -1,86 +1,108 @@
 .filtros-container {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Espaciado entre elementos */
+  gap: 1rem;
+  padding: 1rem 0;
 
-  /* Estilo general para los inputs */
-  .filter-input {
-    background-color: #e1daff; /* Fondo */
-    color: #451bff; /* Texto */
-    border: 2px solid #451bff; /* Borde */
+  /* Estilo de los inputs y calendario */
+  input,
+  ::ng-deep .p-calendar .p-inputtext {
+    border: 1px solid #ccc;
     border-radius: 30px;
-    padding: 0.5rem;
-    font-size: 0.8rem;
-    height: 35px; /* Altura uniforme */
-    width: 200px; /* Ancho estándar */
+    height: 2.8rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;
+    background-color: #f5f5f5;
 
     &::placeholder {
-      color: #451bff; /* Placeholder */
-      font-weight: bold;
+      font-size: 0.8rem;
+      color: #aaa;
     }
   }
 
-  /* Estilo para el campo "Buscar" */
-  .search-input {
-    font-size: 0.8rem; /* Tamaño de fuente */
-    width: 300px; /* Ancho original */
+  /* Campo de búsqueda */
+  .search-container {
+    position: relative;
+    width: 300px;
+
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    input {
+      padding-left: 3rem; /* Espacio para el ícono */
+    }
   }
 
-  /* Ajuste de estilos para p-calendar */
-  ::ng-deep .p-calendar {
-    width: 200px !important; /* Ancho estándar */
-    display: flex; /* Asegura el comportamiento de flexbox */
-    align-items: center; /* Centra los elementos verticalmente */
+  /* Contenedor del calendario */
+  .calendar-container {
+    position: relative;
+    width: 280px;
+
+    .calendar-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color: #666;
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    ::ng-deep .p-calendar .p-inputtext {
+      padding-left: 3rem; /* Espacio para el ícono */
+    }
+
+    ::ng-deep .p-calendar .p-datepicker {
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
   }
 
-  ::ng-deep .p-calendar .p-inputtext {
-    background-color: #e1daff !important; /* Fondo */
-    color: #451bff !important; /* Texto */
-    border: 2px solid #451bff !important; /* Borde */
-    border-radius: 30px !important;
-    padding: 0.5rem !important;
-    font-size: 0.8rem !important;
-    height: 35px !important; /* Altura uniforme */
-    width: 100%; /* Ocupa todo el ancho disponible */
-    box-sizing: border-box; /* Incluye borde en el cálculo del ancho */
-  }
-
-  ::ng-deep .p-calendar .p-inputtext::placeholder {
-    color: #451bff !important; /* Placeholder */
-    font-weight: bold;
-  }
-
-  /* Botón de filtrar */
-  .filter-button {
-    background-color: #451bff; /* Fondo */
-    color: #fff; /* Texto */
-    border: none;
+  /* Botones */
+  button {
     border-radius: 30px;
+    font-size: 0.9rem;
     padding: 0.5rem 1rem;
-    font-size: 0.8rem;
+    height: 2.8rem;
+    font-weight: bold;
+    background-color: #5459ea;
+    color: #fff;
+    border: none;
     cursor: pointer;
-    height: 35px; /* Altura uniforme */
-    white-space: nowrap; /* Evita que el texto se ajuste */
-
-    i {
-      margin-left: 0.5rem; /* Espaciado entre texto e icono */
-    }
 
     &:hover {
-      background-color: #3813cc; /* Color más oscuro al pasar el cursor */
+      background-color: #3813cc;
+    }
+
+    i {
+      margin-left: 0.5rem;
+    }
+
+    &.desembolsar-button {
+      background-color: #28a745;
+
+      &:hover {
+        background-color: #218838;
+      }
     }
   }
 
-  /* Estilo responsivo para pantallas pequeñas */
+  /* Responsivo */
   @media (max-width: 768px) {
-    gap: 0.5rem; /* Reduce el espaciado */
-    flex-direction: column; /* Apila los elementos en filas verticales */
+    flex-direction: column;
+    align-items: stretch;
 
-    .filter-input,
-    .search-input,
-    .filter-button,
-    ::ng-deep .p-calendar {
-      width: 100% !important; /* Toma todo el ancho disponible */
+    .search-container,
+    .calendar-container,
+    button {
+      width: 100%;
     }
   }
 }
