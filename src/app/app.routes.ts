@@ -31,7 +31,7 @@ export const routes: Routes = [
     component: LoginPage
   },
   {
-    path: 'landing',
+    path: 'solicitar-pronto-pago',
     component: SolicitudProntoPagoPage
   },
 ];
