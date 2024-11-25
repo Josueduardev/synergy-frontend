@@ -1,108 +1,103 @@
-.filtros-container {
+::ng-deep .filtros-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: 0.3rem; // Espacio mínimo entre elementos
+  padding: 0.5rem;
+  background-color: #f9f9fc;
+  border-radius: 8px;
 
-  /* Estilo de los inputs y calendario */
-  input,
-  ::ng-deep .p-calendar .p-inputtext {
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    height: 2.8rem;
-    font-size: 0.9rem;
-    padding: 0.5rem 1.5rem;
-    background-color: #f5f5f5;
-
-    &::placeholder {
-      font-size: 0.8rem;
-      color: #aaa;
-    }
+  .search-container,
+  .calendar-container,
+  app-filtros-button,
+  app-desembolsar-button {
+    flex: 0; // Asegura que todos los elementos tengan el mismo tamaño
   }
 
-  /* Campo de búsqueda */
   .search-container {
+    display: flex;
+    align-items: center;
     position: relative;
-    width: 300px;
 
     .search-icon {
       position: absolute;
       top: 50%;
-      left: 15px;
+      left: 10px;
       transform: translateY(-50%);
-      color: #666;
+      color: #a0a0a0;
       font-size: 1.2rem;
-      pointer-events: none;
     }
 
     input {
-      padding-left: 3rem; /* Espacio para el ícono */
-    }
-  }
+      width: 19rem; // Asegura un ancho fijo para mantener el diseño
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      border: 1px solid #e4e4e7;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #4b5563;
 
-  /* Contenedor del calendario */
-  .calendar-container {
-    position: relative;
-    width: 280px;
-
-    .calendar-icon {
-      position: absolute;
-      top: 50%;
-      left: 15px;
-      transform: translateY(-50%);
-      color: #666;
-      font-size: 1.2rem;
-      pointer-events: none;
-    }
-
-    ::ng-deep .p-calendar .p-inputtext {
-      padding-left: 3rem; /* Espacio para el ícono */
-    }
-
-    ::ng-deep .p-calendar .p-datepicker {
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  /* Botones */
-  button {
-    border-radius: 30px;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    height: 2.8rem;
-    font-weight: bold;
-    background-color: #5459ea;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #3813cc;
-    }
-
-    i {
-      margin-left: 0.5rem;
-    }
-
-    &.desembolsar-button {
-      background-color: #28a745;
-
-      &:hover {
-        background-color: #218838;
+      &::placeholder {
+        color: #a0a0a0;
       }
     }
   }
 
-  /* Responsivo */
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: stretch;
+  .calendar-container {
+    display: flex;
+    align-items: center;
+    position: relative;
 
-    .search-container,
-    .calendar-container,
-    button {
-      width: 100%;
+    .calendar-icon {
+      position: absolute;
+      z-index: 10;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #a0a0a0;
+      font-size: 1.2rem;
+    }
+
+    ::ng-deep .p-inputtext {
+      width: 15rem; // Asegura un ancho fijo para consistencia
+      padding: 0.5rem 1rem 0.5rem 2.5rem;
+      border: 1px solid #e4e4e7;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: #4b5563;
+
+      &::placeholder {
+        color: #a0a0a0;
+      }
+    }
+
+    ::ng-deep .calendar-footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem;
+
+      .p-button-secondary {
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+      }
+
+      .p-button-primary {
+        background-color: #007ad9;
+        color: white;
+        border: none;
+      }
+    }
+  }
+
+  app-filtros-button,
+  app-desembolsar-button {
+    border-radius: 8px;
+    border: 1px solid #e4e4e7;
+    text-align: center;
+    background-color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f3f4f6;
     }
   }
 }

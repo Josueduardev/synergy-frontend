@@ -1,0 +1,17 @@
+.btn-desembolsar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e4e4e7;
+  border-radius: 8px;
+  background-color: #f9f9fc;
+  font-size: 0.9rem;
+  color: #a0a0a0;
+  cursor: pointer;
+}
+.btn-desembolsar i {
+  font-size: 0.9rem;
+  color: #a0a0a0;
+}

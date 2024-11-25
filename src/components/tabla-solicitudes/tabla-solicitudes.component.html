@@ -1,41 +1,78 @@
-<p-table
-  [value]="solicitudes.slice(first, first + rows)"
-  [responsiveLayout]="'stack'"
-  [rows]="rows"
-  styleClass="tabla-paginada"
->
-  <ng-template pTemplate="header">
-    <tr>
-      <th *ngFor="let col of cols">{{ col.header }}</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-solicitud>
-    <tr>
-      <td>{{ solicitud.cliente | uppercase }}</td>
-      <td>{{ solicitud.correo | uppercase }}</td>
-      <td>{{ solicitud.nrc | uppercase }}</td>
-      <td>{{ solicitud.encargado | uppercase }}</td>
-      <td>{{ solicitud.telefono | uppercase }}</td>
-      <td>{{ solicitud.monto | currency: 'USD' }}</td>
-      <td>{{ solicitud.interes | uppercase }}</td>
-      <td>
-        <button
-          pButton
-          type="button"
-          label="VER SOLICITUD"
-          class="button-info"
-          (onClick)="verSolicitud(solicitud)"
-        ></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<div class="card">
+  <p-table
+    #dt
+    [value]="solicitudes"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [responsiveLayout]="'scroll'"
+    [globalFilterFields]="['cliente', 'correo', 'nrc', 'encargado', 'telefono', 'monto', 'interes']"
+  >
+    <!-- Barra de búsqueda global -->
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between align-items-center">
+        <p-button
+          label="Clear"
+          icon="pi pi-filter-slash"
+          class="p-button-outlined"
+          (click)="dt.clear()"
+        ></p-button>
+        <div class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            placeholder="Buscar globalmente..."
+            (input)="dt2.filterGlobal($event.target.value, 'contains')"
+          />
+        </div>
+      </div>
+    </ng-template>
 
-<p-paginator
-  [rows]="rows"
-  [totalRecords]="totalRecords"
-  [first]="first"
-  [rowsPerPageOptions]="[10, 20, 30]"
-  (onPageChange)="onPageChange($event)"
-  styleClass="paginacion-derecha"
-></p-paginator>
+    <!-- Encabezado de la tabla con filtros -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of cols">
+          <div class="flex flex-column">
+            <span>{{ col.header }}</span>
+            <p-columnFilter
+              [field]="col.field"
+              [type]="col.filterType || 'text'"
+              [display]="'menu'"
+              [placeholder]="'Buscar por ' + col.header"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <!-- Cuerpo de la tabla -->
+    <ng-template pTemplate="body" let-solicitud>
+      <tr>
+        <td *ngFor="let col of cols">
+          {{ solicitud[col.field] }}
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            label="Ver"
+            icon="pi pi-eye"
+            class="p-button-rounded p-button-info"
+            (click)="verSolicitud(solicitud)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Mensaje cuando no hay datos -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">
+          No hay registros disponibles.
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
