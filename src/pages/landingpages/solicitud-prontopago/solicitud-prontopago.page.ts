@@ -5,22 +5,38 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 import { SynergyProvider } from '../../../providers/synergy.provider';
 import { Factura } from '../../../models/factura.model';
 import { Currency } from '../../../utility/Currency.util';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MessageService } from 'primeng/api';
+import { ErrorHttp } from '../../../models/http/error-http';
 
 @Component({
   selector: 'solicitud-prontopago',
   standalone: true,
-  imports: [CommonModule,TableModule, DialogModule, CheckboxModule, FormsModule, ButtonModule, InputTextModule],
-  providers: [SynergyProvider],
+  imports: [
+    CommonModule, 
+    TableModule, 
+    DialogModule, 
+    CheckboxModule, 
+    FormsModule, 
+    ButtonModule, 
+    InputTextModule,
+    ToastModule
+  ],
+  providers: [SynergyProvider, MessageService],
   templateUrl: './solicitud-prontopago.page.html',
   styleUrls: ['./solicitud-prontopago.page.scss']
 })
 export class SolicitudProntoPagoPage implements OnInit {
   invoiceDetails: any = [];
+  facturaProveedor!: Factura;
+  loading = false;
+  enviada = false;
+  isFormInvalid = false;
   termsAccepted = false;
   modalVisible = false;
   applicant = {
@@ -34,7 +50,8 @@ export class SolicitudProntoPagoPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private synergyProvider: SynergyProvider
+    private synergyProvider: SynergyProvider,
+    private messageService: MessageService
   ) {
 
   }
@@ -45,7 +62,10 @@ export class SolicitudProntoPagoPage implements OnInit {
       console.log(noFactura)
       if (noFactura) {
         const { data } = await this.synergyProvider.getInvoiceDetail(noFactura);
-        this.setDetail(data.factura);
+        if (data && data.factura) {
+          this.facturaProveedor = data.factura;
+          this.setDetail();
+        }
       } else {
         this.facturaNotFound = true;
       }
@@ -55,7 +75,8 @@ export class SolicitudProntoPagoPage implements OnInit {
     }
   }
 
-  setDetail(factura: Factura) {
+  setDetail() {
+    const factura = this.facturaProveedor;
     this.invoiceDetails.push({ concept: 'Factura N.º', valor: factura.no_factura });
     this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: factura.fecha_otorgamiento });
     this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: factura.fecha_vencimiento });
@@ -66,12 +87,49 @@ export class SolicitudProntoPagoPage implements OnInit {
     this.invoiceDetails.push({ concept: 'Total a Recibir', valor: Currency.format(factura.total_a_recibir) });
   }
 
+
+
   showModal() {
     this.modalVisible = true;
   }
 
-  send() {
-    console.log('Datos del Solicitante:', this.applicant);
-    this.modalVisible = false;
+  async send() {
+
+    try {
+      if (!this.applicant.name || !this.applicant.role || !this.isValidEmail(this.applicant.email)) {
+        this.isFormInvalid = true;
+        return;
+      }
+
+      this.isFormInvalid = false;
+      
+      
+      this.loading = true;
+      const response = await this.synergyProvider.requestFactoring(
+        this.facturaProveedor,
+        this.applicant.name,
+        this.applicant.role,
+        this.applicant.email
+      );
+      console.log(response)
+      if(response){
+        setTimeout(() => {
+          this.modalVisible = false;
+          this.loading = false;
+          this.enviada = true;
+        }, 2000);
+      }
+    } catch (error: any) {
+      console.log(error)
+      this.modalVisible = false;
+      this.loading = false;
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
+    }
+
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailPattern.test(email);
   }
 }

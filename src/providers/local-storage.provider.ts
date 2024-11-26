@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 export class LocalStorageProvider {
     public static JWT_KEY = "JWT0001";
 
-    constructor() { }
+    constructor() {}
 
     set jwtSession(token: string) {
         localStorage.setItem(LocalStorageProvider.JWT_KEY, token);
@@ -12,5 +12,9 @@ export class LocalStorageProvider {
 
     get jwtSession(): string | null {
         return localStorage.getItem(LocalStorageProvider.JWT_KEY);
+    }
+
+    clearSession() {
+        localStorage.removeItem(LocalStorageProvider.JWT_KEY);
     }
 }
