@@ -1,4 +1,4 @@
-<div *ngIf="!facturaNotFound" class="container">
+<div *ngIf="!facturaNotFound && !enviada" class="container">
   <div class="proveedor-name">
     <h3><span>CLIENTE:</span> CLOBI TECHNOLOGIES S.A DE C.V</h3>
   </div>
@@ -48,35 +48,57 @@
       </div>
       <div class="field" style="margin-top: 40px;">
         <label for="name">Nombre del Solicitante</label>
-        <input id="name" pInputText type="text" [(ngModel)]="applicant.name" />
+        <input pInputText id="name" [(ngModel)]="applicant.name" [class.ng-invalid]="isFormInvalid && !applicant.name"
+          required />
+        <br>
+        <small *ngIf="isFormInvalid && !applicant.name" class="p-error">El nombre es requerido.</small>
       </div>
       <div class="field">
         <label for="role">Cargo</label>
-        <input id="role" pInputText type="text" [(ngModel)]="applicant.role" />
+        <input pInputText id="role" [(ngModel)]="applicant.role" [class.ng-invalid]="isFormInvalid && !applicant.role"
+          required />
+        <br>
+        <small *ngIf="isFormInvalid && !applicant.role" class="p-error">El rol es requerido.</small>
       </div>
       <div class="field">
         <label for="email">Correo Electrónico</label>
-        <input id="email" pInputText type="email" [(ngModel)]="applicant.email" />
+        <input pInputText id="email" [(ngModel)]="applicant.email"
+          [class.ng-invalid]="isFormInvalid && !isValidEmail(applicant.email)" required />
+        <br>
+        <small *ngIf="isFormInvalid && !isValidEmail(applicant.email)" class="p-error">
+          Ingresa un correo electrónico válido.
+        </small>
       </div>
       <br>
       <div class="btn-aceptar-wrap">
-        <button pButton label="ENVIAR" (click)="send()"></button>
+        <button pButton label="ENVIAR" [loading]="loading" (click)="send()"></button>
       </div>
       <br>
     </div>
   </p-dialog>
 
-
-
+  <div class="card flex justify-content-center">
+    <p-toast />
+  </div>
 </div>
-  <div *ngIf="facturaNotFound" class="container">
-    <div  class="error-container">
-      <div class="error-card">
-        <h1>❌ Error</h1>
-        <p>No pudimos encontrar la factura.</p>
-        <a href="/" class="btn">Volver al Inicio</a>
-      </div>
+
+<!-- Cuando la solicitud ya se ha enviado -->
+<div *ngIf="enviada" class="container" style="margin-top: 100px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon">
+  <h1>¡Solicitud Enviada!</h1>
+  <p>Gracias por enviar tu solicitud de cesión de factoraje. Nos pondremos en contacto contigo a través de correo
+    electrónico para informarte si tu solicitud ha sido aprobada o no.</p>
+  <p>Por favor, verifica tu bandeja de entrada o tu carpeta de spam en las próximas 24 horas.</p>
+  <a href="#" class="button">Volver al Inicio</a>
+</div>
+
+<!-- En dado caso que no encuentre la factura -->
+<div *ngIf="facturaNotFound" class="container">
+  <div class="error-container">
+    <div class="error-card">
+      <h1>❌ Error</h1>
+      <p>No pudimos encontrar la factura.</p>
+      <a href="/" class="btn">Volver al Inicio</a>
     </div>
   </div>
-
-
+</div>
