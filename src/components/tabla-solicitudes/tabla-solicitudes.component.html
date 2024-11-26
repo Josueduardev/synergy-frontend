@@ -1,65 +1,116 @@
-<div class="card">
+<div class="card tabla-content">
   <p-table
-    #dt
+    #dt2
     [value]="solicitudes"
-    [paginator]="true"
+    dataKey="id"
     [rows]="10"
-    [rowsPerPageOptions]="[10, 25, 50]"
-    [responsiveLayout]="'scroll'"
+    [loading]="loading"
+    [paginator]="true"
     [globalFilterFields]="['cliente', 'correo', 'nrc', 'encargado', 'telefono', 'monto', 'interes']"
+    [tableStyle]="{ 'min-width': '75rem' }"
+    stateStorage="session"
+    currentPageReportTemplate="{totalRecords} usuarios"
   >
-    <!-- Barra de búsqueda global -->
-    <ng-template pTemplate="caption">
-      <div class="flex justify-content-between align-items-center">
-        <p-button
-          label="Clear"
-          icon="pi pi-filter-slash"
-          class="p-button-outlined"
-          (click)="dt.clear()"
-        ></p-button>
-        <div class="p-input-icon-left">
-          <i class="pi pi-search"></i>
-          <input
-            pInputText
-            type="text"
-            placeholder="Buscar globalmente..."
-            (input)="dt2.filterGlobal($event.target.value, 'contains')"
-          />
-        </div>
-      </div>
-    </ng-template>
-
-    <!-- Encabezado de la tabla con filtros -->
+    <!-- Encabezados con Filtros -->
     <ng-template pTemplate="header">
-      <tr>
-        <th *ngFor="let col of cols">
-          <div class="flex flex-column">
-            <span>{{ col.header }}</span>
-            <p-columnFilter
-              [field]="col.field"
-              [type]="col.filterType || 'text'"
-              [display]="'menu'"
-              [placeholder]="'Buscar por ' + col.header"
-            ></p-columnFilter>
-          </div>
-        </th>
+      <tr class="custom-header-row">
+        <th>Cliente</th>
+        <th>Correo</th>
+        <th>NRC Emisor</th>
+        <th>Encargado</th>
+        <th>Teléfono</th>
+        <th>Monto</th>
+        <th>Interés</th>
         <th>Acciones</th>
+      </tr>
+      <tr class="custom-header-row">
+        <th>
+          <p-columnFilter
+            type="text"
+            field="cliente"
+            [showButtons]="false"
+            [showMenu]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+            [showOperator]="false"
+            placeholder="Buscar por cliente"
+            ariaLabel="Filtrar Cliente"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="correo"
+            [showButtons]="false"
+            [showMenu]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+            [showOperator]="false"
+            placeholder="Buscar por correo"
+            ariaLabel="Filtrar Correo"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="nrc"
+            [showButtons]="false"
+            [showMenu]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+            [showOperator]="false"
+            placeholder="Buscar por NRC"
+            ariaLabel="Filtrar NRC"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="encargado"
+            [showButtons]="false"
+            [showMenu]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+            [showOperator]="false"
+            placeholder="Buscar por encargado"
+            ariaLabel="Filtrar Encargado"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            type="text"
+            field="telefono"
+            [showButtons]="false"
+            [showMenu]="false"
+            [showApplyButton]="false"
+            [showClearButton]="false"
+            [showOperator]="false"
+            placeholder="Buscar por teléfono"
+            ariaLabel="Filtrar Teléfono"
+          ></p-columnFilter>
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
     </ng-template>
 
-    <!-- Cuerpo de la tabla -->
+    <!-- Cuerpo de la Tabla -->
     <ng-template pTemplate="body" let-solicitud>
       <tr>
-        <td *ngFor="let col of cols">
-          {{ solicitud[col.field] }}
-        </td>
+        <td>{{ solicitud.cliente }}</td>
+        <td style="text-transform: none;">{{ solicitud.correo }}</td>
+        <td>{{ solicitud.nrc }}</td>
+        <td>{{ solicitud.encargado }}</td>
+        <td>{{ solicitud.telefono }}</td>
+        <td>{{ solicitud.monto }}</td>
+        <td>{{ solicitud.interes }}</td>
         <td>
           <button
             pButton
             type="button"
-            label="Ver"
-            icon="pi pi-eye"
-            class="p-button-rounded p-button-info"
+            label="VER SOLICITUD"
+            class="button-info"
             (click)="verSolicitud(solicitud)"
           ></button>
         </td>
@@ -69,10 +120,14 @@
     <!-- Mensaje cuando no hay datos -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="8" class="text-center">
-          No hay registros disponibles.
-        </td>
+        <td colspan="8" class="text-center">No hay registros disponibles.</td>
       </tr>
     </ng-template>
+
+         <!-- Footer del Paginador -->
+         <ng-template pTemplate="paginatorleft">
+          <div class="total-records">{{ solicitudes.length }} usuarios</div>
+        </ng-template>
+
   </p-table>
 </div>

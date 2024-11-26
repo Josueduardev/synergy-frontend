@@ -1,6 +1,6 @@
 <div class="filtros-container">
   <!-- Search Input -->
-  <div class="search-container">
+  <!-- <div class="search-container">
     <i class="pi pi-search search-icon"></i>
     <input
       type="text"
@@ -9,10 +9,11 @@
       placeholder="Buscar cliente, correo, NRC emisor..."
       (input)="buscar()"
     />
-  </div>
+  </div> -->
 
   <!-- Date Range Picker -->
-  <div class="calendar-container">
+   <!-- Date Range Picker -->
+   <div class="calendar-container">
     <i class="pi pi-calendar-plus calendar-icon"></i>
     <p-calendar
       [(ngModel)]="rangeDates"
@@ -20,10 +21,8 @@
       [readonlyInput]="true"
       dateFormat="MM dd"
       [showIcon]="false"
-      inputId="icondisplay"
       rangeSeparator=" - "
       placeholder="{{ placeholder }}"
-      (onSelect)="actualizarRangoTexto()"
       (onClear)="clearRangoTexto()"
     >
       <!-- Footer with custom buttons -->

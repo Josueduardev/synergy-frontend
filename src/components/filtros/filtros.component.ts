@@ -27,7 +27,7 @@ import { ModalFiltrosAvanzadosComponent } from './modal-filtros-avanzados/modal-
 export class FiltrosComponent {
   searchText: string = ''; // Texto del input de búsqueda
   rangeDates: Date[] | null = null; // Rango de fechas seleccionado
-  placeholder: string = 'Seleccionar rango de fechas'; // Texto del placeholder
+  placeholder: string = 'Desde - Hasta'; // Texto del placeholder
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
   actualizarRangoTexto() {

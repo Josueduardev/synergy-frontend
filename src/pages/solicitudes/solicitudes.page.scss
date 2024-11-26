@@ -1,6 +1,5 @@
-.solicitudes-container {
+
+::ng-deep .solicitudes-content {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem; /* Espaciado entre el componente de filtros y el contenido */
-  padding: 1rem;
 }
