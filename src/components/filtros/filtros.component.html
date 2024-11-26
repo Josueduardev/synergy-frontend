@@ -1,72 +1,61 @@
 <div class="filtros-container">
-  <!-- Campo de búsqueda -->
-  <div class="search-container">
+  <!-- Search Input -->
+  <!-- <div class="search-container">
     <i class="pi pi-search search-icon"></i>
     <input
       type="text"
       pInputText
       [(ngModel)]="searchText"
-      placeholder="Buscar cliente, correo NCR emisor..."
+      placeholder="Buscar cliente, correo, NRC emisor..."
       (input)="buscar()"
     />
-  </div>
+  </div> -->
 
-  <!-- Campo de rango de fechas con ícono -->
-  <div class="calendar-container">
-    <i class="pi pi-calendar calendar-icon"></i>
+  <!-- Date Range Picker -->
+   <!-- Date Range Picker -->
+   <div class="calendar-container">
+    <i class="pi pi-calendar-plus calendar-icon"></i>
     <p-calendar
-      [(ngModel)]="rangoFechas"
+      [(ngModel)]="rangeDates"
       selectionMode="range"
+      [readonlyInput]="true"
       dateFormat="MM dd"
-      placeholder="Seleccionar rango de fechas"
-      [monthNavigator]="true"
-      [yearNavigator]="true"
-      yearRange="2000:2030"
-      [locale]="{
-        firstDayOfWeek: 1,
-        dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
-        dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
-        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-        monthNames: [
-          'enero',
-          'febrero',
-          'marzo',
-          'abril',
-          'mayo',
-          'junio',
-          'julio',
-          'agosto',
-          'septiembre',
-          'octubre',
-          'noviembre',
-          'diciembre'
-        ],
-        monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
-        today: 'Hoy',
-        clear: 'Limpiar'
-      }"
-    ></p-calendar>
+      [showIcon]="false"
+      rangeSeparator=" - "
+      placeholder="{{ placeholder }}"
+      (onClear)="clearRangoTexto()"
+    >
+      <!-- Footer with custom buttons -->
+      <ng-template pTemplate="footer">
+        <div class="calendar-footer">
+          <button
+            type="button"
+            pButton
+            label="Cancelar"
+            class="p-button-secondary"
+            (click)="clearRangoTexto()"
+          ></button>
+          <button
+            type="button"
+            pButton
+            label="Escoger Fecha"
+            class="p-button-primary"
+            (click)="aplicarSeleccion()"
+          ></button>
+        </div>
+      </ng-template>
+    </p-calendar>
   </div>
 
-  <!-- Botón de filtrar -->
-  <button
-    pButton
-    type="button"
-    label="Filtrar"
-    icon="pi pi-filter"
-    class="filter-button"
-    (click)="filtrarPorRango()"
-  >
-  </button>
+  <!-- Botón Filtrar -->
+  <app-filtros-button (abrirModal)="mostrarModal()"></app-filtros-button>
 
-  <!-- Botón de desembolsar -->
-  <button
-    pButton
-    type="button"
-    label="Desembolsar"
-    icon="pi pi-wallet"
-    class="desembolsar-button"
-    (click)="desembolsar()"
-  >
-  </button>
+  <!-- Botón Desembolsar -->
+  <app-desembolsar-button></app-desembolsar-button>
+
+  <!-- Modal Filtros Avanzados -->
+  <app-modal-filtros-avanzados
+    [mostrar]="mostrarModalFiltros"
+    (cerrar)="cerrarModal()"
+  ></app-modal-filtros-avanzados>
 </div>
