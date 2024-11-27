@@ -112,22 +112,32 @@ export class HttpProvider {
             }
             case HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR: {
 
-                reject(new ErrorHttp(1, `NTERNAL_SERVER_ERROR 500:\n ${message}`, null));
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR));
                 break;
             }
             case HTTP_STATUS_CODE.NOT_FOUND: {
 
-                reject(new ErrorHttp(1, `NOT_FOUND 404:\n ${message}`, null));
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.NOT_FOUND));
                 break;
             }
             case HTTP_STATUS_CODE.CONFLICT: {
 
-                reject(new ErrorHttp(1, `RESOURCE CONFLICT 409:\n ${message}`, null));
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.CONFLICT));
                 break;
             }
             case HTTP_STATUS_CODE.FORBIDDEN: {
 
-                reject(new ErrorHttp(1, `RESOURCE FORBIDDEN 403:\n ${message}`, null));
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.FORBIDDEN));
+                break;
+            }
+            case HTTP_STATUS_CODE.UNAUTHORIZED: {
+
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.UNAUTHORIZED));
+                break;
+            }
+            case HTTP_STATUS_CODE.BAD_REQUEST: {
+
+                reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.BAD_REQUEST));
                 break;
             }
         }

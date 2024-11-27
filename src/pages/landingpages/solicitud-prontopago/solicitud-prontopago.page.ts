@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { SynergyProvider } from '../../../providers/synergy.provider';
 import { Factura } from '../../../models/factura.model';
-import { Currency } from '../../../utility/Currency.util';
+import { Currency, Email } from '../../../utility/global.util';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
@@ -129,7 +129,6 @@ export class SolicitudProntoPagoPage implements OnInit {
   }
 
   isValidEmail(email: string): boolean {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailPattern.test(email);
+    return Email.isValid(email);
   }
 }

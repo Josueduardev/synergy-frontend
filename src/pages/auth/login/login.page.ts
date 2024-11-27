@@ -9,19 +9,20 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { Email } from '../../../utility/global.util';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-home',
   templateUrl: './login.page.html',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     CheckboxModule,
     ButtonModule,
     PasswordModule,
-    InputTextModule
-
+    InputTextModule,
   ],
   providers: [SynergyProvider, LocalStorageProvider],
   styleUrls: ['./login.page.scss']
@@ -29,27 +30,42 @@ import { InputTextModule } from 'primeng/inputtext';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  isFormInvalid = false;
+  messageError = '';
 
   constructor(
-      private synergyProvider: SynergyProvider,
-      private storeProv: LocalStorageProvider,
-      private router: Router
-  ) {}
+    private synergyProvider: SynergyProvider,
+    private storeProv: LocalStorageProvider,
+    private router: Router,
+    private messageService: MessageService,
+  ) { }
 
-  login() {
-    this.synergyProvider.login(this.email,this.password).then(
-      (resp)=>{
-        if(resp){
-          this.storeProv.jwtSession = resp.data.token; // Guarda el token
-          this.storeProv.userNameSession = resp.data.nombre_completo; 
-          this.storeProv.userIDSession = resp.data.usuario_id.toString(); 
-          this.router.navigate(['/home']); // Redirige al home
-        }
-      },
-      (err)=>{
-        console.log(err)
-        alert("Error al iniciar session");
-      }
-    )
+  async login() {
+    if (!this.email || !this.password || !this.isValidEmail(this.email)) {
+      this.isFormInvalid = true;
+      return;
+    }
+
+    this.isFormInvalid = false;
+    try {
+      const resp = await this.synergyProvider.login(this.email, this.password);
+
+      if (resp) {
+        console.log(resp)
+        this.storeProv.jwtSession = resp.data.token; // Guarda el token
+        this.storeProv.userNameSession = resp.data.nombre_completo;
+        this.storeProv.userIDSession = resp.data.usuario_id.toString();
+        this.messageService.add({ severity: 'success', summary: 'Inicio de sesión', detail: 'Has iniciado sesión exitosamente' });
+        this.router.navigate(['/home']); // Redirige al home
+      } 
+    } catch (error: any) {
+        this.messageError = error.message;
+    }
+      
+    
+  }
+
+  isValidEmail(email: string): boolean {
+    return Email.isValid(email);
   }
 }

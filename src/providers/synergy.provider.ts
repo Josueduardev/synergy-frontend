@@ -26,6 +26,17 @@ export class SynergyProvider {
     });
   }
 
+  logout(id_usuario:number){
+    return new Promise<Root11>((resolve, reject) => {
+      const sender = {}
+      this.httpProvider.post(`usuario/cerrar-sesion?usuario_id=${id_usuario}`, sender).then(data => {
+        resolve(data)
+      }).catch(error => {
+        reject(error);
+      })
+    });
+  }
+
   /**
    * Solicita factoraje a synergy
    * 
