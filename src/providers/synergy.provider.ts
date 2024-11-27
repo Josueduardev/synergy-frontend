@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root10 } from './interface-http';
+import { Root0, Root10, Root11 } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -12,7 +12,21 @@ export class SynergyProvider {
 
   }
 
-    /**
+  login(email:string, password: string){
+    return new Promise<Root11>((resolve, reject) => {
+      const sender = {
+        email,
+        password
+      }
+      this.httpProvider.post(`usuario/inicio-sesion`, sender).then(data => {
+        resolve(data)
+      }).catch(error => {
+        reject(error);
+      })
+    });
+  }
+
+  /**
    * Solicita factoraje a synergy
    * 
    */
@@ -25,7 +39,7 @@ export class SynergyProvider {
         correo_electronico: correo
       }
     }
-    return new Promise<Root10>((resolve, reject) => {
+    return new Promise<Root0>((resolve, reject) => {
       this.httpProvider.post(`factura/solicitar-pago-factura`, sender).then(data => {
         resolve(data)
       }).catch(error => {

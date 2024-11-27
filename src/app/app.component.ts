@@ -6,13 +6,15 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpProvider } from '../providers/http.provider';
 import { LocalStorageProvider } from '../providers/local-storage.provider';
+import { AuthGuardApp } from '../guards/auth.guard';
+import { PublicGuard } from '../guards/public.guard';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this if needed
   imports: [CommonModule,HttpClientModule, RouterOutlet, SidebarComponent, NavbarComponent],
-  providers: [HttpProvider,LocalStorageProvider],
+  providers: [HttpProvider,LocalStorageProvider, AuthGuardApp, PublicGuard],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

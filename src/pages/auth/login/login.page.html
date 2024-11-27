@@ -1,3 +1,29 @@
-<p>
-  Login page funcionando separado de la plantilla
-</p>
+<div class="login-container">
+  <div class="left-section">
+    <img src="assets/clobi-logo.svg" alt="Clobi Technologies" class="logo" />
+    <p>Development by <strong>Clobi Technologies</strong></p>
+  </div>
+  <div class="right-section">
+    <h2>Synergy Factoraje</h2>
+    <form class="login-form">
+      <div class="p-field">
+        <label for="name">Correo electrónico</label>
+        <input id="name" type="email" pInputText [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Correo" />
+      </div>
+
+
+      <div class="p-field">
+        <label for="password">Contraseña</label>
+        <input  id="password" type="password" pInputText [(ngModel)]="password" [ngModelOptions]="{standalone: true}"  placeholder="Min. 8 caracteres"/>
+      </div>
+
+      <div class="p-field-checkbox">
+        <p-checkbox binary="true"></p-checkbox>
+        <label for="remember">Mantener sesión conectada</label>
+      </div>
+      <br>
+      <button pButton type="button" label="Iniciar sesión" class="login-button"></button>
+    </form>
+  </div>
+</div>
+
