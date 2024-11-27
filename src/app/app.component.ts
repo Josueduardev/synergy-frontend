@@ -8,13 +8,28 @@ import { HttpProvider } from '../providers/http.provider';
 import { LocalStorageProvider } from '../providers/local-storage.provider';
 import { AuthGuardApp } from '../guards/auth.guard';
 import { PublicGuard } from '../guards/public.guard';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this if needed
-  imports: [CommonModule,HttpClientModule, RouterOutlet, SidebarComponent, NavbarComponent],
-  providers: [HttpProvider,LocalStorageProvider, AuthGuardApp, PublicGuard],
+  imports: [
+    CommonModule,
+    HttpClientModule, 
+    RouterOutlet, 
+    SidebarComponent, 
+    NavbarComponent,
+    ToastModule
+  ],
+  providers: [
+    HttpProvider,
+    LocalStorageProvider, 
+    AuthGuardApp, 
+    PublicGuard,
+    MessageService
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

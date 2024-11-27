@@ -37,5 +37,6 @@ export class LocalStorageProvider {
     clearSession() {
         localStorage.removeItem(LocalStorageProvider.JWT_KEY);
         localStorage.removeItem(LocalStorageProvider.USERNAME_KEY);
+        localStorage.removeItem(LocalStorageProvider.USERID_KEY);
     }
 }
