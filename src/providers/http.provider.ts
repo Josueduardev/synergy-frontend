@@ -140,6 +140,11 @@ export class HttpProvider {
                 reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.BAD_REQUEST));
                 break;
             }
+            case 0: {
+
+                reject(new ErrorHttp(1, response.message, null, 0));
+                break;
+            }
         }
     }
 

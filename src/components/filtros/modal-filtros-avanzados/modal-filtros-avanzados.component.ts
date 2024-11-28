@@ -16,7 +16,6 @@ export class ModalFiltrosAvanzadosComponent implements AfterViewInit {
   buttonPosition: { left: number; bottom: number } | null = null; // Posición del botón
 
   filtros = {
-    estado: null,
     proveedor: null,
     nombre_proveedor: null,
     nrc: null,
