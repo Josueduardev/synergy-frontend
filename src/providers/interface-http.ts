@@ -39,6 +39,7 @@ export interface Root11 {
 
 export interface Data {
   access_token: string;
+  change_password: number; 
   expires_in:   number;
   usuario:      Usuario;
 }
@@ -59,4 +60,27 @@ export interface Root12 {
   };
   message: string;
   code: number;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export interface Root14 {
+  code:    number;
+  data:    {
+    email: string;
+    mensaje: string;
+  };
+  message: string;
 }

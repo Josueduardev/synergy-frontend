@@ -30,8 +30,15 @@ import { MessageService } from 'primeng/api';
 export class LoginPage {
   email: string = '';
   password: string = '';
+  newPasswordF: string = '';
+  newPasswordS: string = '';
   isFormInvalid = false;
   messageError = '';
+  changePassword = false;
+  currentToken = '';
+  currentEmail = '';
+  currentUser = '';
+  currentUserID = '';
 
   constructor(
     private synergyProvider: SynergyProvider,
@@ -51,12 +58,18 @@ export class LoginPage {
       const resp = await this.synergyProvider.login(this.email, this.password);
 
       if (resp) {
-        console.log(resp)
-        this.storeProv.jwtSession = resp.data.access_token; // Guarda el token
-        this.storeProv.userNameSession = resp.data.usuario.name;
-        this.storeProv.userIDSession = resp.data.usuario.id.toString();
-        this.messageService.add({ severity: 'success', summary: 'Inicio de sesión', detail: 'Has iniciado sesión exitosamente' });
-        this.router.navigate(['/home']); // Redirige al home
+        
+        this.currentToken = resp.data.access_token;
+        this.currentEmail = resp.data.usuario.email;
+        this.currentUser = resp.data.usuario.name;
+        this.currentUserID = resp.data.usuario.id.toString();
+
+        if(resp.data.change_password == 1){
+          this.messageError = 'Es necesario restablecer tu contraseña, por favor ingresa una nueva.';
+          this.changePassword = true;
+        }else{
+          this.authSuccess('Inicio de sesión','Has iniciado sesión exitosamente.');
+        }
       }
     } catch (error: any) {
         this.messageError = error.message;
@@ -65,7 +78,46 @@ export class LoginPage {
 
   }
 
+  authSuccess(summary: string, detail: string){
+    this.storeProv.jwtSession = this.currentToken; // Guarda el token
+    this.storeProv.userNameSession = this.currentUser;
+    this.storeProv.userIDSession = this.currentUserID;
+    this.messageService.add({ severity: 'success', summary: summary, detail: detail });
+    this.router.navigate(['/home']); // Redirige al home
+  }
+
+  restablecer(){
+    if (!this.newPasswordF || !this.newPasswordS || !this.validatePassword()) {
+      this.isFormInvalid = true;
+      return;
+    }
+    this.synergyProvider.resetPassword(this.currentEmail,this.newPasswordF,this.currentToken).then(
+      (resp)=>{
+        this.authSuccess('Restablecer contraseña','Has restablecido tu contraseña exitosamente.');
+      },
+      (error)=>{
+        this.messageError = error.message;
+      }
+    )  
+  }
+
   isValidEmail(email: string): boolean {
     return Email.isValid(email);
+  }
+
+  validatePassword(){
+    if(this.newPasswordF && this.newPasswordS){
+      if(this.newPasswordF != this.newPasswordS){
+        this.messageError = 'Las contraseñas no coinciden, por favor verifica.';
+        return false;
+      }
+      if(this.newPasswordF.length < 6 || this.newPasswordS.length < 6){
+        this.messageError = 'La contraseña debe tener al menos 6 caracteres.';
+        return false;
+      }
+      this.messageError = '';
+      return true;
+    }
+    return false;
   }
 }

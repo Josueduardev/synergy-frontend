@@ -27,15 +27,21 @@ export class HttpProvider {
 
     //   public http_error: ErrorHttp;
 
-    post(endpoint: string, payload?: any) {
+    post(endpoint: string, payload?: any, tokenMemory?: string) {
         return new Promise<any>((resolve, reject) => {
 
             let peticion = environment.apiURL  + endpoint;
-            console.log("peticion http", peticion);
+            console.log("peticion http", peticion);            
             let headers = new HttpHeaders();
             const token = this.storeProv.jwtSession;
             if (token !== null) {
                 headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            }else{
+                // Se setea el token en dado caso que se 
+                // necesite realizar una operacion como restablecer contraseña
+                if(tokenMemory){
+                    headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+                }
             }
 
             console.log("Llamando al endpoint: ", endpoint, payload);
