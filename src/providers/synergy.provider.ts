@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root0, Root10, Root11, Root12  } from './interface-http';
+import { Root0, Root10, Root11, Root12, Root14  } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -30,6 +30,24 @@ export class SynergyProvider {
     return new Promise<Root11>((resolve, reject) => {
       const sender = {}
       this.httpProvider.post(`usuario/cerrar-sesion?usuario_id=${id_usuario}`, sender).then(data => {
+        resolve(data)
+      }).catch(error => {
+        reject(error);
+      })
+    });
+  }
+  
+  /**
+   * Restablece la contraseña para el usuario que ingresa por primera vez y aquellos que se les olvida la contraseña
+   *
+   */
+  resetPassword(email: string, newpassword: string, tokenMemory: string){
+    return new Promise<Root14>((resolve, reject) => {
+      const sender = {
+        email: email,
+        nueva_contrasena: newpassword
+      }
+      this.httpProvider.post(`usuario/cambiar-contraseña`, sender, tokenMemory).then(data => {
         resolve(data)
       }).catch(error => {
         reject(error);
