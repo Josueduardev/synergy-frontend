@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
@@ -30,6 +30,8 @@ export class FiltrosComponent {
   placeholder: string = 'Desde - Hasta'; // Texto del placeholder
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
+  @Output() filtersChanges = new EventEmitter<any>();
+
   actualizarRangoTexto() {
     if (this.rangeDates && this.rangeDates[0] && this.rangeDates[1]) {
       const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric' };
@@ -57,7 +59,13 @@ export class FiltrosComponent {
     this.mostrarModalFiltros = true; // Muestra el modal
   }
 
-  cerrarModal() {
+  cerrarModal(filtros?: any) {
     this.mostrarModalFiltros = false; // Cierra el modal
+
+    if (filtros) {
+      console.log('Filtros recibidos del modal:', filtros);
+      this.filtersChanges.emit(filtros); // Emite los filtros al componente padre
+    }
   }
+
 }

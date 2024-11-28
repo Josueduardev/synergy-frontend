@@ -11,9 +11,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class ModalFiltrosAvanzadosComponent implements AfterViewInit {
   @Input() mostrar = false; // Controla la visibilidad del modal
-  @Output() cerrar = new EventEmitter<void>(); // Evento para notificar cierre del modal
+  @Output() cerrar = new EventEmitter<any>(); // Evento para notificar cierre del modal
 
   buttonPosition: { left: number; bottom: number } | null = null; // Posición del botón
+
+  filtros = {
+    estado: null,
+    proveedor: null,
+    nombre_proveedor: null,
+    nrc: null,
+    telefono: null,
+    correo: null,
+  }
 
   constructor(private elementRef: ElementRef) {}
 
@@ -27,8 +36,8 @@ export class ModalFiltrosAvanzadosComponent implements AfterViewInit {
   }
 
   aplicarFiltros() {
-    console.log('Filtros aplicados');
-    this.cerrar.emit(); // Notifica que se cierra el modal
+    console.log('Filtros aplicados: ',this.filtros);
+    this.cerrar.emit(this.filtros); // Notifica que se cierra el modal
   }
 
   cerrarModal() {

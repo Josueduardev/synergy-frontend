@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root0, Root10, Root11 } from './interface-http';
+import { Root0, Root10, Root11, Root12  } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -39,7 +39,7 @@ export class SynergyProvider {
 
   /**
    * Solicita factoraje a synergy
-   * 
+   *
    */
   requestFactoring(factura: Factura, nombre:string, cargo:string, correo:string){
     const sender = {
@@ -61,7 +61,7 @@ export class SynergyProvider {
 
   /**
    * Obtiene el detalle de factura para pronto pago
-   * 
+   *
    */
   getInvoiceDetail(no_factura: string) {
     return new Promise<Root10>((resolve, reject) => {
@@ -73,5 +73,27 @@ export class SynergyProvider {
     });
   }
 
+/**
+   * Obtiene la lista de solicitudes con filtros y paginación
+   */
+getRequest(page: number, per_page: number, filtros: any = {}) {
+  // Creamos un objeto de parámetros que incluirá filtros adicionales, si es necesario
+  const params: any = {
+    page,
+    per_page,
+    ...filtros // Añadimos los filtros aquí
+  };
+
+  // Convertimos el objeto params en una cadena de consulta URL
+  const queryString = new URLSearchParams(params).toString();
+
+  return new Promise<Root12>((resolve, reject) => {
+    this.httpProvider.get(`solicitud/obtener-solicitudes?${queryString}`).then(data => {
+      resolve(data);
+    }).catch(error => {
+      reject(error);
+    });
+  });
+}
 
 }

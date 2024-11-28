@@ -98,13 +98,13 @@
     <!-- Cuerpo de la Tabla -->
     <ng-template pTemplate="body" let-solicitud>
       <tr>
-        <td>{{ solicitud.cliente }}</td>
-        <td style="text-transform: none;">{{ solicitud.correo }}</td>
-        <td>{{ solicitud.nrc }}</td>
-        <td>{{ solicitud.encargado }}</td>
-        <td>{{ solicitud.telefono }}</td>
-        <td>{{ solicitud.monto }}</td>
-        <td>{{ solicitud.interes }}</td>
+        <td>{{ solicitud.nombre_cliente }}</td>
+        <td style="text-transform: none;">{{ solicitud.email }}</td>
+        <td>{{ "NCR" }}</td>
+        <td>{{ solicitud.factura.proveedor.razon_social }}</td>
+        <td>{{ solicitud.contacto }}</td>
+        <td>{{ solicitud.factura.monto | currency:'$' }}</td>
+        <td>{{ "INTERES" }}</td>
         <td>
           <button
             pButton
