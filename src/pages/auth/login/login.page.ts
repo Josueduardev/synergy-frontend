@@ -52,17 +52,17 @@ export class LoginPage {
 
       if (resp) {
         console.log(resp)
-        this.storeProv.jwtSession = resp.data.token; // Guarda el token
-        this.storeProv.userNameSession = resp.data.nombre_completo;
-        this.storeProv.userIDSession = resp.data.usuario_id.toString();
+        this.storeProv.jwtSession = resp.data.access_token; // Guarda el token
+        this.storeProv.userNameSession = resp.data.usuario.name;
+        this.storeProv.userIDSession = resp.data.usuario.id.toString();
         this.messageService.add({ severity: 'success', summary: 'Inicio de sesión', detail: 'Has iniciado sesión exitosamente' });
         this.router.navigate(['/home']); // Redirige al home
-      } 
+      }
     } catch (error: any) {
         this.messageError = error.message;
     }
-      
-    
+
+
   }
 
   isValidEmail(email: string): boolean {

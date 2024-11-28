@@ -9,7 +9,7 @@
     <div class="modal-body">
       <!-- Input para buscar por nombre -->
       <div class="input-container">
-        <input
+        <input  [(ngModel)]="filtros.nombre_proveedor"
           type="text"
           placeholder="Buscar por nombre de proveedor"
         />
@@ -17,7 +17,7 @@
 
       <!-- Input para buscar por correo -->
       <div class="input-container">
-        <input
+        <input [(ngModel)]="filtros.correo"
           type="text"
           placeholder="Buscar por correo de proveedor"
         />
@@ -25,7 +25,7 @@
 
       <!-- Input para buscar por NCR -->
       <div class="input-container">
-        <input
+        <input [(ngModel)]="filtros.nrc"
           type="text"
           placeholder="Buscar por NCR de proveedor"
         />
@@ -33,7 +33,7 @@
 
       <!-- Input para buscar por teléfono -->
       <div class="input-container">
-        <input
+        <input [(ngModel)]="filtros.telefono"
           type="text"
           placeholder="Buscar por teléfono de proveedor"
         />

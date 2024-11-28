@@ -1,3 +1,4 @@
+import { Proveedor } from './proveedor.model';
 export interface Factura {
     cliente?:            string;
     dias_restantes?:     number;
@@ -9,4 +10,5 @@ export interface Factura {
     pronto_pago?:        number;
     subtotal_descuento?: number;
     total_a_recibir?:    number;
+    proveedor:     Proveedor;
 }
