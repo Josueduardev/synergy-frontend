@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 import { SynergyProvider } from '../../providers/synergy.provider';
 import { LocalStorageProvider } from '../../providers/local-storage.provider';
-import { ToastModule } from 'primeng/toast';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -26,52 +26,54 @@ export class NavbarComponent {
   ]; // Ejemplo de elementos del breadcrumb
   @Output() toggleSidebar: EventEmitter<void> = new EventEmitter<void>(); // Evento para alternar el Sidebar
 
-  isDropdownOpen = false; // Estado del menú desplegable
+  isDropdownOpen = false;
 
   constructor(
     private synergyProvider: SynergyProvider,
     private storageProvider: LocalStorageProvider,
     private messageService: MessageService,
-    private router: Router
-  ){
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  }
-
-  // Devuelve la inicial del nombre del usuario para el avatar
   get userInitial(): string {
     return this.username.charAt(0).toUpperCase();
   }
 
-  // Alterna la visibilidad del Sidebar
   onToggleSidebar() {
     this.toggleSidebar.emit();
   }
 
-  // Alterna la visibilidad del menú desplegable
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  // Navegación a otra sección
   navigateTo(route: string) {
     console.log(`Navigate to ${route}`);
-    // Aquí iría la lógica de navegación, si se desea implementarla
+    this.router.navigate([route]);
   }
 
-  // Lógica para cerrar sesión
   logout() {
     const id_usuario = this.storageProvider.userIDSession;
-    if(id_usuario){
+    if (id_usuario) {
       this.synergyProvider.logout(Number.parseInt(id_usuario)).then(
-        (response)=>{
+        (response) => {
           this.storageProvider.clearSession();
-          this.messageService.add({ severity: 'success', summary: 'Cierre de sesión', detail: 'Has cerrado sesión exitosamente' });
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Cierre de sesión',
+            detail: 'Has cerrado sesión exitosamente',
+          });
           this.router.navigate(['/login']);
         },
-        (error)=>{
-          this.messageService.add({ severity: 'error', summary: 'Cierre de sesión', detail: 'Hubo un problema al cerrar la sesión' });
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Cierre de sesión',
+            detail: 'Hubo un problema al cerrar la sesión',
+          });
         }
-      )
+      );
     }
   }
 }

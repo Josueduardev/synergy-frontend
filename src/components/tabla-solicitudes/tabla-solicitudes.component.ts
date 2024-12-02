@@ -4,6 +4,7 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
+import { Router } from '@angular/router';
 import { Solicitud } from '../../models/solicitud.model';
 
 @Component({
@@ -18,7 +19,7 @@ export class TablaSolicitudesComponent implements OnInit {
   cols: any[] = [];
   loading: boolean = false;
 
-  constructor() {}
+  constructor(private router: Router) {} // Inyectar Router
 
   ngOnInit(): void {
     // Definición de columnas con tipos de filtros
@@ -38,7 +39,9 @@ export class TablaSolicitudesComponent implements OnInit {
     // Aquí puedes emitir eventos o hacer algo con la página seleccionada
   }
 
+  // Método para redirigir al detalle de la solicitud
   verSolicitud(solicitud: any): void {
-    console.log('Detalle de solicitud:', solicitud);
+    // Redirigir a la ruta de detalle de la solicitud, pasando el id de la solicitud
+    this.router.navigate(['solicitudes/detalle', solicitud.id]);
   }
 }
