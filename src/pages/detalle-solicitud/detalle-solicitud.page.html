@@ -1,0 +1,80 @@
+<!-- Botón para regresar a lista de solicitudes -->
+<div class="detalle-solicitud-header-buttom">
+  <button pButton icon="pi pi-arrow-left" label="Regresar a Solicitudes" class="p-button-rounded p-button-info no-bg-blue" (click)="regresarALaLista()"></button>
+</div>
+
+<div class="detalle-solicitud-container">
+  <!-- Título Cliente -->
+  <div class="detalle-solicitud-header">
+    <h1>CLIENTE: {{ solicitud.cliente }}</h1>
+  </div>
+
+  <!-- Título de Detalle de Cesión de Facturaje -->
+  <div class="detalle-solicitud-header">
+    <p>Detalle de Cesión de Facturaje</p>
+  </div>
+
+  <!-- Tabla con los detalles -->
+  <div class="detalle-solicitud-table">
+    <p-table [value]="detallesCesion" class="p-datatable-striped">
+      <!-- Encabezados de la tabla -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Concepto</th>
+          <th>Valor</th>
+        </tr>
+      </ng-template>
+
+      <!-- Cuerpo de la tabla -->
+      <ng-template pTemplate="body" let-detalle>
+        <tr>
+          <td class="concepto-column">{{ detalle.concepto }}</td>
+          <td class="valor-column">{{ detalle.valor }}</td>
+        </tr>
+      </ng-template>
+
+      <!-- Mensaje cuando no hay datos -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="2" class="text-center">No hay registros disponibles.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Botón para agregar comentario -->
+  <div class="detalle-solicitud-footer centered">
+    <button pButton icon="pi pi-plus" label="Agregar comentario" class="p-button-rounded p-button-info no-bg-blue" (click)="mostrarModalComentario()"></button>
+  </div>
+
+  <!-- Modal para ingresar comentario -->
+  <p-dialog header="Agregar Comentario" [(visible)]="modalComentarioVisible" [style]="{width: '50%'}" [modal]="true" [closable]="true">
+    <div class="modal-content">
+      <textarea [(ngModel)]="comentario" pInputTextarea rows="5" cols="30" placeholder="Escribe tu comentario..."></textarea>
+    </div>
+    <p-footer>
+      <button pButton label="Guardar" class="p-button-success" (click)="guardarComentario()"></button>
+      <button pButton label="Cancelar" class="p-button-danger" (click)="cancelarComentario()"></button>
+    </p-footer>
+  </p-dialog>
+
+  <!-- Botones para confirmar o denegar la solicitud -->
+  <div class="detalle-solicitud-footer acciones">
+    <button pButton label="Aceptar" class="p-button-green" (click)="confirmarSolicitud()"></button>
+    <button pButton label="Denegar" class="p-button-red" (click)="denegarSolicitud()"></button>
+  </div>
+
+  <div class="bottom">
+    <p>Nombre del Aprobador: {{ solicitud.aprobador }}</p>
+    <p>Fecha: {{ solicitud.fecha }}</p>
+  </div>
+
+  <!-- Confirmación de acción (Aceptar o Denegar solicitud) -->
+  <p-dialog header="Confirmación" [(visible)]="modalAccionVisible" [style]="{width: '30vw'}">
+    <p>¿Está seguro de que desea ejecutar esta acción?</p>
+    <p-footer>
+      <button pButton label="Sí" icon="pi pi-check" class="p-button-success" (click)="ejecutarAccion()"></button>
+      <button pButton label="No" icon="pi pi-times" class="p-button-danger" (click)="cancelarAccion()"></button>
+    </p-footer>
+  </p-dialog>
+</div>

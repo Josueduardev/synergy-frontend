@@ -1,0 +1,166 @@
+.detalle-solicitud-header-buttom{
+  margin: 1rem;
+}
+
+.detalle-solicitud-container {
+  padding: 20px;
+  background-color: #ffffff;
+  margin: 2rem 15rem;
+}
+
+/* Estilo para el encabezado de la sección de cliente */
+.detalle-solicitud-header {
+  margin-bottom: 20px;
+}
+
+.detalle-solicitud-header h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  text-transform: uppercase;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detalle-solicitud-header p {
+  font-size: 1.1rem;
+  padding-bottom: 0.2rem;
+  margin-left: 8rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Estilos para la tabla */
+::ng-deep p-table th {
+  background-color: #f5f7fb;
+  color: #686868;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+::ng-deep p-table td {
+  color: #898989;
+  text-align: left;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  border-top: 1px solid #f6f6f6;
+}
+
+/* Estilo para las columnas específicas */
+::ng-deep p-table th:first-child,
+::ng-deep p-table td:first-child {
+  width: 50%; /* Define un ancho del 50% para la columna 'Concepto' */
+}
+
+::ng-deep p-table th:nth-child(2),
+::ng-deep p-table td:nth-child(2) {
+  width: 50%; /* Define un ancho del 50% para la columna 'Valor' */
+}
+
+/* Colores de fondo */
+::ng-deep p-table td.concepto-column {
+  background-color: #fcfcfc;  /* Fondo gris claro para la columna 'Concepto' */
+}
+
+::ng-deep p-table td.valor-column {
+  background-color: #ffffff; /* Fondo blanco para la columna 'Valor' */
+}
+
+/* Estilo para el botón "Agregar comentario" */
+.no-bg-blue {
+  background: none;
+  color: #2B3674;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap; /* Impide que el texto se envuelva */
+}
+
+::ng-deep .no-bg-blue span{
+  font-size: 0.9rem;
+}
+
+/* Centrar el botón de agregar comentario */
+.detalle-solicitud-footer.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Estilo para los botones de "Aceptar" y "Denegar" */
+.detalle-solicitud-footer.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.p-button-green{
+  background-color: #73B16B;
+  border: none;
+}
+
+.p-button-red{
+  background-color: #D23230;
+  border: none;
+}
+
+.p-button-green:hover{
+  background-color: #6fc563;
+}
+
+.p-button-red:hover{
+  background-color: #f2514e;
+}
+
+/* Estilos para los botones dentro del modal */
+.p-footer button {
+  margin: 0 0.5rem;
+}
+
+/* Modal content styles */
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 1rem; /* Espacio entre los elementos del modal */
+}
+
+textarea {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.p-dialog .p-dialog-header {
+  text-align: center;
+  font-weight: bold;
+}
+
+.p-dialog .p-dialog-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.bottom
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6rem;
+  color: #2B3674;
+}
+
+.bottom p
+{
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 0.2rem 0;
+}

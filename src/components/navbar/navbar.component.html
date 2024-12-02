@@ -33,8 +33,9 @@
       <!-- Menú desplegable -->
       <div class="dropdown-menu" *ngIf="isDropdownOpen">
         <ul>
-          <li (click)="navigateTo('settings')">Settings</li>
-          <li (click)="logout()">Cerrar</li>
+          <li (click)="navigateTo('user')">Usuario</li>
+          <li (click)="navigateTo('settings')">Ajustes</li>
+          <li (click)="logout()">Cerrar Sesion</li>
         </ul>
       </div>
     </div>

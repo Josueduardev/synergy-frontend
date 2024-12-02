@@ -4,6 +4,7 @@ import { Solicitud } from '../../models/solicitud.model';
 import { FiltrosComponent } from '../../components/filtros/filtros.component';
 import { TablaSolicitudesComponent } from '../../components/tabla-solicitudes/tabla-solicitudes.component';
 import { MessageService } from 'primeng/api';
+import { SharedComponent } from '../../components/shared/shared.component';
 
 @Component({
   selector: 'app-solicitudes',
@@ -21,10 +22,13 @@ export class SolicitudesPage implements OnInit {
   page = 1;         // Página inicial
   perPage = 10;     // Registros por página
 
-  constructor(private synergyProvider: SynergyProvider,private messageService: MessageService) {}
+  constructor(private sharedComponent: SharedComponent,private synergyProvider: SynergyProvider,private messageService: MessageService) {}
 
   ngOnInit() {
-    this.loadSolicitudes(); // Cargar solicitudes al inicio
+    // Abrir el sidebar al cargar la página
+    this.sharedComponent.sidebarVisible = true;
+    // Cargar solicitudes al inicio
+    this.loadSolicitudes();
   }
 
   /**
