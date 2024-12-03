@@ -1,3 +1,28 @@
-<div style="text-align: center; margin-top: 200px;">
-  <h1>Gestion de Factoraje para proveedores de ICC</h1>
+<div class="container-panel">
+<app-filtros-panel></app-filtros-panel>
+<div class="dashboard">
+  <!-- Tarjeta principal -->
+  <div class="card total">
+    <div class="card-value">{{ totalSolicitudes }}</div>
+    <div class="card-label">SOLICITUDES</div>
+  </div>
+
+  <!-- Línea vertical -->
+  <div class="vertical-line"></div>
+
+  <!-- Simulación de línea horizontal con bordes redondeados -->
+  <div class="connection-simulator"></div>
+
+  <!-- Tarjetas inferiores -->
+  <div class="card-group">
+    <div class="card approved">
+      <div class="card-value">{{ aprobadas }}</div>
+      <div class="card-label">APROBADAS</div>
+    </div>
+    <div class="card pending">
+      <div class="card-value">{{ sinAprobar }}</div>
+      <div class="card-label">SIN APROBAR</div>
+    </div>
+  </div>
+</div>
 </div>

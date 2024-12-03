@@ -1,0 +1,38 @@
+<div class="container-filtro-panel">
+<h3>Fecha</h3>
+<!-- Date Range Picker -->
+   <!-- Date Range Picker -->
+   <div class="calendar-container">
+    <i class="pi pi-calendar-plus calendar-icon"></i>
+    <p-calendar
+      [(ngModel)]="rangeDates"
+      selectionMode="range"
+      [readonlyInput]="true"
+      dateFormat="MM dd"
+      [showIcon]="false"
+      rangeSeparator=" - "
+      placeholder="{{ placeholder }}"
+      (onClear)="clearRangoTexto()"
+    >
+      <!-- Footer with custom buttons -->
+      <ng-template pTemplate="footer">
+        <div class="calendar-footer">
+          <button
+            type="button"
+            pButton
+            label="Cancelar"
+            class="p-button-secondary"
+            (click)="clearRangoTexto()"
+          ></button>
+          <button
+            type="button"
+            pButton
+            label="Escoger Fecha"
+            class="p-button-primary"
+            (click)="aplicarSeleccion()"
+          ></button>
+        </div>
+      </ng-template>
+    </p-calendar>
+  </div>
+</div>
