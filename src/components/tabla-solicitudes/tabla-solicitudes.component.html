@@ -100,7 +100,7 @@
       <tr>
         <td>{{ solicitud.factura.proveedor.razon_social }}</td>
         <td style="text-transform: none;">{{ solicitud.email }}</td>
-        <td>{{ "NCR" }}</td>
+        <td>{{  solicitud.factura.proveedor.nrc }}</td>
         <td>{{ solicitud.nombre_cliente }}</td>
         <td>{{ solicitud.contacto }}</td>
         <td>{{ solicitud.factura.monto | currency:'$' }}</td>
@@ -126,7 +126,7 @@
 
          <!-- Footer del Paginador -->
          <ng-template pTemplate="paginatorleft">
-          <div class="total-records">{{ solicitudes.length }} usuarios</div>
+          <div class="total-records">{{ solicitudes.length }} registros</div>
         </ng-template>
 
   </p-table>

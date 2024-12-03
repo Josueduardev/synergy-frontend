@@ -3,10 +3,10 @@ import { MenubarModule } from 'primeng/menubar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SynergyProvider } from '../../providers/synergy.provider';
 import { LocalStorageProvider } from '../../providers/local-storage.provider';
+
 
 @Component({
   selector: 'app-navbar',

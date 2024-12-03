@@ -64,6 +64,43 @@ export class HttpProvider {
         });
     }
 
+    put(endpoint: string, payload?: any, tokenMemory?: string) {
+        return new Promise<any>((resolve, reject) => {
+
+            let peticion = environment.apiURL  + endpoint;
+            console.log("peticion http", peticion);            
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            }else{
+                // Se setea el token en dado caso que se 
+                // necesite realizar una operacion como restablecer contraseña
+                if(tokenMemory){
+                    headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+                }
+            }
+
+            console.log("Llamando al endpoint: ", endpoint, payload);
+            this.http.put(
+                peticion,
+                payload,
+                {
+                    headers,
+                    observe: 'response'
+                }
+            ).subscribe((response) => {
+                this.evaluateStatus(resolve, reject, response);
+
+
+            }, (error: HttpErrorResponse) => {
+                console.log(error)
+                this.evaluateStatus(resolve, reject, error);
+            });
+
+        });
+    }
+
     get(endpoint: string, payload?: any) {
         return new Promise<any>((resolve, reject) => {
 
@@ -144,6 +181,11 @@ export class HttpProvider {
             case HTTP_STATUS_CODE.BAD_REQUEST: {
 
                 reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.BAD_REQUEST));
+                break;
+            }
+            case HTTP_STATUS_CODE.METHOD_NOT_ALLOWED: {
+
+                reject(new ErrorHttp(1, response.message, null, HTTP_STATUS_CODE.METHOD_NOT_ALLOWED));
                 break;
             }
             case 0: {

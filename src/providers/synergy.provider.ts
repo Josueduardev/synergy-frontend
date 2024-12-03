@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root0, Root10, Root11, Root12, Root14  } from './interface-http';
+import { Root0, Root10, Root11, Root12, Root13, Root14 } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class SynergyProvider {
 
   }
 
-  login(email:string, password: string){
+  login(email: string, password: string) {
     return new Promise<Root11>((resolve, reject) => {
       const sender = {
         email,
@@ -26,7 +26,7 @@ export class SynergyProvider {
     });
   }
 
-  logout(id_usuario:number){
+  logout(id_usuario: number) {
     return new Promise<Root11>((resolve, reject) => {
       const sender = {}
       this.httpProvider.post(`usuario/cerrar-sesion?usuario_id=${id_usuario}`, sender).then(data => {
@@ -36,12 +36,12 @@ export class SynergyProvider {
       })
     });
   }
-  
+
   /**
    * Restablece la contraseña para el usuario que ingresa por primera vez y aquellos que se les olvida la contraseña
    *
    */
-  resetPassword(email: string, newpassword: string, tokenMemory: string){
+  resetPassword(email: string, newpassword: string, tokenMemory: string) {
     return new Promise<Root14>((resolve, reject) => {
       const sender = {
         email: email,
@@ -59,11 +59,11 @@ export class SynergyProvider {
    * Solicita factoraje a synergy
    *
    */
-  requestFactoring(factura: Factura, nombre:string, cargo:string, correo:string){
+  requestFactoring(factura: Factura, nombre: string, cargo: string, correo: string) {
     const sender = {
-      data:{
+      data: {
         factura: factura,
-        nombre_solicitante:  nombre,
+        nombre_solicitante: nombre,
         cargo: cargo,
         correo_electronico: correo
       }
@@ -91,27 +91,66 @@ export class SynergyProvider {
     });
   }
 
-/**
-   * Obtiene la lista de solicitudes con filtros y paginación
-   */
-getRequest(page: number, per_page: number, filtros: any = {}) {
-  // Creamos un objeto de parámetros que incluirá filtros adicionales, si es necesario
-  const params: any = {
-    page,
-    per_page,
-    ...filtros // Añadimos los filtros aquí
-  };
+  /**
+     * Obtiene la lista de solicitudes con filtros y paginación
+     */
+  getRequest(page: number, per_page: number, filtros: any = {}) {
+    // Creamos un objeto de parámetros que incluirá filtros adicionales, si es necesario
+    const params: any = {
+      page,
+      per_page,
+      ...filtros // Añadimos los filtros aquí
+    };
 
-  // Convertimos el objeto params en una cadena de consulta URL
-  const queryString = new URLSearchParams(params).toString();
+    // Convertimos el objeto params en una cadena de consulta URL
+    const queryString = new URLSearchParams(params).toString();
 
-  return new Promise<Root12>((resolve, reject) => {
-    this.httpProvider.get(`solicitud/obtener-solicitudes?${queryString}`).then(data => {
-      resolve(data);
-    }).catch(error => {
-      reject(error);
+    return new Promise<Root12>((resolve, reject) => {
+      this.httpProvider.get(`solicitud/obtener-solicitudes?${queryString}`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
     });
-  });
-}
+  }
+
+  getDetailRequest(id: string){
+    return new Promise<Root13>((resolve, reject) => {
+      this.httpProvider.get(`solicitud/obtener-detalle-solicitud?id=${id}`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  approveRequest(id: string, id_aprobador: string, comentario?: string) {
+    return new Promise<Root12>((resolve, reject) => {
+      const sender = {
+        id_aprobador: id_aprobador,
+        comentario: comentario
+      }
+      this.httpProvider.put(`solicitud/aprobar?id=${id}`,sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  denyRequest(id: string,  id_aprobador: string, comentario?: string) {
+    return new Promise<Root12>((resolve, reject) => {
+      const sender = {
+        id_aprobador: id_aprobador,
+        comentario: comentario
+      }
+      this.httpProvider.put(`solicitud/desaprobar?id=${id}`,sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
 
 }
