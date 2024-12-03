@@ -1,6 +1,11 @@
 export interface Proveedor {
-  correo_electronico: string;
-  id:                 number;
-  razon_social:       string;
-  telefono:           string;
+  correo_electronico?: string;
+  id?:                 number;
+  max_factoring?:      string;
+  min_factoring?:      string;
+  nit?:                string;
+  nombre_contacto?:    string;
+  nrc?:                string;
+  razon_social?:       string;
+  telefono?:           string;
 }

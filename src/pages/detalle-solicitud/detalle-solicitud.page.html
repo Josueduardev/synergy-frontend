@@ -16,7 +16,7 @@
 
   <!-- Tabla con los detalles -->
   <div class="detalle-solicitud-table">
-    <p-table [value]="detallesCesion" class="p-datatable-striped">
+    <p-table [value]="invoiceDetails" class="p-datatable-striped">
       <!-- Encabezados de la tabla -->
       <ng-template pTemplate="header">
         <tr>
@@ -26,10 +26,10 @@
       </ng-template>
 
       <!-- Cuerpo de la tabla -->
-      <ng-template pTemplate="body" let-detalle>
+      <ng-template pTemplate="body" let-detail>
         <tr>
-          <td class="concepto-column">{{ detalle.concepto }}</td>
-          <td class="valor-column">{{ detalle.valor }}</td>
+          <td class="concepto-column">{{ detail.concept }}</td>
+          <td class="valor-column">{{ detail.valor }}</td>
         </tr>
       </ng-template>
 
@@ -60,8 +60,8 @@
 
   <!-- Botones para confirmar o denegar la solicitud -->
   <div class="detalle-solicitud-footer acciones">
-    <button pButton label="Aceptar" class="p-button-green" (click)="confirmarSolicitud()"></button>
-    <button pButton label="Denegar" class="p-button-red" (click)="denegarSolicitud()"></button>
+    <button pButton label="Aceptar" class="p-button-green" (click)="confirmarSolicitud('aprobar')"></button>
+    <button pButton label="Denegar" class="p-button-red" (click)="denegarSolicitud('denegar')"></button>
   </div>
 
   <div class="bottom">
@@ -70,11 +70,11 @@
   </div>
 
   <!-- Confirmación de acción (Aceptar o Denegar solicitud) -->
-  <p-dialog header="Confirmación" [(visible)]="modalAccionVisible" [style]="{width: '30vw'}">
+  <p-dialog [header]="accion == 'aprobar' ? 'Aprobación' : 'Denegación' " [(visible)]="modalAccionVisible" [style]="{width: '30vw'}">
     <p>¿Está seguro de que desea ejecutar esta acción?</p>
     <p-footer>
-      <button pButton label="Sí" icon="pi pi-check" class="p-button-success" (click)="ejecutarAccion()"></button>
-      <button pButton label="No" icon="pi pi-times" class="p-button-danger" (click)="cancelarAccion()"></button>
+      <button pButton [loading]="loading" label="Sí" icon="pi pi-check" class="p-button-success" (click)="ejecutarAccion()"></button>
+      <button pButton  label="No" icon="pi pi-times" class="p-button-danger" (click)="cancelarAccion()"></button>
     </p-footer>
   </p-dialog>
 </div>

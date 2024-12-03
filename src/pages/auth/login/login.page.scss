@@ -7,17 +7,17 @@
   
   /* Sección izquierda */
   .left-section {
-    width: 50%;
-    background: linear-gradient(135deg, #4a46f5, #673ab7);
+    width: 37%;
+    background: url('../../../assets/img/background-login.svg') no-repeat center center;
+    background-size: cover;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
   }
-  
   .left-section .logo {
-    width: 200px;
+    // width: 200px;
     margin-bottom: 20px;
   }
   
@@ -29,7 +29,7 @@
   
   /* Sección derecha */
   .right-section {
-    width: 50%;
+    width: 65%;
     display: flex;
     flex-direction: column;
     justify-content: center;

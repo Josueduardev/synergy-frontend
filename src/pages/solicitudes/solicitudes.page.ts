@@ -5,6 +5,7 @@ import { FiltrosComponent } from '../../components/filtros/filtros.component';
 import { TablaSolicitudesComponent } from '../../components/tabla-solicitudes/tabla-solicitudes.component';
 import { MessageService } from 'primeng/api';
 import { SharedComponent } from '../../components/shared/shared.component';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-solicitudes',
@@ -39,7 +40,6 @@ export class SolicitudesPage implements OnInit {
     this.loading = true;
     try {
       const response = await this.synergyProvider.getRequest(page, perPage, this.filtros);
-
       // Asegúrate de que 'solicitudes' sea un arreglo
       if (response && response.data && Array.isArray(response.data.solicitudes)) {
         this.solicitudes = response.data.solicitudes;

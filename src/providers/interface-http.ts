@@ -62,6 +62,19 @@ export interface Root12 {
   code: number;
 }
 
+export interface Root13 {
+  data: {
+      current_page: number;
+      per_page: number;
+      solicitud: Solicitud;
+      total_pages: number;
+  };
+  message: string;
+  code: number;
+}
+
+
+
 
 
 

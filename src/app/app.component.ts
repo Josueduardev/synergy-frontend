@@ -34,9 +34,6 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  public sidebarVisible: boolean = true;
 
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
-  }
+
 }
