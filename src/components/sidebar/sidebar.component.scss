@@ -2,10 +2,9 @@
   width: 250px;
   background-color: #ffffff; /* Fondo blanco */
   border-right: 1px solid #0000000f;
-
   transition: all 0.3s ease;
   overflow: hidden;
-  height: 100vh; /* Asegura altura completa */
+  height: 100vh;
 
   &.hidden {
     width: 0;
@@ -13,12 +12,11 @@
     border-right: none;
   }
 
-  /* Encabezado */
   .sidebar-header {
     display: flex;
     align-items: center;
     justify-content: start;
-    background-color: #ffffff; /* Fondo del encabezado */
+    background-color: #ffffff;
     padding: 1.5rem 0.8rem;
     border-radius: 2px;
     border-bottom: 1px solid #0000000f;
@@ -44,7 +42,6 @@
     }
   }
 
-  /* Menú */
   .sidebar-menu {
     margin-top: 2rem;
     list-style: none;
@@ -56,35 +53,92 @@
       border-radius: 5px;
       display: flex;
       align-items: center;
+      flex-direction: column;
 
       &:hover {
-        background-color: #E0E5F2; /* Color de fondo en hover */
+        background-color: #E0E5F2;
       }
 
       a {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.2rem 1rem;
+        // justify-content: space-between;
+        width: 100%;
         color: #A3AED0;
         text-decoration: none;
         border-radius: 4px;
         font-size: 1rem;
         cursor: pointer;
         font-weight: bold;
+        padding: 0.2rem 1rem;
 
-        /* Cambiar color del ícono y texto al mismo tiempo */
         &:hover {
           color: #9880FF;
 
           i {
-            color: #9880FF; /* Asegura que el ícono tome el color al hacer hover en el enlace */
+            color: #9880FF;
           }
         }
 
         i {
           font-size: 1.2rem;
-          color: #A3AED0; /* Color inicial del ícono */
+          color: #A3AED0;
+        }
+
+        .dropdown-icon {
+          margin-left: auto;
+          font-size: 0.7rem;
+          transform: rotate(0deg);
+          transition: transform 0.2s ease;
+
+          &.open {
+            transform: rotate(90deg);
+          }
+        }
+      }
+
+      a.active {
+        color: #9880ff;
+        
+        i {
+          color: #9880ff;
+        }
+      }
+
+      ul.submenu {
+        list-style: none;
+        padding-left: 1rem;
+        margin-top: 0.5rem;
+        width: 100%;
+
+        li {
+          margin: 0.4rem 0;
+          padding: 0.5rem 0.5rem;
+          border-radius: 4px;
+
+          &:hover {
+            background-color: #F0F4FC;
+          }
+
+          a {
+            font-size: 0.9rem;
+            color: #A3AED0;
+            font-weight: normal;
+
+            &:hover {
+              color: #9880FF;
+
+              i {
+                color: #9880FF;
+                
+              }
+            }
+
+            i {
+              font-size: 1rem;
+              margin-right: 15px;
+            }
+          }
         }
       }
     }

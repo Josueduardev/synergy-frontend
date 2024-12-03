@@ -9,7 +9,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
-import { Email } from '../../../utility/global.util';
+import { Email, MenuPermisssion } from '../../../utility/global.util';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 
@@ -40,6 +40,7 @@ export class LoginPage {
   currentEmail = '';
   currentUser = '';
   currentUserID = '';
+  currentMenu:any = [];
 
   constructor(
     private synergyProvider: SynergyProvider,
@@ -59,10 +60,11 @@ export class LoginPage {
       const resp = await this.synergyProvider.login(this.email, this.password);
 
       if (resp) {
-        
+        console.log(resp.data)
         this.currentToken = resp.data.access_token;
         this.currentEmail = resp.data.usuario.email;
         this.currentUser = resp.data.usuario.name;
+        this.currentMenu = resp.data.usuario.permissions;
         this.currentUserID = resp.data.usuario.id.toString();
 
         if(resp.data.change_password == 1){
@@ -83,6 +85,7 @@ export class LoginPage {
     this.storeProv.jwtSession = this.currentToken; // Guarda el token
     this.storeProv.userNameSession = this.currentUser;
     this.storeProv.userIDSession = this.currentUserID;
+    this.storeProv.menuSession = MenuPermisssion.format(this.currentMenu);
     this.messageService.add({ severity: 'success', summary: summary, detail: detail });
     this.router.navigate(['/home']); // Redirige al home
   }

@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { PermissionNode } from "../models/usuario.model";
 
 @Injectable({
     providedIn: 'root'
@@ -7,6 +8,7 @@ export class LocalStorageProvider {
     public static JWT_KEY = "JWT0001";
     public static USERNAME_KEY = "USERNAME002";
     public static USERID_KEY = "USERID003";
+    public static MENU_KEY = "MENU004";
 
     constructor() {}
 
@@ -34,9 +36,22 @@ export class LocalStorageProvider {
         return localStorage.getItem(LocalStorageProvider.USERID_KEY);
     }
 
+    set menuSession(menu: PermissionNode[]) {
+        localStorage.setItem(LocalStorageProvider.MENU_KEY, JSON.stringify(menu));
+    }
+
+    get menuSession(): PermissionNode[] | null  {
+        const menu = localStorage.getItem(LocalStorageProvider.MENU_KEY);
+        if(menu){
+            return JSON.parse( menu );
+        }
+        return null;
+    }
+
     clearSession() {
         localStorage.removeItem(LocalStorageProvider.JWT_KEY);
         localStorage.removeItem(LocalStorageProvider.USERNAME_KEY);
         localStorage.removeItem(LocalStorageProvider.USERID_KEY);
+        localStorage.removeItem(LocalStorageProvider.MENU_KEY);
     }
 }

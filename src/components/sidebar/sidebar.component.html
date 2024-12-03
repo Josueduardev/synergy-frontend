@@ -10,31 +10,29 @@
 
     <!-- Menú -->
     <ul class="sidebar-menu">
-      <li>
-        <a routerLink="/home">
-          <i class="pi pi-home"></i> Panel
-        </a>
-      </li>
-      <li>
-        <a routerLink="/solicitudes">
-          <i class="pi pi-file"></i> Solicitudes
-        </a>
-      </li>
-      <li>
-        <a routerLink="/desembolso">
-          <i class="pi pi-wallet"></i> Desembolso
-        </a>
-      </li>
-      <li>
-        <a routerLink="/settings">
-          <i class="pi pi-cog"></i> Ajustes
-        </a>
-      </li>
-      <li>
-        <a routerLink="/usuarios">
-          <i class="pi pi-users"></i> Usuarios
-        </a>
-      </li>
+      <ng-container *ngFor="let item of permisos">
+        <li>
+          <!-- Menú Padre -->
+          <a (click)="toggleMenu(item)" [routerLink]="item.menu.path" routerLinkActive="active">
+            <i [class]="item.menu.icon" style="margin-right: 15px;"></i>  {{ item.menu.menu }}
+            <i
+              *ngIf="item.children?.length"
+              class="pi pi-chevron-right dropdown-icon"
+              [class.open]="item.isOpen"
+
+            ></i>
+          </a>
+
+          <!-- Submenús -->
+          <ul class="submenu" *ngIf="item.isOpen">
+            <li *ngFor="let subItem of item.children">
+              <a [routerLink]="subItem.menu.path || null" routerLinkActive="active">
+                <i [class]="subItem.menu.icon"></i> {{ subItem.menu.menu }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
     </ul>
   </ng-container>
 </div>

@@ -1,5 +1,6 @@
 import { Solicitud } from './../models/solicitud.model';
 import { Factura } from "../models/factura.model";
+import { Usuario } from '../models/usuario.model';
 export interface Root10{
     data:{
         factura: Factura
@@ -44,13 +45,8 @@ export interface Data {
   usuario:      Usuario;
 }
 
-export interface Usuario {
-  email:       string;
-  id:          number;
-  name:        string;
-  permissions: any[];
-  role:        string;
-}
+
+
 export interface Root12 {
   data: {
       current_page: number;
