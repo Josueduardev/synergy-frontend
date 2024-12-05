@@ -17,8 +17,8 @@ import { LocalStorageProvider } from '../../providers/local-storage.provider';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-  @Input() username: string = 'Justina Clark'; // Nombre del usuario
-  @Input() role: string = 'Admin'; // Rol del usuario
+  @Input() username: string = ''; // Nombre del usuario
+  @Input() role: string = ''; // Rol del usuario
   @Input() breadcrumbs: MenuItem[] = [
     { label: 'Solicitudes' },
     { label: 'Aprobadas' },
@@ -34,7 +34,10 @@ export class NavbarComponent {
     private messageService: MessageService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.username = this.storageProvider.userNameSession ? this.storageProvider.userNameSession : 'Desconocido';
+    this.role = this.storageProvider.userRolSession ? this.storageProvider.userRolSession : 'Desconocido';
+  }
 
   get userInitial(): string {
     return this.username.charAt(0).toUpperCase();

@@ -13,6 +13,7 @@
   }
 
   .sidebar-header {
+    text-decoration: none;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -99,7 +100,7 @@
 
       a.active {
         color: #9880ff;
-        
+
         i {
           color: #9880ff;
         }
@@ -130,7 +131,7 @@
 
               i {
                 color: #9880FF;
-                
+
               }
             }
 

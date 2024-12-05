@@ -1,6 +1,8 @@
 import { Solicitud } from './../models/solicitud.model';
 import { Factura } from "../models/factura.model";
 import { Usuario } from '../models/usuario.model';
+
+// Obtener detalles de factura
 export interface Root10{
     data:{
         factura: Factura
@@ -10,6 +12,7 @@ export interface Root10{
     statuscode?: number;
 }
 
+// Solicitud de pronto pago
 export interface Root0{
     data:any
     message: string;
@@ -32,6 +35,7 @@ export interface Root0{
 //     usuario_id:      number;
 // }
 
+// Datos de sesion
 export interface Root11 {
   code:    number;
   data:    Data;
@@ -40,13 +44,12 @@ export interface Root11 {
 
 export interface Data {
   access_token: string;
-  change_password: number; 
+  change_password: number;
   expires_in:   number;
   usuario:      Usuario;
 }
 
-
-
+// Obtener solicitudes
 export interface Root12 {
   data: {
       current_page: number;
@@ -58,6 +61,7 @@ export interface Root12 {
   code: number;
 }
 
+// Obtener detalle de solicitud
 export interface Root13 {
   data: {
       current_page: number;

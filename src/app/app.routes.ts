@@ -19,8 +19,16 @@ export const routes: Routes = [
         path: 'home',
         component: HomePage,
       },
+      // {
+      //   path: 'solicitudes',
+      //   component: SolicitudesPage,
+      // },
       {
-        path: 'solicitudes',
+        path: 'solicitudes/aprobadas',
+        component: SolicitudesPage,
+      },
+      {
+        path: 'solicitudes/sin-aprobar',
         component: SolicitudesPage,
       },
       {

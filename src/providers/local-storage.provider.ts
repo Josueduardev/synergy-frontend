@@ -9,6 +9,8 @@ export class LocalStorageProvider {
     public static USERNAME_KEY = "USERNAME002";
     public static USERID_KEY = "USERID003";
     public static MENU_KEY = "MENU004";
+    public static USER_ROLE = "USERROL005"
+    public static USER_NAME = "USERNAME006"
 
     constructor() {}
 
@@ -26,6 +28,14 @@ export class LocalStorageProvider {
 
     get userNameSession(): string | null {
         return localStorage.getItem(LocalStorageProvider.USERNAME_KEY);
+    }
+
+    set userRolSession(user: string) {
+      localStorage.setItem(LocalStorageProvider.USER_ROLE, user);
+    }
+
+    get userRolSession(): string | null {
+        return localStorage.getItem(LocalStorageProvider.USER_ROLE);
     }
 
     set userIDSession(id: string) {
