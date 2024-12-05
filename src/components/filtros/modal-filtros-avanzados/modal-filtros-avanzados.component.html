@@ -17,7 +17,7 @@
 
       <!-- Input para buscar por correo -->
       <div class="input-container">
-        <input [(ngModel)]="filtros.correo"
+        <input [(ngModel)]="filtros.email"
           type="text"
           placeholder="Buscar por correo de proveedor"
         />
@@ -41,7 +41,7 @@
 
       <!-- Input para buscar por número de factura -->
       <div class="input-container">
-        <input
+        <input  [(ngModel)]="filtros.no_factura"
           type="text"
           placeholder="Buscar por número de factura"
         />

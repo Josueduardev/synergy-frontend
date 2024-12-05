@@ -1,12 +1,13 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CalendarModule } from 'primeng/calendar';
+import { Calendar, CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FiltrosButtonComponent } from './filtros-button/filtros-button.component';
 import { DesembolsarButtonComponent } from './desembolsar-button/desembolsar-button.component';
 import { ModalFiltrosAvanzadosComponent } from './modal-filtros-avanzados/modal-filtros-avanzados.component';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-filtros',
@@ -30,7 +31,11 @@ export class FiltrosComponent {
   placeholder: string = 'Desde - Hasta'; // Texto del placeholder
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
+  @ViewChild('calendar') calendar!: Calendar;
+
   @Output() filtersChanges = new EventEmitter<any>();
+
+  constructor(private messageService: MessageService){}
 
   actualizarRangoTexto() {
     if (this.rangeDates && this.rangeDates[0] && this.rangeDates[1]) {
@@ -45,10 +50,31 @@ export class FiltrosComponent {
   clearRangoTexto() {
     this.rangeDates = null;
     this.placeholder = 'Seleccionar rango de fechas';
+    this.closeCalendar()
   }
 
   aplicarSeleccion() {
-    console.log('Rango de fechas seleccionado:', this.placeholder);
+    if (this.rangeDates && this.rangeDates[0] && this.rangeDates[1]) {
+      //this.calendar.hideOnDateTimeSelect=true;
+      // Formatear las fechas al formato YYYY-MM-DD
+      const fechasFormateadas = this.rangeDates.map(fecha => {
+        return fecha.toISOString().split('T')[0]; // Extraer solo la parte de la fecha (YYYY-MM-DD)
+      });
+
+      this.filtersChanges.emit({fecha_inicio: fechasFormateadas[0], fecha_fin: fechasFormateadas[1]})
+    } else {
+      console.log('No se ha seleccionado un rango de fechas.');
+      this.messageService.add({ severity: 'warning', summary: 'Seleccionar Fechas', detail: 'No se ha seleccionado un rango de fechas.' });
+    }
+    this.closeCalendar()
+    //this.calendar.hideOnDateTimeSelect=false;
+  }
+
+  closeCalendar(): void {
+    if (this.calendar) {
+      this.calendar.hideOverlay(); // Hides the calendar overlay
+      console.log('Calendar overlay closed.');
+    }
   }
 
   buscar() {
@@ -67,5 +93,4 @@ export class FiltrosComponent {
       this.filtersChanges.emit(filtros); // Emite los filtros al componente padre
     }
   }
-
 }

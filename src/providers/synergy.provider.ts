@@ -65,7 +65,7 @@ export class SynergyProvider {
         factura: factura,
         nombre_solicitante: nombre,
         cargo: cargo,
-        correo_electronico: correo
+        email: correo
       }
     }
     return new Promise<Root0>((resolve, reject) => {

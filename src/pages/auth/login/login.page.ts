@@ -40,6 +40,8 @@ export class LoginPage {
   currentEmail = '';
   currentUser = '';
   currentUserID = '';
+  currentUserRol = '';
+  currentUserName = '';
   currentMenu:any = [];
 
   constructor(
@@ -67,6 +69,9 @@ export class LoginPage {
         this.currentMenu = resp.data.usuario.permissions;
         this.currentUserID = resp.data.usuario.id.toString();
 
+        this.currentUserRol = resp.data.usuario.role;
+        this.currentUserName = resp.data.usuario.name;
+
         if(resp.data.change_password == 1){
           this.messageError = 'Es necesario restablecer tu contraseña, por favor ingresa una nueva.';
           this.changePassword = true;
@@ -86,6 +91,10 @@ export class LoginPage {
     this.storeProv.userNameSession = this.currentUser;
     this.storeProv.userIDSession = this.currentUserID;
     this.storeProv.menuSession = MenuPermisssion.format(this.currentMenu);
+
+    this.storeProv.userRolSession = this.currentUserRol;
+    this.storeProv.userNameSession = this.currentUserName;
+
     this.messageService.add({ severity: 'success', summary: summary, detail: detail });
     this.router.navigate(['/home']); // Redirige al home
   }
@@ -102,7 +111,7 @@ export class LoginPage {
       (error)=>{
         this.messageError = error.message;
       }
-    )  
+    )
   }
 
   isValidEmail(email: string): boolean {

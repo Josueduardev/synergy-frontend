@@ -2,8 +2,8 @@
   <p-table
     #dt2
     [value]="solicitudes"
-    [scrollable]="true" 
-    scrollHeight="60vh" 
+    [scrollable]="true"
+    scrollHeight="60vh"
     dataKey="id"
     [rows]="10"
     [loading]="loading"
@@ -101,10 +101,10 @@
     <ng-template pTemplate="body" let-solicitud>
       <tr>
         <td>{{ solicitud.factura.proveedor.razon_social }}</td>
-        <td style="text-transform: none;">{{ solicitud.email }}</td>
+        <td style="text-transform: none;">{{ solicitud.factura.proveedor.correo_electronico }}</td>
         <td>{{  solicitud.factura.proveedor.nrc }}</td>
         <td>{{ solicitud.nombre_cliente }}</td>
-        <td>{{ solicitud.contacto }}</td>
+        <td>{{ solicitud.factura.proveedor.telefono }}</td>
         <td>{{ solicitud.factura.monto | currency:'$' }}</td>
         <td>{{ "INTERES" }}</td>
         <td>

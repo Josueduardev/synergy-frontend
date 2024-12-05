@@ -42,7 +42,7 @@ export class DetalleSolicitudPage implements OnInit {
   modalAccionVisible: boolean = false;
 
   constructor(
-    private sharedComponent: SharedComponent, 
+    private sharedComponent: SharedComponent,
     private router: Router,
     private route: ActivatedRoute,
     private synergyProvider: SynergyProvider,
@@ -54,30 +54,30 @@ export class DetalleSolicitudPage implements OnInit {
     try {
       this.sharedComponent.sidebarVisible = false;
       const noSolicitud = this.route.snapshot.paramMap.get('id');
-      
+
       if(noSolicitud){
         const {data} = await this.synergyProvider.getDetailRequest(noSolicitud);
         console.log(data);
         if(data){
           this.currentSolicitud = data.solicitud;
           this.setDetail();
-        }        
+        }
       }
     } catch (error:any) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
     }
 
-    
+
   }
 
   async setDetail(){
-    
+
     const solicitud = this.currentSolicitud;
     console.log(solicitud)
     this.invoiceDetails.push({ concept: 'Factura N.º', valor: solicitud.factura.no_factura });
-    this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: solicitud.factura.fecha_otorgamiento });
-    this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: solicitud.factura.fecha_vencimiento });
-    this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(solicitud.factura.monto_factura) });
+    this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: solicitud.factura.fecha_otorga });
+    this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: solicitud.factura.fecha_vence });
+    this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(solicitud.factura.monto) });
     this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(solicitud.factura.pronto_pago) });
     this.invoiceDetails.push({ concept: 'IVA', valor: Currency.format(solicitud.iva) });
     this.invoiceDetails.push({ concept: 'Subtotal del Descuento', valor: Currency.format(solicitud.subtotal) });

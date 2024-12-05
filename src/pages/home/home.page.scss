@@ -79,6 +79,10 @@
     max-width: 540px;
     margin-top: -12px; /* Ajusta la superposición con el simulador */
   }
+
+  .card-group a{
+    text-decoration: none;
+  }
 }
 
 /* Responsividad */

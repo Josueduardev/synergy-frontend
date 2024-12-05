@@ -15,14 +15,14 @@
 
   <!-- Tarjetas inferiores -->
   <div class="card-group">
-    <div class="card approved">
-      <div class="card-value">{{ aprobadas }}</div>
-      <div class="card-label">APROBADAS</div>
-    </div>
-    <div class="card pending">
-      <div class="card-value">{{ sinAprobar }}</div>
-      <div class="card-label">SIN APROBAR</div>
-    </div>
+    <a class="card approved" href="/solicitudes/aprobadas">
+        <div class="card-value">{{ aprobadas }}</div>
+        <div class="card-label">APROBADAS</div>
+    </a>
+    <a class="card pending" href="/solicitudes/sin-aprobar">
+        <div class="card-value">{{ sinAprobar }}</div>
+        <div class="card-label">SIN APROBAR</div>
+    </a>
   </div>
 </div>
 </div>

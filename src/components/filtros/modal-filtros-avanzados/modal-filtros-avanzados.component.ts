@@ -20,7 +20,8 @@ export class ModalFiltrosAvanzadosComponent implements AfterViewInit {
     nombre_proveedor: null,
     nrc: null,
     telefono: null,
-    correo: null,
+    email: null,
+    no_factura: null,
   }
 
   constructor(private elementRef: ElementRef) {}
@@ -31,12 +32,25 @@ export class ModalFiltrosAvanzadosComponent implements AfterViewInit {
 
   limpiarFiltros() {
     console.log('Filtros limpiados');
-    this.cerrar.emit(); // Notifica que se cierra el modal
+    this.  filtros = {
+      proveedor: null,
+      nombre_proveedor: null,
+      nrc: null,
+      telefono: null,
+      email: null,
+      no_factura: null,
+    }
+    this.cerrar.emit({}); // Notifica que se cierra el modal
   }
 
   aplicarFiltros() {
-    console.log('Filtros aplicados: ',this.filtros);
-    this.cerrar.emit(this.filtros); // Notifica que se cierra el modal
+    // Filtrar solo las propiedades que no son null o undefined
+    const filtrosAplicados = Object.fromEntries(
+      Object.entries(this.filtros).filter(([key, value]) => value !== null && value !== undefined)
+    );
+
+    console.log('Filtros aplicados: ', filtrosAplicados);
+    this.cerrar.emit(filtrosAplicados); // Emitir los filtros no nulos
   }
 
   cerrarModal() {

@@ -18,12 +18,12 @@ import { ErrorHttp } from '../../../models/http/error-http';
   selector: 'solicitud-prontopago',
   standalone: true,
   imports: [
-    CommonModule, 
-    TableModule, 
-    DialogModule, 
-    CheckboxModule, 
-    FormsModule, 
-    ButtonModule, 
+    CommonModule,
+    TableModule,
+    DialogModule,
+    CheckboxModule,
+    FormsModule,
+    ButtonModule,
     InputTextModule,
     ToastModule
   ],
@@ -78,13 +78,13 @@ export class SolicitudProntoPagoPage implements OnInit {
   setDetail() {
     const factura = this.facturaProveedor;
     this.invoiceDetails.push({ concept: 'Factura N.º', valor: factura.no_factura });
-    this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: factura.fecha_otorgamiento });
-    this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: factura.fecha_vencimiento });
-    this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(factura.monto_factura) });
-    this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(factura.pronto_pago) });
+    this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: factura.fecha_otorga });
+    this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: factura.fecha_vence });
+    this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(factura.monto) });
+    this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(factura.descuento_app) });
     this.invoiceDetails.push({ concept: 'IVA', valor: Currency.format(factura.iva) });
-    this.invoiceDetails.push({ concept: 'Subtotal del Descuento', valor: Currency.format(factura.subtotal_descuento) });
-    this.invoiceDetails.push({ concept: 'Total a Recibir', valor: Currency.format(factura.total_a_recibir) });
+    this.invoiceDetails.push({ concept: 'Subtotal del Descuento', valor: Currency.format(factura.subtotal) });
+    this.invoiceDetails.push({ concept: 'Total a Recibir', valor: Currency.format(factura.total) });
   }
 
 
@@ -102,8 +102,8 @@ export class SolicitudProntoPagoPage implements OnInit {
       }
 
       this.isFormInvalid = false;
-      
-      
+
+
       this.loading = true;
       const response = await this.synergyProvider.requestFactoring(
         this.facturaProveedor,

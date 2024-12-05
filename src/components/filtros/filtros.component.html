@@ -1,29 +1,18 @@
 <div class="filtros-container">
-  <!-- Search Input -->
-  <!-- <div class="search-container">
-    <i class="pi pi-search search-icon"></i>
-    <input
-      type="text"
-      pInputText
-      [(ngModel)]="searchText"
-      placeholder="Buscar cliente, correo, NRC emisor..."
-      (input)="buscar()"
-    />
-  </div> -->
-
   <!-- Date Range Picker -->
-   <!-- Date Range Picker -->
-   <div class="calendar-container">
+  <div class="calendar-container">
     <i class="pi pi-calendar-plus calendar-icon"></i>
     <p-calendar
+      #calendar
       [(ngModel)]="rangeDates"
       selectionMode="range"
       [readonlyInput]="true"
-      dateFormat="MM dd"
+      dateFormat="dd/mm/yy"
       [showIcon]="false"
       rangeSeparator=" - "
       placeholder="{{ placeholder }}"
       (onClear)="clearRangoTexto()"
+      [hideOnDateTimeSelect]="false"
     >
       <!-- Footer with custom buttons -->
       <ng-template pTemplate="footer">
@@ -40,7 +29,7 @@
             pButton
             label="Escoger Fecha"
             class="p-button-primary"
-            (click)="aplicarSeleccion()"
+            (click)="aplicarSeleccion();"
           ></button>
         </div>
       </ng-template>

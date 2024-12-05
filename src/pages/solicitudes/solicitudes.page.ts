@@ -6,6 +6,7 @@ import { TablaSolicitudesComponent } from '../../components/tabla-solicitudes/ta
 import { MessageService } from 'primeng/api';
 import { SharedComponent } from '../../components/shared/shared.component';
 import { ToastModule } from 'primeng/toast';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-solicitudes',
@@ -23,12 +24,30 @@ export class SolicitudesPage implements OnInit {
   page = 1;         // Página inicial
   perPage = 10;     // Registros por página
 
-  constructor(private sharedComponent: SharedComponent,private synergyProvider: SynergyProvider,private messageService: MessageService) {}
+  constructor(
+    private sharedComponent: SharedComponent,
+    private synergyProvider: SynergyProvider,
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     // Abrir el sidebar al cargar la página
     this.sharedComponent.sidebarVisible = true;
+    if(this.route.snapshot.routeConfig?.path){
+      console.log(this.route.snapshot.routeConfig?.path)
+      this.typeRoute(this.route.snapshot.routeConfig.path);
+    }
     // Cargar solicitudes al inicio
+    this.loadSolicitudes();
+  }
+
+  typeRoute(tipo:string){
+    if(tipo=='solicitudes/aprobadas'){
+      this.filtros={estado: 2}
+    }else{
+      this.filtros={estado: 1}
+    }
     this.loadSolicitudes();
   }
 

@@ -1,14 +1,19 @@
 import { Proveedor } from './proveedor.model';
 export interface Factura {
+    descuento_app?:       number;
     cliente?:            string;
     dias_restantes?:     number;
-    fecha_otorgamiento?: string;
-    fecha_vencimiento?:  string;
+    fecha_otorga?:       string;
+    fecha_vence?:        string;
+    id?:                 number;
     iva?:                number;
-    monto_factura?:      number;
+    monto?:              number;
     no_factura?:         string;
     pronto_pago?:        number;
+    nombre_proveedor?:   string;
     subtotal_descuento?: number;
     total_a_recibir?:    number;
-    proveedor:     Proveedor;
+    subtotal?:           number;
+    total?:              number;
+    proveedor?:          Proveedor;
 }
