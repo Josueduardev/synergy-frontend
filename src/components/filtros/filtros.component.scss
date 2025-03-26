@@ -1,15 +1,21 @@
 ::ng-deep .filtros-container {
   display: flex;
   align-items: center;
-  margin: 0 2rem; /* Espaciado horizontal para la tabla */
+  margin: 0 2rem;
   padding: 0.5rem;
   gap: 0.3rem;
   background-color: #f5f7fb;
+
+  ::ng-deep .p-inputtext{
+    width: 16rem;
+    height: 33px;
+  }
 
   .calendar-container {
     display: flex;
     align-items: center;
     position: relative;
+    flex-shrink: 0;
 
     .calendar-icon {
       position: absolute;
@@ -34,10 +40,12 @@
       }
     }
 
+    /* Estilos comunes del calendario */
     ::ng-deep .p-datepicker {
       width: 20rem;
       border-radius: 12px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
 
       .p-datepicker-header {
         background-color: #ffffff;
@@ -50,28 +58,27 @@
 
       .p-datepicker-calendar {
         font-size: 0.9rem;
-        table-layout: fixed; /* Ensures consistent column widths */
-        width: 100%; /* Full-width table */
+        table-layout: fixed;
+        width: 100%;
 
-        td,
-        th {
+        td, th {
           text-align: center;
           vertical-align: middle;
           padding: 0.5rem;
-          width: 2rem; /* Fixed width for all cells */
-          height: 2rem; /* Fixed height for all cells */
-          box-sizing: border-box; /* Ensures padding doesn't affect size */
-          transition: background-color 0.3s, color 0.3s; /* Smooth hover effects */
+          width: 2rem;
+          height: 2rem;
+          box-sizing: border-box;
+          transition: background-color 0.3s, color 0.3s;
         }
 
         span:hover {
-          background-color: #5459ea; /* Hover background color */
+          background-color: #5459ea;
           color: #ffffff;
-          border-radius: 5px !important;/* Rounded day cells */
+          border-radius: 5px !important;
         }
 
         .p-datepicker-current-day {
-          border-color: #5459ea; /* Highlight for selected day */
+          border-color: #5459ea;
           color: #5459ea;
           font-weight: bold;
         }
@@ -83,14 +90,13 @@
         }
 
         .p-datepicker-other-month {
-          color: #b0b0b0; /* Dimmed color for days outside current month */
-          pointer-events: none; /* Disable interaction for non-month days */
+          color: #b0b0b0;
+          pointer-events: none;
         }
       }
 
       .calendar-footer {
         display: flex;
-        font-weight: normal;
         justify-content: space-between;
         padding: 0.5rem;
 
@@ -121,5 +127,68 @@
         }
       }
     }
+
+    /* Calendario grande (sin appendTo) - visible en pantallas grandes */
+    ::ng-deep .calendar-large .p-datepicker {
+      position: absolute;
+      top: calc(100% + 5px);
+      left: 0;
+    }
+
+    /* Calendario pequeño (appendTo=body) - visible en pantallas pequeñas */
+    /* Se ajusta en el media query */
   }
+}
+
+/* En pantallas pequeñas, todo en columna, input y botones mismo ancho,
+   y el calendario pequeño centrado en la pantalla */
+@media (max-width: 768px) {
+  ::ng-deep .filtros-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
+    .calendar-container {
+      ::ng-deep .p-inputtext {
+        width: 16rem;
+        max-width: 100%;
+      }
+    }
+
+    app-filtros-button,
+    app-desembolsar-button {
+      width: 16rem;
+      text-align: center;
+    }
+
+    /* Ocultar calendario grande y mostrar calendario pequeño en pantallas pequeñas */
+    ::ng-deep .calendar-large {
+      display: none !important;
+    }
+
+    ::ng-deep .calendar-small {
+      display: block !important;
+    }
+
+    /* Calendario pequeño centrado en pantalla (appendTo=body) */
+    body .p-datepicker {
+      position: fixed !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 20rem !important;
+      z-index: 9999 !important;
+    }
+}
+
+/* En pantallas grandes: mostrar calendario grande y ocultar el pequeño */
+@media (min-width: 769px) {
+  ::ng-deep .calendar-large {
+    display: block !important;
+  }
+
+  ::ng-deep .calendar-small {
+    display: none !important;
+  }
+}
 }

@@ -3,10 +3,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem, MessageService } from 'primeng/api';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { SynergyProvider } from '../../providers/synergy.provider';
 import { LocalStorageProvider } from '../../providers/local-storage.provider';
-
+import { SidebarProvider } from '../../providers/sidebar.provider';
 
 @Component({
   selector: 'app-navbar',
@@ -16,35 +17,91 @@ import { LocalStorageProvider } from '../../providers/local-storage.provider';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
-  @Input() username: string = ''; // Nombre del usuario
-  @Input() role: string = ''; // Rol del usuario
-  @Input() breadcrumbs: MenuItem[] = [
-    { label: 'Solicitudes' },
-    { label: 'Aprobadas' },
-    { label: 'Inicio' },
-  ]; // Ejemplo de elementos del breadcrumb
-  @Output() toggleSidebar: EventEmitter<void> = new EventEmitter<void>(); // Evento para alternar el Sidebar
+export class NavbarComponent implements OnInit {
+  @Input() name: string = '';
+  @Input() lastName: string = ''; // Apellido del Usuario
+  @Input() fullName: string = ''; // Nombre completo del Usuario
+  @Input() role: string = '';
+  @Output() toggleSidebar: EventEmitter<void> = new EventEmitter<void>();
+  toggle = true;
 
+  breadcrumbs: MenuItem[] = [];
   isDropdownOpen = false;
+  showBienvenido: boolean = true; // Muestra BIENVENIDO inicialmente
 
   constructor(
     private synergyProvider: SynergyProvider,
     private storageProvider: LocalStorageProvider,
     private messageService: MessageService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sidebarProvider: SidebarProvider
   ) {
-    this.username = this.storageProvider.userNameSession ? this.storageProvider.userNameSession : 'Desconocido';
+    this.name = this.storageProvider.userNameSession ? this.storageProvider.userNameSession : 'Desconocido';
+    this.lastName = this.storageProvider.userLastNameSession ? this.storageProvider.userLastNameSession : 'Desconocido';
     this.role = this.storageProvider.userRolSession ? this.storageProvider.userRolSession : 'Desconocido';
+    
+    this.fullName = `${this.name} ${this.lastName}`;
+
+  }
+
+  ngOnInit() {
+    // Mostrar BIENVENIDO por 3 segundos, luego cambiar a SINERGY
+    setTimeout(() => {
+      this.showBienvenido = false;
+    }, 3000);
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
+      });
+  }
+
+  private buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: MenuItem[] = []): MenuItem[] {
+    const children: ActivatedRoute[] = route.children;
+
+    if (children.length === 0) {
+      return breadcrumbs;
+    }
+
+    for (const child of children) {
+      if (child.outlet === PRIMARY_OUTLET) {
+        const routeSnapshot = child.snapshot;
+        const breadcrumbData = routeSnapshot.data['breadcrumb'];
+        const path = routeSnapshot.url.map(segment => segment.path).join('/');
+        const nextUrl = path ? `${url}/${path}` : url;
+
+        if (breadcrumbData) {
+          // Si el breadcrumb es un arreglo, divídelo en varios elementos
+          if (Array.isArray(breadcrumbData)) {
+            breadcrumbData.forEach((breadcrumb: string, index: number) => {
+              breadcrumbs.push({
+                label: breadcrumb,
+                routerLink: index === breadcrumbData.length - 1 ? nextUrl : undefined, // El último tiene el enlace
+              });
+            });
+          } else {
+            // Si no es un arreglo, es un string y se agrega normalmente
+            breadcrumbs.push({ label: breadcrumbData, routerLink: nextUrl });
+          }
+        }
+
+        return this.buildBreadcrumbs(child, nextUrl, breadcrumbs);
+      }
+    }
+
+    return breadcrumbs;
   }
 
   get userInitial(): string {
-    return this.username.charAt(0).toUpperCase();
+    return this.fullName.charAt(0).toUpperCase();
   }
 
   onToggleSidebar() {
-    this.toggleSidebar.emit();
+    // this.toggleSidebar.emit();
+    this.toggle = !this.toggle;
+    this.sidebarProvider.setToggle(this.toggle);
   }
 
   toggleDropdown() {
@@ -52,7 +109,6 @@ export class NavbarComponent {
   }
 
   navigateTo(route: string) {
-    console.log(`Navigate to ${route}`);
     this.router.navigate([route]);
   }
 

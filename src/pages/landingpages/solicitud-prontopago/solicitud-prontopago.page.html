@@ -1,6 +1,6 @@
-<div *ngIf="!facturaNotFound && !enviada" class="container">
+<div *ngIf="!facturaNotFound && !enviada && validarEstadoPendinte()" class="container">
   <div class="proveedor-name">
-    <h3><span>CLIENTE:</span> CLOBI TECHNOLOGIES S.A DE C.V</h3>
+    <h3><span>CLIENTE:</span> {{facturaProveedor.nombre_proveedor}}</h3>
   </div>
   <h5 class="detalle-cesion">Detalle de Cesión de Factoraje</h5>
   <p-table [value]="invoiceDetails" class="invoice-table" styleClass="p-datatable-gridlines p-datatable-sm">
@@ -83,13 +83,40 @@
 </div>
 
 <!-- Cuando la solicitud ya se ha enviado -->
-<div *ngIf="enviada" class="container" style="margin-top: 100px;">
-  <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon">
+<div *ngIf="validarEstadoEnviada()" class="container" style="margin-top: 100px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/4697/4697876.png" alt="Success Icon">
   <h1>¡Solicitud Enviada!</h1>
   <p>Gracias por enviar tu solicitud de cesión de factoraje. Nos pondremos en contacto contigo a través de correo
     electrónico para informarte si tu solicitud ha sido aprobada o no.</p>
   <p>Por favor, verifica tu bandeja de entrada o tu carpeta de spam en las próximas 24 horas.</p>
-  <a href="#" class="button">Volver al Inicio</a>
+  <!-- <a href="#" class="button">Volver al Inicio</a> -->
+</div>
+
+<!-- Vista cuando la solicitud ha sido aprobada -->
+<div *ngIf="validarEstadoAprobada()" class="container">
+  <div class="success-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon" style="margin-top: 100px;">
+    <h1>¡Solicitud Aprobada!</h1>
+    <p>Felicidades, tu solicitud de cesión de factoraje ha sido aprobada. El pago será procesado y recibirás el monto acordado.</p>
+  </div>
+</div>
+
+<!-- Vista cuando la solicitud ha sido denegada -->
+<div *ngIf="validarEstadoDenegada()" class="container">
+  <div class="errord-container">
+    <img src="https://cdn-icons-png.flaticon.com/128/1113/1113253.png" alt="Success Icon" style="margin-top: 100px;">
+    <h1>Solicitud Denegada</h1>
+    <p>Lamentablemente, tu solicitud de cesión de factoraje ha sido denegada.</p>
+  </div>
+</div>
+
+<!-- Vista cuando la solicitud ha caducado -->
+<div *ngIf="validarEstadoCaducada()" class="container">
+  <div class="warning-container">
+    <img src="https://cdn-icons-png.flaticon.com/512/10755/10755029.png" alt="Success Icon" style="margin-top: 100px;">
+    <h1>Solicitud Expirada</h1>
+    <p>Tu solicitud para aplicar a pronto pago ha caducado.</p>
+  </div>
 </div>
 
 <!-- En dado caso que no encuentre la factura -->
@@ -98,7 +125,7 @@
     <div class="error-card">
       <h1>❌ Error</h1>
       <p>No pudimos encontrar la factura.</p>
-      <a href="/" class="btn">Volver al Inicio</a>
+      <!-- <a href="/" class="btn">Volver al Inicio</a> -->
     </div>
   </div>
 </div>

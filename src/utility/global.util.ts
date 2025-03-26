@@ -22,18 +22,20 @@ export class Email {
 export class MenuPermisssion {
 
   static format(permisos: Permission[]): PermissionNode[] {
-    // Crear un mapa de todos los permisos por su ID
+    // Filtrar los permisos cuya descripción sea "MENU"
+    const permisosFiltrados = permisos;
+  
+    // Crear un mapa de todos los permisos filtrados por su ID
     const permisoMap: { [key: number]: PermissionNode } = {};
-
-
-    permisos.forEach(permiso => {
+  
+    permisosFiltrados.forEach(permiso => {
       permisoMap[permiso.menu.id] = { ...permiso, children: [] };
     });
-
+  
     // Crear la estructura jerárquica
     const raiz: PermissionNode[] = [];
-
-    permisos.forEach(permiso => {
+  
+    permisosFiltrados.forEach(permiso => {
       const nodo = permisoMap[permiso.menu.id];
       if (permiso.menu.padre === 0) {
         // Si no tiene padre, es raíz
@@ -46,6 +48,7 @@ export class MenuPermisssion {
         }
       }
     });
+  
     return this.ordenarNodos(raiz);
   }
 
@@ -60,6 +63,53 @@ export class MenuPermisssion {
   }
 
 }
+
+
+//Ordenar menu para roles y permisos
+
+interface MenuROL {
+  id: number;
+  menu: string;
+  padre: number | null;
+  orden: number | null;
+  [key: string]: any;
+}
+
+export function sortMenus(menus: any[]): any[] {
+  // Crear un mapa para agrupar los menús por su padre
+  const menuMap = new Map<number | null, MenuROL[]>();
+
+  menus.forEach(menu => {
+      const parentId = menu.padre;
+      if (!menuMap.has(parentId)) {
+          menuMap.set(parentId, []);
+      }
+      menuMap.get(parentId)?.push(menu);
+  });
+
+  // Ordenar los menús por el campo 'orden'
+  menus.forEach(menuGroup => {
+      menuMap.get(menuGroup.padre)?.sort((a, b) => {
+          if (a.orden === null) return 1;
+          if (b.orden === null) return -1;
+          return a.orden - b.orden;
+      });
+  });
+
+  // Función recursiva para construir la jerarquía
+  function buildHierarchy(parentId: number | null): MenuROL[] {
+      return (menuMap.get(parentId) || []).map(menu => {
+          return {
+              ...menu,
+              children: buildHierarchy(menu.id) // Añadir hijos recursivamente
+          };
+      });
+  }
+
+  // Construir la jerarquía desde los elementos sin padre
+  return buildHierarchy(0); // 0 es el ID del nivel raíz en este caso
+}
+
 
 
 

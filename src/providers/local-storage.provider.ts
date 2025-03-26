@@ -11,6 +11,10 @@ export class LocalStorageProvider {
     public static MENU_KEY = "MENU004";
     public static USER_ROLE = "USERROL005"
     public static USER_NAME = "USERNAME006"
+    public static USER_LASTNAME = "USERLASTNAME007"
+    public static USER_EMAIL = "USEREMAIL008"
+    public static USER_IDROL = "USERIDROL009"
+    public static USER_ID = "USERID010"
 
     constructor() {}
 
@@ -28,6 +32,30 @@ export class LocalStorageProvider {
 
     get userNameSession(): string | null {
         return localStorage.getItem(LocalStorageProvider.USERNAME_KEY);
+    }
+
+    set userLastNameSession(user: string) {
+        localStorage.setItem(LocalStorageProvider.USER_LASTNAME, user);
+    }
+
+    get userLastNameSession(): string | null {
+        return localStorage.getItem(LocalStorageProvider.USER_LASTNAME);
+    }
+
+    set userIDRolSession(user: string) {
+      localStorage.setItem(LocalStorageProvider.USER_IDROL, user);
+    }
+
+    get userIDRolSession(): string | null {
+        return localStorage.getItem(LocalStorageProvider.USER_IDROL);
+    }
+
+    set userEmailSession(user: string) {
+      localStorage.setItem(LocalStorageProvider.USER_EMAIL, user);
+    }
+
+    get userEmailSession(): string | null {
+        return localStorage.getItem(LocalStorageProvider.USER_EMAIL);
     }
 
     set userRolSession(user: string) {
@@ -62,6 +90,10 @@ export class LocalStorageProvider {
         localStorage.removeItem(LocalStorageProvider.JWT_KEY);
         localStorage.removeItem(LocalStorageProvider.USERNAME_KEY);
         localStorage.removeItem(LocalStorageProvider.USERID_KEY);
+        localStorage.removeItem(LocalStorageProvider.USER_ROLE);
         localStorage.removeItem(LocalStorageProvider.MENU_KEY);
+        localStorage.removeItem(LocalStorageProvider.USER_LASTNAME);
+        localStorage.removeItem(LocalStorageProvider.USER_EMAIL);
+        localStorage.removeItem(LocalStorageProvider.USER_IDROL);
     }
 }

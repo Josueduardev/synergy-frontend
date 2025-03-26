@@ -6,16 +6,15 @@
   background-color: #ffffff;
   border-bottom: 1px solid #0000000f;
 
-  /* Contenedor para el menú y breadcrumb */
   .menu-and-breadcrumb {
     display: flex;
     align-items: center;
     margin-left: 2rem;
 
     .menu-icon i {
-      font-size: 1.1rem; /* Tamaño aumentado */
+      font-size: 1.1rem;
       cursor: pointer;
-      margin-right: 0.8rem; /* Espacio entre el icono y el breadcrumb */
+      margin-right: 0.8rem;
       font-weight: bold;
     }
 
@@ -30,6 +29,15 @@
 
       .breadcrumb-item {
         font-size: 1.1rem;
+
+        &.clickable a {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+        &.clickable a:hover {
+          opacity: 0.8;
+        }
       }
 
       .breadcrumb-separator {
@@ -39,11 +47,10 @@
     }
   }
 
-  /* Información del usuario */
   .user-info {
     display: flex;
     align-items: center;
-    position: relative; /* Para el menú desplegable */
+    position: relative;
 
     .user-details {
       display: flex;
@@ -58,7 +65,7 @@
 
       .role {
         font-size: 0.9rem;
-        color: #000000b4; /* Color más suave */
+        color: #000000b4;
       }
     }
 
@@ -69,29 +76,28 @@
       .user-avatar {
         width: 35px;
         height: 35px;
-        border-radius: 50%; /* Hace el contenedor circular */
-        overflow: hidden; /* Asegura que la imagen no sobresalga */
+        border-radius: 50%;
+        overflow: hidden;
 
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover; /* Ajusta la imagen dentro del contenedor */
+          object-fit: cover;
         }
       }
 
       .dropdown-icon {
-        font-size: 0.8rem; /* Tamaño aumentado */
+        font-size: 0.8rem;
         color: #010008;
         margin: 0 1.2rem;
         cursor: pointer;
         font-weight: bold;
 
         &:hover {
-          color: #9880ff; /* Cambia el color al hacer hover */
+          color: #9880ff;
         }
       }
 
-      /* Menú desplegable */
       .dropdown-menu {
         position: absolute;
         top: 50px;
@@ -101,6 +107,7 @@
         border-radius: 4px;
         box-shadow: 0 4px 8px #0000001a;
         padding: 0.5rem 0.8rem;
+        margin-right: 0.1rem;
         z-index: 10;
 
         ul {
@@ -113,14 +120,74 @@
             cursor: pointer;
             font-size: 0.9rem;
             color: #333;
+            white-space: nowrap;
 
             &:hover {
-              background-color: #e1daff; /* Color suave en hover */
-              color: #4718ff; /* Cambia el color del texto */
+              background-color: #e1daff;
+              color: #4718ff;
+            }
+          }
+
+          /* Estilo específico para la sección del usuario dentro del dropdown */
+          .dropdown-user-info {
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e4e4e7;
+            margin-bottom: 0.8rem;
+
+            .username-dropdown {
+              font-weight: bold;
+              font-size: 0.9rem;
+            }
+
+            .role-dropdown {
+              font-size: 0.9rem;
+              color: #000000b4;
             }
           }
         }
       }
     }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem 1rem;
+
+    .menu-and-breadcrumb {
+      margin-left: 0;
+
+      .breadcrumb {
+        display: none; /* Oculta el breadcrumb en pantallas pequeñas */
+      }
+    }
+
+    .user-info {
+      .user-details {
+        display: none; /* Oculta el nombre y rol fuera del dropdown en pantallas pequeñas */
+      }
+
+      .user-avatar-menu {
+        /* Ajustar margenes para centrar ícono y avatar al mismo nivel que el menú (sidebar) */
+        .dropdown-icon {
+          margin: 0 0 0 0.8rem;
+        }
+      }
+    }
+  }
+
+  /* Dentro del menú desplegable se mostrará nombre y rol en pantallas pequeñas */
+  .dropdown-user-info {
+    display: block; /* Se muestra normalmente, no es necesario ocultarlo */
+  }
+}
+
+/* En pantallas grandes, ocultamos la info de usuario en el dropdown (ya que está arriba) */
+@media (min-width: 601px) {
+  .dropdown-user-info {
+    display: none; /* En pantallas grandes no mostrar duplicación de nombre y rol en dropdown */
   }
 }

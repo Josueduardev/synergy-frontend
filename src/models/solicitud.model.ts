@@ -8,9 +8,12 @@ export interface Solicitud {
   factura:        Factura;
   proveedor:      Proveedor;
   id:             number;
-  id_estado:      number;
+  id_estado?:      number;
   iva:            number;
   nombre_cliente: string;
   subtotal:       number;
   total:          number;
+  fecha_solicitud: string;
+  fecha_aprobacion: string;
+  comentario: string;
 }

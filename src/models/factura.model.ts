@@ -1,8 +1,10 @@
 import { Proveedor } from './proveedor.model';
+import { Estados } from './enums/global.enum';
 export interface Factura {
     descuento_app?:       number;
     cliente?:            string;
     dias_restantes?:     number;
+    estado?:              number;
     fecha_otorga?:       string;
     fecha_vence?:        string;
     id?:                 number;

@@ -1,13 +1,15 @@
-.container-panel{
-  margin: 4rem;
+.container-panel {
+  margin: 2rem 4rem;
 }
+
 .dashboard {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 4rem 0;
+  position: relative; /* Para poder posicionar elementos relativos al contenedor */
 
-  /* Estilo de las tarjetas */
+  /* Tarjetas */
   .card {
     display: flex;
     flex-direction: column;
@@ -21,11 +23,13 @@
     padding: 20px;
     width: 300px;
     height: 140px;
+    box-sizing: border-box;
 
     &.total {
       background-color: #5a5af0;
       color: white;
       padding: 30px;
+      margin-bottom: 0px; /* Espacio entre la tarjeta principal y las inferiores */
     }
 
     &.approved,
@@ -49,51 +53,94 @@
   /* Línea vertical */
   .vertical-line {
     width: 4px;
-    height: 30px;
-    background-color: #5a5af0; /* Azul */
+    height: 80px;
+    background-color: #5a5af0; 
     margin: 0 auto;
   }
 
-  /* Simulador de línea horizontal con bordes redondeados */
+  /* Línea horizontal simulada con bordes redondeados */
   .connection-simulator {
-    width: 272px;
+    width: 50%;
     height: 50px;
-    background-color: #ffffff; /* Fondo blanco para las tarjetas */
-    border-top: 4px solid #5a5af0; /* Color de la tarjeta principal */
-    border-left: 4px solid #5a5af0; /* Color de la tarjeta principal */
-    border-right: 4px solid #5a5af0; /* Color de la tarjeta principal */
-    border-top-right-radius: 20px; /* Bordes redondeados */
+    background-color: #ffffff;
+    border-top: 4px solid #5a5af0;
+    border-left: 4px solid #5a5af0;
+    border-right: 4px solid #5a5af0;
+    border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    margin-top:0; /* Asegurar que esté por debajo de las tarjetas */
+    margin-top: 0;
     position: relative;
-    z-index: -1; /* Coloca el contenedor detrás de las tarjetas */
+    z-index: -1; 
   }
 
-  /* Tarjetas inferiores */
+  /* Grupo de tarjetas inferiores */
   .card-group {
-    border-radius: 50%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     gap: 30px;
     width: 100%;
-    max-width: 540px;
-    margin-top: -12px; /* Ajusta la superposición con el simulador */
+    max-width: 960px; 
+    margin-top: -12px; 
+    box-sizing: border-box;
   }
 
-  .card-group a{
+  .card-group a {
     text-decoration: none;
+    flex: 1;
+    max-width: 300px; 
   }
 }
 
 /* Responsividad */
-@media (max-width: 768px) {
-  .dashboard .card-group {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+@media (max-width: 1024px) {
+  .container-panel {
+    margin: 2rem;
   }
 
-  .connection-simulator {
-    width: 200px; /* Ajusta el tamaño en pantallas pequeñas */
+  .dashboard {
+    .card {
+      width: 80%; 
+      max-width: 280px;
+    }
+
+    .connection-simulator {
+      width: 220px;
+    }
+
+    .card-group {
+      max-width: 460px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    /* En pantallas pequeñas, las tarjetas inferiores se apilan sin perder la idea del "mapa mental" */
+    .card-group {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .connection-simulator {
+      width: 180px;
+    }
+
+    /* Opcional: Ajustar tamaños de fuente y espaciados para mayor legibilidad en pantallas pequeñas */
+    .card {
+      height: auto;
+      .card-value {
+        font-size: 2rem;
+      }
+      .card-label {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  .container-panel {
+    margin: 1rem;
   }
 }

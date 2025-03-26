@@ -13,6 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { ErrorHttp } from '../../../models/http/error-http';
+import { EstadosSolicitud } from '../../../models/enums/global-solicitud.enum';
+import { environment } from '../../../enviroments/enviroment';
+import { LocalStorageProvider } from '../../../providers/local-storage.provider';
 
 @Component({
   selector: 'solicitud-prontopago',
@@ -45,13 +48,15 @@ export class SolicitudProntoPagoPage implements OnInit {
     email: '',
   };
   facturaNotFound = false;
+  currentToken = '';
 
   contentStyle = { backgroundColor: '#f8f9fa', color: '#333', borderRadius: '50px' };
 
   constructor(
     private route: ActivatedRoute,
     private synergyProvider: SynergyProvider,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private storeProv: LocalStorageProvider,
   ) {
 
   }
@@ -59,20 +64,77 @@ export class SolicitudProntoPagoPage implements OnInit {
   async ngOnInit() {
     try {
       const noFactura = this.route.snapshot.queryParamMap.get('no_factura');
-      console.log(noFactura)
-      if (noFactura) {
-        const { data } = await this.synergyProvider.getInvoiceDetail(noFactura);
-        if (data && data.factura) {
-          this.facturaProveedor = data.factura;
-          this.setDetail();
+      this.synergyProvider.login(environment.emailUser,environment.passwordUser).then(
+        async (resp)=>{
+          this.currentToken = resp.data.access_token;
+          this.storeProv.jwtSession = this.currentToken;
+          await this.setFactoraje(noFactura ?? "")
         }
-      } else {
-        this.facturaNotFound = true;
-      }
+      )
     } catch (err) {
-      this.facturaNotFound = true;
       console.log(err);
+      this.facturaNotFound = true;
     }
+  }
+
+  async setFactoraje(noFactura:string){
+    if (noFactura) {
+      const { data } = await this.synergyProvider.getInvoiceDetail(noFactura,this.currentToken);
+      console.log(data)
+      if (data) {
+        this.facturaNotFound = false;
+        this.facturaProveedor = data.factura;
+        this.setDetail();
+      }
+    } else {
+      this.facturaNotFound = true;
+    }
+  }
+
+  validarEstadoPendinte(){
+    const estado = this.facturaProveedor?.estado;
+    if(estado === EstadosSolicitud.Pendiente){
+      this.facturaNotFound = false;
+      return true;
+    }
+
+    return false;
+  }
+
+  validarEstadoEnviada(){
+    const estado = this.facturaProveedor?.estado;
+    if(estado === EstadosSolicitud.Enviada){
+      this.facturaNotFound = false;
+      return true;
+    }
+    return false;
+  }
+
+  validarEstadoAprobada(){
+    const estado = this.facturaProveedor?.estado;
+    if(estado === EstadosSolicitud.Aprobada){
+      this.facturaNotFound = false;
+      return true;
+    }
+    return false;
+  }
+
+  validarEstadoDenegada(){
+    const estado = this.facturaProveedor?.estado;
+    if(estado === EstadosSolicitud.Denegada){
+      this.facturaNotFound = false;
+      return true;
+    }
+    return false;
+  }
+
+  validarEstadoCaducada(){
+    const estado = this.facturaProveedor?.estado;
+    if(estado === EstadosSolicitud.Caducada){
+      this.facturaNotFound = false;
+      return true;
+    }
+    return false;
   }
 
   setDetail() {
@@ -94,7 +156,6 @@ export class SolicitudProntoPagoPage implements OnInit {
   }
 
   async send() {
-
     try {
       if (!this.applicant.name || !this.applicant.role || !this.isValidEmail(this.applicant.email)) {
         this.isFormInvalid = true;
@@ -102,30 +163,33 @@ export class SolicitudProntoPagoPage implements OnInit {
       }
 
       this.isFormInvalid = false;
-
-
       this.loading = true;
+
       const response = await this.synergyProvider.requestFactoring(
         this.facturaProveedor,
         this.applicant.name,
         this.applicant.role,
         this.applicant.email
       );
-      console.log(response)
-      if(response){
+
+      console.log(response);
+
+      if (response) {
         setTimeout(() => {
           this.modalVisible = false;
           this.loading = false;
           this.enviada = true;
+
+          // Recarga la página después de cerrar el modal
+          window.location.reload();
         }, 2000);
       }
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       this.modalVisible = false;
       this.loading = false;
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
     }
-
   }
 
   isValidEmail(email: string): boolean {

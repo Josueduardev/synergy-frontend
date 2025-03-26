@@ -6,6 +6,7 @@ import { LocalStorageProvider } from './local-storage.provider';
 import { catchError, timeout } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ErrorHttp, HTTP_STATUS_CODE } from '../models/http/error-http';
+import { Router } from '@angular/router';
 
 
 
@@ -16,11 +17,12 @@ import { ErrorHttp, HTTP_STATUS_CODE } from '../models/http/error-http';
 @Injectable()
 export class HttpProvider {
 
-    
+
 
     constructor(
         private http: HttpClient,
         private storeProv: LocalStorageProvider,
+        private router: Router
     ) {
 
     }
@@ -30,16 +32,16 @@ export class HttpProvider {
     post(endpoint: string, payload?: any, tokenMemory?: string) {
         return new Promise<any>((resolve, reject) => {
 
-            let peticion = environment.apiURL  + endpoint;
-            console.log("peticion http", peticion);            
+            let peticion = environment.apiURL + endpoint;
+            console.log("peticion http", peticion);
             let headers = new HttpHeaders();
             const token = this.storeProv.jwtSession;
             if (token !== null) {
                 headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
-            }else{
-                // Se setea el token en dado caso que se 
+            } else {
+                // Se setea el token en dado caso que se
                 // necesite realizar una operacion como restablecer contraseña
-                if(tokenMemory){
+                if (tokenMemory) {
                     headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
                 }
             }
@@ -67,16 +69,16 @@ export class HttpProvider {
     put(endpoint: string, payload?: any, tokenMemory?: string) {
         return new Promise<any>((resolve, reject) => {
 
-            let peticion = environment.apiURL  + endpoint;
-            console.log("peticion http", peticion);            
+            let peticion = environment.apiURL + endpoint;
+            console.log("peticion http", peticion);
             let headers = new HttpHeaders();
             const token = this.storeProv.jwtSession;
             if (token !== null) {
                 headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
-            }else{
-                // Se setea el token en dado caso que se 
+            } else {
+                // Se setea el token en dado caso que se
                 // necesite realizar una operacion como restablecer contraseña
-                if(tokenMemory){
+                if (tokenMemory) {
                     headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
                 }
             }
@@ -101,7 +103,7 @@ export class HttpProvider {
         });
     }
 
-    get(endpoint: string, payload?: any) {
+    get(endpoint: string, payload?: any, tokenMemory?: string) {
         return new Promise<any>((resolve, reject) => {
 
             let peticion = environment.apiURL + endpoint;
@@ -109,6 +111,12 @@ export class HttpProvider {
             const token = this.storeProv.jwtSession;
             if (token !== null) {
                 headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            } else {
+                // Se setea el token en dado caso que se 
+                // necesite realizar una operacion como restablecer contraseña
+                if (tokenMemory) {
+                    headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+                }
             }
 
             console.log("Llamando al endpoint: ", endpoint, payload);
@@ -130,15 +138,49 @@ export class HttpProvider {
         });
     }
 
+    delete(endpoint: string, payload?: any) {
+        return new Promise<any>((resolve, reject) => {
 
+            let peticion = environment.apiURL + endpoint;
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            }
+
+            console.log("Llamando al endpoint: ", endpoint, payload);
+            this.http.delete(
+                peticion,
+                {
+                    headers,
+                    observe: 'response'
+                }
+            ).subscribe((response) => {
+                this.evaluateStatus(resolve, reject, response);
+
+
+            }, (error: HttpErrorResponse) => {
+                console.log(error)
+                this.evaluateStatus(resolve, reject, error);
+            });
+
+        });
+    }
 
     evaluateStatus(resolve: any, reject: any, response: any) {
         let message = "";
-        
+
         if (response instanceof HttpErrorResponse) {
             message = response?.error?.message ? response?.error?.message : "";
         } else {
             message = response?.body?.message ? response?.body?.message : "";
+        }
+
+        // Validar el mensaje de error
+        if (message === "Token de autorización inválido" || message === "El token proporcionado no corresponde al usuario") {
+            console.warn('Token inválido, redirigiendo al login');
+            this.storeProv.clearSession(); // Limpiar la sesión almacenada
+            this.router.navigate(['/login']); // Redirigir al login
         }
 
 
@@ -174,7 +216,6 @@ export class HttpProvider {
                 break;
             }
             case HTTP_STATUS_CODE.UNAUTHORIZED: {
-
                 reject(new ErrorHttp(1, message, null, HTTP_STATUS_CODE.UNAUTHORIZED));
                 break;
             }

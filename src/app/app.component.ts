@@ -10,6 +10,7 @@ import { AuthGuardApp } from '../guards/auth.guard';
 import { PublicGuard } from '../guards/public.guard';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { SidebarProvider } from '../providers/sidebar.provider';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,8 @@ import { MessageService } from 'primeng/api';
     LocalStorageProvider, 
     AuthGuardApp, 
     PublicGuard,
-    MessageService
+    MessageService,
+    SidebarProvider
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

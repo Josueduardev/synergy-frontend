@@ -7,43 +7,139 @@ import { SolicitudProntoPagoPage } from '../pages/landingpages/solicitud-prontop
 import { AuthGuardApp } from '../guards/auth.guard';
 import { PublicGuard } from '../guards/public.guard';
 import { DetalleSolicitudPage } from '../pages/detalle-solicitud/detalle-solicitud.page';
+import { UnAuthorizedPage } from '../pages/auth/no-autorizado/no-autorizado.page';
+import { UsuariosPage } from '../pages/usuarios/usuarios.page';
+import { AccesosPage } from '../pages/accesos/accesos.page';
+import { AccesosEditPage } from '../pages/accesos/edit/accesos-edit.page';
+import { ConfiguracionesPage } from '../pages/usuarios/configuraciones/configuraciones.page';
+import { DesembolsosComponent } from '../pages/desembolsos/desembolsos.component';
 
 export const routes: Routes = [
   {
-    path: '', // Ruta privada
+    path: '',
     component: SharedComponent,
-    canActivate: [AuthGuardApp], // Aplica el guard
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'home',
         component: HomePage,
-      },
-      // {
-      //   path: 'solicitudes',
-      //   component: SolicitudesPage,
-      // },
-      {
-        path: 'solicitudes/aprobadas',
-        component: SolicitudesPage,
+        canActivate: [AuthGuardApp],
+        //data: { breadcrumb: 'Panel' }
       },
       {
-        path: 'solicitudes/sin-aprobar',
-        component: SolicitudesPage,
+        path: 'solicitudes',
+        data: { breadcrumb: 'Solicitudes' },
+        canActivate: [AuthGuardApp],
+        children: [
+          {
+            path: 'aprobadas',
+            component: SolicitudesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Aprobadas' },
+          },
+          {
+            path: 'sin-aprobar',
+            component: SolicitudesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Sin Aprobar' },
+          },
+          {
+            path: 'denegadas',
+            component: SolicitudesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Denegadas' },
+          },
+          {
+            path: 'detalle/:id',
+            component: DetalleSolicitudPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Detalle' },
+          },
+        ],
+      }, {
+        path: 'desembolso',
+        data: { breadcrumb: 'Desembolso' },
+        canActivate: [AuthGuardApp],
+        children: [
+
+          {
+            path: 'sin-procesar',
+            component: DesembolsosComponent,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Sin Procesar' },
+          },
+          {
+            path: 'procesadas',
+            component: DesembolsosComponent,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Procesados' },
+          }
+        ],
       },
       {
-        path: 'solicitudes/detalle/:id',
-        component: DetalleSolicitudPage,
+        path: 'ajustes',
+        component: ConfiguracionesPage,
+        canActivate: [AuthGuardApp],
+        data: { breadcrumb: 'Configuraciones de la cuenta' },
+      },
+      {
+        path: 'admin',
+        data: { breadcrumb: 'Administración' },
+        children: [
+          {
+            path: 'usuarios',
+            component: UsuariosPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Usuarios' },
+          },
+          {
+            path: 'usuarios/crear',
+            component: ConfiguracionesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: ['Usuarios', 'Crear usuario'] },
+          },
+          {
+            path: 'usuarios/editar/:id',
+            component: ConfiguracionesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: ['Usuarios', 'Editar usuario'] },
+          },
+          {
+            path: 'roles-permisos',
+            component: AccesosPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Roles y permisos' },
+
+          },
+          {
+            path: 'roles-permisos/editar/:id',
+            component: AccesosEditPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Editar rol' }
+          },
+          {
+            path: 'roles-permisos/nuevo',
+            component: AccesosEditPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Nuevo rol' },
+          },
+        ],
       },
     ],
   },
   {
-    path: 'login', // Ruta pública
+    path: 'login',
     component: LoginPage,
     canActivate: [PublicGuard],
+    //data: { breadcrumb: 'Login' }
   },
   {
-    path: 'solicitar-pronto-pago', // Ruta pública
+    path: 'solicitar-pronto-pago',
     component: SolicitudProntoPagoPage,
   },
+  {
+    path: 'no-autorizado',
+    component: UnAuthorizedPage,
+  },
+  { path: 'no-autorizado', component: UnAuthorizedPage },
 ];

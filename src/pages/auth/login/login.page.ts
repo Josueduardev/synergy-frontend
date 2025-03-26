@@ -39,10 +39,15 @@ export class LoginPage {
   currentToken = '';
   currentEmail = '';
   currentUser = '';
-  currentUserID = '';
+  currentUserID: number = 0;
   currentUserRol = '';
   currentUserName = '';
+  currentUserLastName = '';
+  currentUserEmail = '';
+  currentUserIDRol = '';
   currentMenu:any = [];
+
+  passwordVisible: boolean = false;
 
   constructor(
     private synergyProvider: SynergyProvider,
@@ -64,13 +69,16 @@ export class LoginPage {
       if (resp) {
         console.log(resp.data)
         this.currentToken = resp.data.access_token;
-        this.currentEmail = resp.data.usuario.email;
-        this.currentUser = resp.data.usuario.name;
+        this.currentEmail = resp.data.usuario.email ?? '';
+        this.currentUser = resp.data.usuario.name ?? '';
         this.currentMenu = resp.data.usuario.permissions;
-        this.currentUserID = resp.data.usuario.id.toString();
+        this.currentUserID = resp.data.usuario.id ?? 0;
 
-        this.currentUserRol = resp.data.usuario.role;
-        this.currentUserName = resp.data.usuario.name;
+        this.currentUserRol = resp.data.usuario.role ?? '';
+        this.currentUserName = resp.data.usuario.nombres ?? '';
+        this.currentUserLastName = resp.data.usuario.apellidos ?? '';
+        this.currentUserEmail = resp.data.usuario.email ?? '';
+        this.currentUserIDRol = resp.data.usuario.id_role ?? '';
 
         if(resp.data.change_password == 1){
           this.messageError = 'Es necesario restablecer tu contraseña, por favor ingresa una nueva.';
@@ -86,14 +94,21 @@ export class LoginPage {
 
   }
 
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   authSuccess(summary: string, detail: string){
     this.storeProv.jwtSession = this.currentToken; // Guarda el token
     this.storeProv.userNameSession = this.currentUser;
-    this.storeProv.userIDSession = this.currentUserID;
+    this.storeProv.userIDSession = this.currentUserID.toString();
     this.storeProv.menuSession = MenuPermisssion.format(this.currentMenu);
 
     this.storeProv.userRolSession = this.currentUserRol;
     this.storeProv.userNameSession = this.currentUserName;
+    this.storeProv.userLastNameSession = this.currentUserLastName;
+    this.storeProv.userEmailSession = this.currentUserEmail;
+    this.storeProv.userIDRolSession = this.currentUserIDRol;
 
     this.messageService.add({ severity: 'success', summary: summary, detail: detail });
     this.router.navigate(['/home']); // Redirige al home

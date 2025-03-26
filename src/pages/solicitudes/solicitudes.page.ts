@@ -4,9 +4,8 @@ import { Solicitud } from '../../models/solicitud.model';
 import { FiltrosComponent } from '../../components/filtros/filtros.component';
 import { TablaSolicitudesComponent } from '../../components/tabla-solicitudes/tabla-solicitudes.component';
 import { MessageService } from 'primeng/api';
-import { SharedComponent } from '../../components/shared/shared.component';
-import { ToastModule } from 'primeng/toast';
 import { ActivatedRoute } from '@angular/router';
+import { SidebarProvider } from '../../providers/sidebar.provider';
 
 @Component({
   selector: 'app-solicitudes',
@@ -25,7 +24,7 @@ export class SolicitudesPage implements OnInit {
   perPage = 10;     // Registros por página
 
   constructor(
-    private sharedComponent: SharedComponent,
+    private sidebarProvider: SidebarProvider,
     private synergyProvider: SynergyProvider,
     private messageService: MessageService,
     private route: ActivatedRoute,
@@ -33,18 +32,20 @@ export class SolicitudesPage implements OnInit {
 
   ngOnInit() {
     // Abrir el sidebar al cargar la página
-    this.sharedComponent.sidebarVisible = true;
+    this.sidebarProvider.setToggle(false)
     if(this.route.snapshot.routeConfig?.path){
       console.log(this.route.snapshot.routeConfig?.path)
       this.typeRoute(this.route.snapshot.routeConfig.path);
     }
-    // Cargar solicitudes al inicio
-    this.loadSolicitudes();
+    // // Cargar solicitudes al inicio
+    // this.loadSolicitudes();
   }
 
   typeRoute(tipo:string){
-    if(tipo=='solicitudes/aprobadas'){
+    if(tipo=='aprobadas'){
       this.filtros={estado: 2}
+    }else if(tipo=='denegadas'){
+      this.filtros={estado: 3}
     }else{
       this.filtros={estado: 1}
     }
@@ -56,6 +57,7 @@ export class SolicitudesPage implements OnInit {
    * con los filtros aplicados.
    */
   async loadSolicitudes(page: number = this.page, perPage: number = this.perPage) {
+    this.solicitudes = [];
     this.loading = true;
     try {
       const response = await this.synergyProvider.getRequest(page, perPage, this.filtros);

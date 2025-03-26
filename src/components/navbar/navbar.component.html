@@ -6,11 +6,14 @@
     </div>
 
     <div class="breadcrumb">
-      <span class="breadcrumb-item-first">SYNERGY</span>
-      <ng-container *ngFor="let breadcrumb of breadcrumbs; let isLast = last">
-        <ng-container *ngIf="!isLast">
+      <span class="breadcrumb-item-first">{{ showBienvenido ? 'BIENVENIDO' : 'SINERGY' }}</span>
+      <ng-container *ngIf="!showBienvenido">
+        <ng-container *ngFor="let breadcrumb of breadcrumbs; let isLast = last">
           <span class="breadcrumb-separator"><i class="pi pi-angle-right"></i></span>
-          <span class="breadcrumb-item">{{ breadcrumb.label }}</span>
+          <span class="breadcrumb-item" [ngClass]="{ 'clickable': !isLast }">
+            <span *ngIf="!isLast" [routerLink]="breadcrumb.routerLink">{{ breadcrumb.label }}</span>
+            <span *ngIf="isLast">{{ breadcrumb.label }}</span>
+          </span>
         </ng-container>
       </ng-container>
     </div>
@@ -18,8 +21,9 @@
 
   <!-- Información del usuario -->
   <div class="user-info">
+    <!-- Detalles del usuario (solo en pantallas grandes) -->
     <div class="user-details">
-      <div class="username">{{ username }}</div>
+      <div class="username">{{ fullName }}</div>
       <div class="role">{{ role }}</div>
     </div>
 
@@ -33,8 +37,12 @@
       <!-- Menú desplegable -->
       <div class="dropdown-menu" *ngIf="isDropdownOpen">
         <ul>
-          <li (click)="navigateTo('user')">Usuario</li>
-          <li (click)="navigateTo('settings')">Ajustes</li>
+          <!-- Nombre y rol dentro del menú (ocultos en pantallas grandes, visibles en pantallas pequeñas) -->
+          <li class="dropdown-user-info">
+            <div class="username-dropdown">{{ fullName }}</div>
+            <div class="role-dropdown">{{ role }}</div>
+          </li>
+          <li (click)="navigateTo('ajustes')">Ajustes</li>
           <li (click)="logout()">Cerrar Sesion</li>
         </ul>
       </div>

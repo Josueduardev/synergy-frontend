@@ -1,6 +1,7 @@
 import { Solicitud } from './../models/solicitud.model';
 import { Factura } from "../models/factura.model";
-import { Usuario } from '../models/usuario.model';
+import { Usuario, UsuarioOne } from '../models/usuario.model';
+import { Roles } from '../models/roles.model';
 
 // Obtener detalles de factura
 export interface Root10{
@@ -73,22 +74,6 @@ export interface Root13 {
   code: number;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export interface Root14 {
   code:    number;
   data:    {
@@ -96,4 +81,107 @@ export interface Root14 {
     mensaje: string;
   };
   message: string;
+}
+
+export interface Root15 {
+  data: {
+    filtros_aplicados: {
+      fecha_fin?: Date,
+      fecha_inicio?: Date
+    };
+    solicitudes_aprobadas?:   number;
+    solicitudes_sin_aprobar?: number;
+    solicitudes_denegadas?:   number;
+    total_solicitudes?:       number;
+  };
+  message: string;
+  code: number;
+}
+
+
+export interface Root16{
+  data:{
+    usuarios: Usuario[];
+  }
+  message: string;
+  code: number;
+}
+
+export interface Root17u {
+  data: UsuarioOne;
+  message: string;
+  code: number;
+}
+
+export interface Root17 {
+  code?:    number;
+  data?:    DataPermiso;
+  message?: string;
+}
+
+export interface DataPermiso {
+  descripcion?: null;
+  id_rol?:      number;
+  nombre?:      string;
+  permisos?:    Permiso[];
+}
+
+export interface Permiso {
+  create_perm?: number;
+  delete_perm?: number;
+  edit_perm?:   number;
+  id_menu?:     number;
+  view_perm?:   number;
+  approve_deny?: number;
+  download?:    number;
+  process?:     number;
+  edit_user?:   number;
+  create_user?: number;
+  active_inactive_user?: number;
+  edit_role?: number;
+  create_role?: number;
+}
+
+export interface Root18 {
+  code?:    number;
+  data?:    DataMenu;
+  message?: string;
+}
+
+export interface DataMenu {
+  menus?: Menu[];
+}
+
+export interface Menu {
+  created_at?:  null;
+  description?: Description;
+  icon?:        null | string;
+  id?:          number;
+  menu?:        string;
+  orden?:       number | null;
+  padre?:       number | null;
+  path?:        null | string;
+  updated_at?:  null;
+}
+
+export enum Description {
+  Accion = "ACCION",
+  Menu = "MENU",
+}
+
+
+export interface Root19 {
+  code?:    number;
+  data?:    DataRole;
+  message?: string;
+}
+
+export interface DataRole {
+  roles?: Roles[];
+}
+
+export interface Role {
+  descripcion?: null;
+  id_rol?:      number;
+  nombre?:      string;
 }

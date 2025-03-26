@@ -16,20 +16,21 @@ import { Solicitud } from '../../models/solicitud.model';
 })
 export class TablaSolicitudesComponent implements OnInit {
   @Input() solicitudes: Solicitud[] = [];  // Recibimos las solicitudes del componente padre
+  selectedSolicitudes: Solicitud[] = []; // Almacena las solicitudes seleccionadas
   cols: any[] = [];
   loading: boolean = false;
 
-  constructor(private router: Router) {} // Inyectar Router
+  constructor(private router: Router) { } // Inyectar Router
 
   ngOnInit(): void {
     // Definición de columnas con tipos de filtros
     this.cols = [
-      { field: 'cliente', header: 'Cliente', filterType: 'text' },
-      { field: 'correo', header: 'Correo', filterType: 'text' },
-      { field: 'nrc', header: 'NRC Emisor', filterType: 'text' },
-      { field: 'encargado', header: 'Encargado', filterType: 'text' },
-      { field: 'telefono', header: 'Teléfono', filterType: 'text' },
-      { field: 'monto', header: 'Monto', filterType: 'text' },
+      { field: 'factura.proveedor.razon_social', header: 'Cliente', filterType: 'text' },
+      { field: 'factura.proveedor.correo_electronico', header: 'Correo', filterType: 'text' },
+      { field: 'factura.proveedor.nrc', header: 'NRC Emisor', filterType: 'text' },
+      { field: 'nombre_cliente', header: 'Encargado', filterType: 'text' },
+      { field: 'factura.proveedor.telefono', header: 'Teléfono', filterType: 'text' },
+      { field: 'factura.monto', header: 'Monto', filterType: 'text' },
       { field: 'interes', header: 'Interés', filterType: 'text' },
     ];
   }
@@ -44,4 +45,19 @@ export class TablaSolicitudesComponent implements OnInit {
     // Redirigir a la ruta de detalle de la solicitud, pasando el id de la solicitud
     this.router.navigate(['solicitudes/detalle', solicitud.id]);
   }
+
+  // Metodo para verificar si hay solicitudes aprobadas 
+  tieneSolicitudesAprobadas(): boolean {
+    return this.solicitudes.some(s => s.estado === 'APROBADA' );
+  }
+
+  tieneSolicitudesDenegadas(): boolean {
+    return this.solicitudes.some(s => s.estado === 'DENEGADA' );
+  }
+
+  // Método para obtener las solicitudes seleccionadas
+  obtenerSolicitudesSeleccionadas(): void {
+    console.log("Solicitudes seleccionadas:", this.selectedSolicitudes);
+  }
+  
 }
