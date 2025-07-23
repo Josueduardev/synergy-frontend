@@ -25,15 +25,15 @@ export class SidebarComponent implements OnInit {
 
     this.sidebarProvider.getToggle().subscribe((resp)=>{
       console.log(resp);
-          // Determinar el ancho de la pantalla al cargar
-    const screenWidth = window.innerWidth;
-    if (screenWidth < 768) {
-      // Pantallas pequeñas: cerrado
-      this.visible = resp;
-    } else {
-      // Pantallas grandes: abierto
-      this.visible = resp;
-    }
+      // Determinar el ancho de la pantalla al cargar
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 768) {
+        // Pantallas pequeñas: cerrado
+        this.visible = resp;
+      } else {
+        // Pantallas grandes: abierto
+        this.visible = resp;
+      }
     })
 
   }

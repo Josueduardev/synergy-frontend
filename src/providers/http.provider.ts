@@ -8,11 +8,9 @@ import { of } from 'rxjs';
 import { ErrorHttp, HTTP_STATUS_CODE } from '../models/http/error-http';
 import { Router } from '@angular/router';
 
-
-
 /*
- Http Provider
- Encargado de realizar los http request a los endpoints
+  Http Provider
+  Encargado de realizar los http request a los endpoints
  */
 @Injectable()
 export class HttpProvider {
@@ -56,7 +54,6 @@ export class HttpProvider {
                 }
             ).subscribe((response) => {
                 this.evaluateStatus(resolve, reject, response);
-
 
             }, (error: HttpErrorResponse) => {
                 console.log(error)
@@ -175,15 +172,7 @@ export class HttpProvider {
         } else {
             message = response?.body?.message ? response?.body?.message : "";
         }
-
-        // Validar el mensaje de error
-        if (message === "Token de autorización inválido" || message === "El token proporcionado no corresponde al usuario") {
-            console.warn('Token inválido, redirigiendo al login');
-            this.storeProv.clearSession(); // Limpiar la sesión almacenada
-            this.router.navigate(['/login']); // Redirigir al login
-        }
-
-
+        
         switch (response.status) {
             case HTTP_STATUS_CODE.OK: {
 

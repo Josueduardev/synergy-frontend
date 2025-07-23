@@ -62,7 +62,8 @@ export const routes: Routes = [
             data: { breadcrumb: 'Detalle' },
           },
         ],
-      }, {
+      }, 
+      {
         path: 'desembolso',
         data: { breadcrumb: 'Desembolso' },
         canActivate: [AuthGuardApp],
@@ -86,7 +87,9 @@ export const routes: Routes = [
         path: 'ajustes',
         component: ConfiguracionesPage,
         canActivate: [AuthGuardApp],
-        data: { breadcrumb: 'Configuraciones de la cuenta' },
+        data: { 
+          breadcrumb: 'Configuraciones de la cuenta' 
+        },
       },
       {
         path: 'admin',

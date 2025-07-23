@@ -61,8 +61,6 @@
                         [matchMode]="'contains'" placeholder="Buscar por teléfono"
                         ariaLabel="Filtrar Teléfono"></p-columnFilter>
                 </th>
-                <th></th>
-                <th></th>
                 <!-- <th> -->
                     <!-- <p-columnFilter type="text" field="monto_final" [showButtons]="false"
                         [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
@@ -76,8 +74,6 @@
                         ariaLabel="Filtrar Interés"></p-columnFilter>
                 </th> -->
                 <th *ngIf="tieneDesembolsosProcesados()"></th>
-                <th></th>
-                <th></th>
             </tr>
         </ng-template>
 

@@ -11,10 +11,11 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status === 401) {
-                    // Eliminar localStorage y redirigir al usuario al login
+                if (error.status === 401 
+                    || error.message.includes("Token de autorización inválido") 
+                    || error.message.includes("El token proporcionado no corresponde al usuario")) {
                     localStorage.clear();
-                    this.router.navigate(['/login']); // Asegúrate de que la ruta de login sea correcta
+                    this.router.navigate(['/login']);
                 }
                 return throwError(() => error);
             })
