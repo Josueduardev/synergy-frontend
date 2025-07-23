@@ -1,1 +1,4 @@
-<p>desembolsos works!</p>
+<div class="desembolsos-content">
+    <app-filtros-desembolso (filtersChanges)="applyFilters($event)"></app-filtros-desembolso>
+    <app-tabla-desembolsos [desembolso]="desembolsos" (onPageChange)="onPageChange($event)"></app-tabla-desembolsos>
+</div>

@@ -19,6 +19,7 @@ export class TablaSolicitudesComponent implements OnInit {
   selectedSolicitudes: Solicitud[] = []; // Almacena las solicitudes seleccionadas
   cols: any[] = [];
   loading: boolean = false;
+  @Input() storageKey: string = 'solicitudesSeleccionadas'; 
 
   constructor(private router: Router) { } // Inyectar Router
 
@@ -59,5 +60,15 @@ export class TablaSolicitudesComponent implements OnInit {
   obtenerSolicitudesSeleccionadas(): void {
     console.log("Solicitudes seleccionadas:", this.selectedSolicitudes);
   }
+
+  onSelectedSolicitudesChange(): void {
+    // Almacenamos solo los ids de las solicitudes seleccionadas
+    const selectedIds = this.selectedSolicitudes.map(solicitud => solicitud.id);
+    if (this.storageKey) {
+      localStorage.setItem(this.storageKey, JSON.stringify(selectedIds));
+    }
+    console.log('IDs seleccionados:', selectedIds);
+  }
+  
   
 }

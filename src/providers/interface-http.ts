@@ -2,6 +2,7 @@ import { Solicitud } from './../models/solicitud.model';
 import { Factura } from "../models/factura.model";
 import { Usuario, UsuarioOne } from '../models/usuario.model';
 import { Roles } from '../models/roles.model';
+import { Proveedor } from '../models/proveedor.model';
 
 // Obtener detalles de factura
 export interface Root10{
@@ -62,6 +63,18 @@ export interface Root12 {
   code: number;
 }
 
+// Obtener Desembolsos
+export interface Root21 {
+  data: {
+      current_page: number;
+      per_page: number;
+      desembolsos: Solicitud;
+      total_pages: number;
+  };
+  message: string;
+  code: number;
+}
+
 // Obtener detalle de solicitud
 export interface Root13 {
   data: {
@@ -102,6 +115,14 @@ export interface Root15 {
 export interface Root16{
   data:{
     usuarios: Usuario[];
+  }
+  message: string;
+  code: number;
+}
+
+export interface Root20{
+  data:{
+    proveedores: Proveedor[];
   }
   message: string;
   code: number;

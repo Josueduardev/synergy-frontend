@@ -1,3 +1,16 @@
-<button type="button" class="btn-desembolsar">
+<button type="button" class="btn-desembolsar" (click)="abrirModal()">
   <i class="pi pi-download"></i> Desembolsar
 </button>
+
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <h3>Ingrese un número</h3>
+    <input type="number" [(ngModel)]="numeroIngresado" />
+
+    <div class="modal-buttons">
+      <button (click)="cerrarModal()">Cancelar</button>
+      <button (click)="procesar()">Procesar</button>
+    </div>
+  </div>
+</div>

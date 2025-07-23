@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root0, Root10, Root11, Root12, Root13, Root14, Root15, Root16, Root17,Root17u, Root18, Root19 } from './interface-http';
+import { Root0, Root10, Root11, Root12, Root13, Root14, Root15, Root16, Root17, Root17u, Root18, Root19, Root20, Root21 } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -83,7 +83,7 @@ export class SynergyProvider {
    */
   getInvoiceDetail(no_factura: string, tokenMemory: string) {
     return new Promise<Root10>((resolve, reject) => {
-      this.httpProvider.get(`factura/obtener-detalle-factura?no_factura=${no_factura}`,{},tokenMemory).then(data => {
+      this.httpProvider.get(`factura/obtener-detalle-factura?no_factura=${no_factura}`, {}, tokenMemory).then(data => {
         resolve(data)
       }).catch(error => {
         reject(error);
@@ -114,29 +114,29 @@ export class SynergyProvider {
     });
   }
 
-    /**
-     * Obtiene las metricas del panel de solicitudes con filtros
-     */
-    getRequestPanel(filtros: any = {}) {
-      // Creamos un objeto de parámetros que incluirá filtros adicionales, si es necesario
-      const params: any = {
-        ...filtros // Añadimos los filtros aquí
-      };
+  /**
+   * Obtiene las metricas del panel de solicitudes con filtros
+   */
+  getRequestPanel(filtros: any = {}) {
+    // Creamos un objeto de parámetros que incluirá filtros adicionales, si es necesario
+    const params: any = {
+      ...filtros // Añadimos los filtros aquí
+    };
 
-      // Convertimos el objeto params en una cadena de consulta URL
-      const queryString = new URLSearchParams(params).toString();
+    // Convertimos el objeto params en una cadena de consulta URL
+    const queryString = new URLSearchParams(params).toString();
 
-      return new Promise<Root15>((resolve, reject) => {
-        this.httpProvider.get(`solicitud/panel-solicitudes?${queryString}`).then(data => {
-          resolve(data);
-        }).catch(error => {
-          reject(error);
-        });
+    return new Promise<Root15>((resolve, reject) => {
+      this.httpProvider.get(`solicitud/panel-solicitudes?${queryString}`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
       });
-    }
+    });
+  }
 
 
-  getDetailRequest(id: string){
+  getDetailRequest(id: string) {
     return new Promise<Root13>((resolve, reject) => {
       this.httpProvider.get(`solicitud/obtener-detalle-solicitud?id=${id}`).then(data => {
         resolve(data);
@@ -154,7 +154,7 @@ export class SynergyProvider {
         id_usuario_bitacora: id_usuario_bitacora,
         nombre_usuario_bitacora: nombre_usuario_bitacora
       }
-      this.httpProvider.put(`solicitud/aprobar?id=${id}`,sender).then(data => {
+      this.httpProvider.put(`solicitud/aprobar?id=${id}`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -162,7 +162,7 @@ export class SynergyProvider {
     });
   }
 
-  denyRequest(id: string,  id_aprobador: string, comentario?: string, id_usuario_bitacora?: string, nombre_usuario_bitacora?: string) {
+  denyRequest(id: string, id_aprobador: string, comentario?: string, id_usuario_bitacora?: string, nombre_usuario_bitacora?: string) {
     return new Promise<Root12>((resolve, reject) => {
       const sender = {
         id_aprobador: id_aprobador,
@@ -170,7 +170,7 @@ export class SynergyProvider {
         id_usuario_bitacora: id_usuario_bitacora,
         nombre_usuario_bitacora: nombre_usuario_bitacora
       }
-      this.httpProvider.put(`solicitud/desaprobar?id=${id}`,sender).then(data => {
+      this.httpProvider.put(`solicitud/desaprobar?id=${id}`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -183,22 +183,34 @@ export class SynergyProvider {
     return new Promise<Root16>((resolve, reject) => {
       const sender = {
       }
-      this.httpProvider.get(`usuario/listar-usuarios`,sender).then(data => {
+      this.httpProvider.get(`usuario/listar-usuarios`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
       });
     });
   }
- /**
-  *
-  * Obtiene el rol con todos los permisos
-  */
-  getRole(id:string) {
+
+  getProveedores() {
+    return new Promise<Root20>((resolve, reject) => {
+      const sender = {
+      }
+      this.httpProvider.get(`proveedor/listar-proveedores`, sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+  /**
+   *
+   * Obtiene el rol con todos los permisos
+   */
+  getRole(id: string) {
     return new Promise<Root17>((resolve, reject) => {
       const sender = {
       }
-      this.httpProvider.get(`permiso/listar-permisos?id_rol=${id}`,sender).then(data => {
+      this.httpProvider.get(`permiso/listar-permisos?id_rol=${id}`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -206,15 +218,15 @@ export class SynergyProvider {
     });
   }
 
-   /**
-  *
-  * Obtiene todos los menus
-  */
-   getMenus() {
+  /**
+ *
+ * Obtiene todos los menus
+ */
+  getMenus() {
     return new Promise<Root18>((resolve, reject) => {
       const sender = {
       }
-      this.httpProvider.get(`permiso/listar-menus`,sender).then(data => {
+      this.httpProvider.get(`permiso/listar-menus`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -223,15 +235,15 @@ export class SynergyProvider {
   }
 
 
-   /**
-  *
-  * Actualiza los permisos de un rol
-  */
-   updateRol(payload:any) {
+  /**
+ *
+ * Actualiza los permisos de un rol
+ */
+  updateRol(payload: any) {
     return new Promise((resolve, reject) => {
       const sender = {
       }
-      this.httpProvider.put(`permiso/actualizar-permisos`,payload).then(data => {
+      this.httpProvider.put(`permiso/actualizar-permisos`, payload).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -239,27 +251,39 @@ export class SynergyProvider {
     });
   }
 
-     /**
-  *
-  * Obtiene todos los roles
-  */
-     getRoles() {
-      return new Promise<Root19>((resolve, reject) => {
-        const sender = {
-        }
-        this.httpProvider.get(`permiso/listar-roles`).then(data => {
-          resolve(data);
-        }).catch(error => {
-          reject(error);
-        });
+  /**
+*
+* Obtiene todos los roles
+*/
+  getRoles() {
+    return new Promise<Root19>((resolve, reject) => {
+      const sender = {
+      }
+      this.httpProvider.get(`permiso/listar-roles`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
       });
-    }
+    });
+  }
 
   getUserById(id: string) {
     return new Promise<Root17u>((resolve, reject) => {
       const sender = {
       }
-      this.httpProvider.get(`usuario/detalle-usuario?usuario_id=${id}`,sender).then(data => {
+      this.httpProvider.get(`usuario/detalle-usuario?usuario_id=${id}`, sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  getProveedorById(id: string) {
+    return new Promise<Root20>((resolve, reject) => {
+      const sender = {
+      }
+      this.httpProvider.get(`proveedor/obtener-proveedor?id=${id}`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
@@ -298,6 +322,79 @@ export class SynergyProvider {
       }).catch(error => {
         reject(error);
       });
+    });
+  }
+
+  // Crear el proveedor
+  createProveedor(
+    id: string,
+    razon_social: string,
+    nrc: string,
+    nit: string,
+    correo_electronico: string,
+    cuenta_bancaria: string,
+    min_factoring: string,
+    max_factoring: string,
+    banco: string,
+    codigo_banco: string,
+    nombre_contacto: string,
+    telefono: string,
+  ) {
+    return new Promise<Root20>((resolve, reject) => {
+      const sender: any = {
+        id: id,
+        razon_social: razon_social,
+        nrc: nrc,
+        nit: nit,
+        correo_electronico: correo_electronico,
+        cuenta_bancaria: cuenta_bancaria,
+        min_factoring: min_factoring,
+        max_factoring: max_factoring,
+        banco: banco,
+        codigo_banco: codigo_banco,
+        nombre_contacto: nombre_contacto,
+        telefono: telefono,
+      };
+
+      this.httpProvider.post(`proveedor/registrar-proveedor`, sender)
+        .then(data => resolve(data))
+        .catch(error => reject(error));
+    });
+  }
+
+  editProveedorById(
+    usuario_id: string,
+    razon_social: string,
+    nrc: string,
+    nit: string,
+    correo_electronico: string,
+    cuenta_bancaria: string,
+    min_factoring: string,
+    max_factoring: string,
+    banco: string,
+    codigo_banco: string,
+    nombre_contacto: string,
+    telefono: string,
+  ) {
+    return new Promise<Root17u>((resolve, reject) => {
+      const sender: any = {
+        razon_social: razon_social,
+        nrc: nrc,
+        nit: nit,
+        correo_electronico: correo_electronico,
+        cuenta_bancaria: cuenta_bancaria,
+        min_factoring: min_factoring,
+        max_factoring: max_factoring,
+        banco: banco,
+        codigo_banco: codigo_banco,
+        nombre_contacto: nombre_contacto,
+        telefono: telefono,
+
+      };
+
+      this.httpProvider.put(`proveedor/actualizar-proveedor?id=${usuario_id}`, sender)
+        .then(data => resolve(data))
+        .catch(error => reject(error));
     });
   }
 
@@ -340,6 +437,18 @@ export class SynergyProvider {
     });
   }
 
+  deleteProveedorStatusById(id: string) {
+    return new Promise<Root20>((resolve, reject) => {
+      const sender: any = {
+      };
+      this.httpProvider.delete(`proveedor/eliminar-proveedor?id=${id}`, sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
   deleteRole(id: string) {
     return new Promise<any>((resolve, reject) => {
       const sender: any = {
@@ -363,8 +472,23 @@ export class SynergyProvider {
     // Convertimos el objeto params en una cadena de consulta URL
     const queryString = new URLSearchParams(params).toString();
 
-    return new Promise<Root12>((resolve, reject) => {
+    return new Promise<Root21>((resolve, reject) => {
       this.httpProvider.get(`desembolso/obtener-desembolsos?${queryString}`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  processRequests(ids: string[], numeroInicial: number = 1): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const sender = {
+        ids: ids,
+        numero_inicial: numeroInicial
+      };
+      
+      this.httpProvider.post(`solicitud/procesar-solicitudes`, sender).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);

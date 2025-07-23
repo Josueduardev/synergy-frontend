@@ -12,14 +12,20 @@ import { UsuariosPage } from '../pages/usuarios/usuarios.page';
 import { AccesosPage } from '../pages/accesos/accesos.page';
 import { AccesosEditPage } from '../pages/accesos/edit/accesos-edit.page';
 import { ConfiguracionesPage } from '../pages/usuarios/configuraciones/configuraciones.page';
-import { DesembolsosComponent } from '../pages/desembolsos/desembolsos.component';
+import { DesembolsosPage } from '../pages/desembolsos/desembolsos.page';
+import { ProveedoresPage } from '../pages/proveedores/proveedores.page';
+import { EditarProveedores } from '../pages/proveedores/editar/EditarProveedores.page';
 
 export const routes: Routes = [
   {
     path: '',
     component: SharedComponent,
     children: [
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { 
+        path: '', 
+        redirectTo: 'home', 
+        pathMatch: 'full' 
+      },
       {
         path: 'home',
         component: HomePage,
@@ -64,13 +70,13 @@ export const routes: Routes = [
 
           {
             path: 'sin-procesar',
-            component: DesembolsosComponent,
+            component: DesembolsosPage,
             canActivate: [AuthGuardApp],
             data: { breadcrumb: 'Sin Procesar' },
           },
           {
             path: 'procesadas',
-            component: DesembolsosComponent,
+            component: DesembolsosPage,
             canActivate: [AuthGuardApp],
             data: { breadcrumb: 'Procesados' },
           }
@@ -122,7 +128,26 @@ export const routes: Routes = [
             component: AccesosEditPage,
             canActivate: [AuthGuardApp],
             data: { breadcrumb: 'Nuevo rol' },
+          }
+          ,
+          {
+            path: 'proveedores',
+            component: ProveedoresPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Proveedores' },
           },
+          {
+            path: 'proveedores/crear',
+            component: EditarProveedores,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: ['Proveedores', 'Crear proveedor'] },
+          },
+          {
+            path: 'proveedores/editar/:id',
+            component: EditarProveedores,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: ['Usuarios', 'Editar proveedor'] },
+          }
         ],
       },
     ],

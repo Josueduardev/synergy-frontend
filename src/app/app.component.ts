@@ -18,16 +18,16 @@ import { SidebarProvider } from '../providers/sidebar.provider';
   schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this if needed
   imports: [
     CommonModule,
-    HttpClientModule, 
-    RouterOutlet, 
-    SidebarComponent, 
+    HttpClientModule,
+    RouterOutlet,
+    SidebarComponent,
     NavbarComponent,
     ToastModule
   ],
   providers: [
     HttpProvider,
-    LocalStorageProvider, 
-    AuthGuardApp, 
+    LocalStorageProvider,
+    AuthGuardApp,
     PublicGuard,
     MessageService,
     SidebarProvider
@@ -36,6 +36,5 @@ import { SidebarProvider } from '../providers/sidebar.provider';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-
 
 }

@@ -8,4 +8,7 @@ export interface Proveedor {
   nrc?:                string;
   razon_social?:       string;
   telefono?:           string;
+  banco?:              string;
+  codigo_banco?:        string;
+  mensaje?:             string;
 }

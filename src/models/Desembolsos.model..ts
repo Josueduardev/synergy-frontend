@@ -4,7 +4,7 @@ import { Proveedor } from './proveedor.model';
 export interface desembolso {
   contacto:       string;
   email:          string;
-  estado:         string;
+  estado:         number;
   factura:        Factura;
   proveedor:      Proveedor;
   id:             number;

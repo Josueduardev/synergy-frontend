@@ -5,18 +5,18 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
-import { Solicitud } from '../../models/solicitud.model';
+import { desembolso } from '../../models/Desembolsos.model.'; // Asegúrate de que la ruta sea correcta
 
 @Component({
-  selector: 'app-tabla-desembolsos',
+  selector: 'app-tabla-desembolsos ',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, PaginatorModule],
+  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, PaginatorModule,],
   templateUrl: './tabla-desembolsos.component.html',
   styleUrls: ['./tabla-desembolsos.component.scss'],
 })
 export class TablasDesembolsosComponents implements OnInit {
-  @Input() solicitudes: Solicitud[] = [];  // Recibimos las solicitudes del componente padre
-  selectedSolicitudes: Solicitud[] = []; // Almacena las solicitudes seleccionadas
+  @Input() desembolso: desembolso[] = [];  // Recibimos las solicitudes del componente padre
+  selectedDesembolsos: desembolso[] = []; // Almacena las desembolsos seleccionadas
   cols: any[] = [];
   loading: boolean = false;
 
@@ -40,24 +40,23 @@ export class TablasDesembolsosComponents implements OnInit {
     // Aquí puedes emitir eventos o hacer algo con la página seleccionada
   }
 
-  // Método para redirigir al detalle de la solicitud
-  verSolicitud(solicitud: any): void {
-    // Redirigir a la ruta de detalle de la solicitud, pasando el id de la solicitud
-    this.router.navigate(['solicitudes/detalle', solicitud.id]);
+  // Método para descargar  desembolso
+  verPDF(desembolso: any): void {
+
   }
 
   // Metodo para verificar si hay solicitudes aprobadas 
-  tieneSolicitudesAprobadas(): boolean {
-    return this.solicitudes.some(s => s.estado === 'APROBADA');
+  tieneDesembolsosProcesados(): boolean {
+    return this.desembolso.some(s => s.estado === 5);
   }
 
-  tieneSolicitudesDenegadas(): boolean {
-    return this.solicitudes.some(s => s.estado === 'DENEGADA');
+  tieneDesembolsosPagados(): boolean {
+    return this.desembolso.some(s => s.estado === 7);
   }
 
   // Método para obtener las solicitudes seleccionadas
-  obtenerSolicitudesSeleccionadas(): void {
-    console.log("Solicitudes seleccionadas:", this.selectedSolicitudes);
+  obtenerDesembolsosSeleccionados(): void {
+    console.log("Solicitudes seleccionadas:", this.selectedDesembolsos);
   }
 
 }

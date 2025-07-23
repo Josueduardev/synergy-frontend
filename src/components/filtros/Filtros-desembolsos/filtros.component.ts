@@ -5,14 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { Calendar, CalendarModule } from 'primeng/calendar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { FiltrosButtonComponent } from './filtros-button/filtros-button.component';
-import { DesembolsarButtonComponent } from './desembolsar-button/desembolsar-button.component';
-import { ModalFiltrosAvanzadosComponent } from './modal-filtros-avanzados/modal-filtros-avanzados.component';
 import { MessageService } from 'primeng/api';
-import { DescargarButtonComponent } from './descargar-button/descargar-button.component';
+import { FiltrosButtonComponent } from '../filtros-button/filtros-button.component';
+import { DesembolsarButtonComponent } from '../desembolsar-button/desembolsar-button.component';
+import { ModalFiltrosAvanzadosComponent } from '../modal-filtros-avanzados/modal-filtros-avanzados.component';
+import { DescargarButtonComponent } from '../descargar-button/descargar-button.component';
+import { ModalFiltrosAvanzadosDesembolsosComponent } from './modal-filtros-avanzados-desembolsos.component';
 
 @Component({
-  selector: 'app-filtros',
+  selector: 'app-filtros-desembolso',
   standalone: true,
   imports: [
     CommonModule,
@@ -22,13 +23,13 @@ import { DescargarButtonComponent } from './descargar-button/descargar-button.co
     ButtonModule,
     FiltrosButtonComponent,
     DesembolsarButtonComponent,
-    ModalFiltrosAvanzadosComponent,
+    ModalFiltrosAvanzadosDesembolsosComponent,
     DescargarButtonComponent
   ],
   templateUrl: './filtros.component.html',
   styleUrls: ['./filtros.component.scss'],
 })
-export class FiltrosComponent {
+export class FiltrosDesembolsoComponent {
   searchText: string = ''; // Texto del input de búsqueda
   rangeDates: Date[] | null = null; // Rango de fechas seleccionado
   placeholder: string = 'Desde - Hasta'; // Texto del placeholder
@@ -162,7 +163,7 @@ export class FiltrosComponent {
     this.mostrarModalFiltros = false;
 
     if (filtros) {
-      console.log('Filtros recibidos del modal:', filtros);
+      console.log('Filtros recibidos del modal de desembolsos:', filtros);
 
       // Emitir los filtros del modal junto con los filtros previos (como el estado)
       this.filtersChanges.emit({
