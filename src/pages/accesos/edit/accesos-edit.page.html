@@ -14,13 +14,17 @@
             <!-- Columna de Rol: 100% en pantallas pequeñas, 4/12 en medianas y superiores -->
             <div class="col-12 md:col-4">
               <p-card header="Rol" [style]="{ 'max-height': '400px' }">
-                <div class="flex flex-column gap-2">
-                  <label for="username">Nombre del rol</label>
-                  <input [(ngModel)]="this.nombre" pInputText id="username" class="full-width"
-                    aria-describedby="username-help" />
-                  <label for="descripcion">Descripcion</label>
-                  <textarea [(ngModel)]="this.descripcion" style="width: 100%; height: 100px;" id="descripcion"
-                    pInputTextarea></textarea>
+                <div class="flex flex-column gap-2 rol-text">
+                  <div>
+                    <label for="username">Nombre del rol</label>
+                    <input [(ngModel)]="this.nombre" pInputText id="username" class="full-width"
+                      aria-describedby="username-help" />
+                  </div>
+                  <div>
+                    <label for="descripcion">Descripcion</label>
+                    <textarea [(ngModel)]="this.descripcion" id="descripcion"
+                      pInputTextarea></textarea>
+                  </div>
                   <button style="width: 100px; margin-top: 10px;" pButton (click)="guardarRol()">
                     Guardar
                   </button>
@@ -30,7 +34,7 @@
 
             <!-- Columna de Permisos: 100% en pantallas pequeñas, 8/12 en medianas y superiores -->
             <div class="col-12 md:col-8">
-              <p-card header="Permisos">
+              <p-card header="Permisos" [style]="{ 'margin-top': '1rem' }">
                 <!-- Contenido de Permisos -->
                 <div class="card">
                   <p-tabView>
@@ -79,18 +83,10 @@
                       </div>
                     </p-tabPanel>
                     <p-tabPanel header="Opciones">
-                      <div style="width: 100%; height: 70px;">
+                      <div class="dropdown-container" style="width: 100%;">
                         <p>Selecciona el menu asignado para listar las acciones</p>
-                        <select (change)="filtrarAcciones($event)">
-                          <option disabled selected>Seleccionar</option>
-                          <ng-container *ngFor="let parent of menus">
-
-                            <option value="{{parent.id}}" *ngIf="parent.checked && parent.id != 1 && parent.id != 8">
-                              {{parent.menu}}</option>
-
-
-                          </ng-container>
-                        </select>
+                        <p-dropdown [options]="filteredMenus" [(ngModel)]="selectedMenuId" optionLabel="menu" optionValue="id" (onChange)="filtrarAcciones($event)" placeholder="Seleccionar">
+                        </p-dropdown>
                       </div>
                       <div class="grid">
                         <div class="col-12 overflow-x-auto max-h-400 block">

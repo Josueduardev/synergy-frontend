@@ -23,6 +23,7 @@ import { PermissionNode } from '../../../models/usuario.model';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { Permiso, DataPermiso, Menu } from '../../../providers/interface-http';
 import { TabViewModule } from 'primeng/tabview';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-accesos-edit',
@@ -39,6 +40,7 @@ import { TabViewModule } from 'primeng/tabview';
     InputTextareaModule,
     ListboxModule,
     InputSwitchModule,
+    DropdownModule,
     TabViewModule
   ],
   providers: [SynergyProvider],
@@ -51,6 +53,7 @@ export class AccesosEditPage implements OnInit {
   menus: any[] = [];
   acciones: any[] = [];
   accionesFiltradas: any[] = []
+  filteredMenus: any[] = []; // Menús filtrados para el dropdown
   selectedMenuId: number | null = 1; // El ID del menú "Panel"
 
 
@@ -59,7 +62,6 @@ export class AccesosEditPage implements OnInit {
   nombre: string = "";
   descripcion: string = "";
   selectedPermisos!: Permiso[];
-  filteredMenus: any[] = []
 
   permisosPanel = [
     {
@@ -176,9 +178,8 @@ export class AccesosEditPage implements OnInit {
         permisos_actuales = [];
       }
 
-
-
-
+      // Filtrar los menús para el p-select
+      this.updateFilteredMenus();
 
     } catch (error: any) {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
@@ -188,7 +189,7 @@ export class AccesosEditPage implements OnInit {
 
   // Método para marcar menús recursivamente
   markMenusAsChecked(menus: any[], activeMenuIds: any[]): any[] {
-    return menus.map(menu => {
+    const updatedMenus = menus.map(menu => {
       // Si el ID está en la lista de activos, marcar como checked
       if (activeMenuIds.includes(menu.id)) {
         menu.checked = true;
@@ -201,11 +202,11 @@ export class AccesosEditPage implements OnInit {
 
       return menu;
     });
+    
+    return updatedMenus;
   }
 
   guardarRol() {
-
-
     const payload = {
       id_rol: this.id,
       nombre: this.nombre,
@@ -216,7 +217,9 @@ export class AccesosEditPage implements OnInit {
     console.log(payload)
     this.synergyProvider.updateRol(payload).then(
       (resp) => {
-        this.messageService.add({ severity: 'success', summary: 'Guardar Rol', detail: "Se guardo el rol correctamente" });
+        this.messageService.add({ severity: 'success', summary: 'Guardar Rol', detail: "Se guardó el rol correctamente" });
+        // Actualizar los menús filtrados después de guardar
+        this.updateFilteredMenus();
       },
       (error) => {
         this.messageService.add({ severity: 'error', summary: 'Guardar Rol', detail: error.message });
@@ -226,20 +229,27 @@ export class AccesosEditPage implements OnInit {
 
   filtrarAcciones(event:any){
     this.accionesFiltradas = [];
-    if(event.target){
-      
-      let idpadre = event.target.value as Number;
+    if(event && event.value){
+      let idpadre = event.value;
       console.log(idpadre, this.acciones)
-      this.accionesFiltradas =  this.acciones.filter((accion)=>accion.padre == idpadre);
+      this.accionesFiltradas = this.acciones.filter((accion) => accion.padre == idpadre);
       console.log(this.accionesFiltradas)
     }
+  }
 
-    
+  // Método para actualizar los menús filtrados para el p-select
+  updateFilteredMenus() {
+    this.filteredMenus = this.flattenMenus(this.menus).filter(menu => 
+      menu.checked && menu.id != 1 && menu.id != 8
+    );
   }
 
   getCheckedItems(): any[] {
     const flattenedMenus = this.flattenMenus(this.menus); // Aplana todos los menús
-    return flattenedMenus.filter((item: any) => item.checked); // Filtra los elementos marcados
+    const checkedItems = flattenedMenus.filter((item: any) => item.checked); // Filtra los elementos marcados
+    // Actualizar los menús filtrados después de obtener los elementos marcados
+    this.updateFilteredMenus();
+    return checkedItems;
   }
   // Método para aplanar el menú
   flattenMenus(menus: any[]): any[] {
