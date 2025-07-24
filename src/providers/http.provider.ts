@@ -109,7 +109,7 @@ export class HttpProvider {
             if (token !== null) {
                 headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
             } else {
-                // Se setea el token en dado caso que se 
+                // Se setea el token en dado caso que se
                 // necesite realizar una operacion como restablecer contraseña
                 if (tokenMemory) {
                     headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
@@ -172,7 +172,9 @@ export class HttpProvider {
         } else {
             message = response?.body?.message ? response?.body?.message : "";
         }
+
         
+
         switch (response.status) {
             case HTTP_STATUS_CODE.OK: {
 

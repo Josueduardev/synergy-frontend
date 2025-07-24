@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit {
     this.name = this.storageProvider.userNameSession ? this.storageProvider.userNameSession : 'Desconocido';
     this.lastName = this.storageProvider.userLastNameSession ? this.storageProvider.userLastNameSession : 'Desconocido';
     this.role = this.storageProvider.userRolSession ? this.storageProvider.userRolSession : 'Desconocido';
-    
+
     this.fullName = `${this.name} ${this.lastName}`;
 
   }
@@ -99,7 +99,6 @@ export class NavbarComponent implements OnInit {
   }
 
   onToggleSidebar() {
-    // this.toggleSidebar.emit();
     this.toggle = !this.toggle;
     this.sidebarProvider.setToggle(this.toggle);
   }
@@ -115,24 +114,43 @@ export class NavbarComponent implements OnInit {
   logout() {
     const id_usuario = this.storageProvider.userIDSession;
     if (id_usuario) {
-      this.synergyProvider.logout(Number.parseInt(id_usuario)).then(
-        (response) => {
-          this.storageProvider.clearSession();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Cierre de sesión',
-            detail: 'Has cerrado sesión exitosamente',
-          });
-          this.router.navigate(['/login']);
-        },
-        (error) => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Cierre de sesión',
-            detail: 'Hubo un problema al cerrar la sesión',
-          });
-        }
-      );
+      // Intentar hacer logout en el servidor
+      this.synergyProvider.logout(Number.parseInt(id_usuario))
+        .then(
+          (response) => {
+            this.handleSuccessfulLogout();
+          },
+          (error) => {
+            // Si hay un error 401 (token expirado) o cualquier otro error, limpiar la sesión de todos modos
+            if (error.httpStatusCode === 401) {
+              this.handleSuccessfulLogout();
+            } else {
+              // Para otros errores, mostrar mensaje pero también limpiar sesión
+              this.storageProvider.clearSession();
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Cierre de sesión',
+                detail: 'Hubo un problema al cerrar la sesión, pero se ha cerrado la sesión local',
+              });
+              this.router.navigate(['/login'])
+            }
+          }
+        );
+    } else {
+      // Si no hay ID de usuario (posiblemente por sesión corrupta), limpiar sesión de todos modos
+      this.storageProvider.clearSession();
+      this.router.navigate(['/login']);
     }
+  }
+
+  // Método para manejar el cierre de sesión exitoso
+  private handleSuccessfulLogout() {
+    this.storageProvider.clearSession();
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Cierre de sesión',
+      detail: 'Has cerrado sesión exitosamente',
+    });
+    this.router.navigate(['/login'])
   }
 }

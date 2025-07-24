@@ -21,6 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(req).pipe(
             catchError((error) => {
                 if (error.status === 401) {
+                    // Limpiar la sesión antes de redirigir
                     this.storeProv.clearSession();
                     this.router.navigate(['/login']);
                 }
