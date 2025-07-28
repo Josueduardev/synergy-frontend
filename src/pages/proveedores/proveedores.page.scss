@@ -3,9 +3,7 @@
   display: flex;
   flex-direction: column;
   background-color: #f5f7fb;
-
-  /* Altura temporal, se puede ajustar según necesidad */
-  height: 120px;
+  height: 100%;
 }
 
 .filtros-container {
@@ -14,7 +12,6 @@
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-  height: 100%;
 }
 
 .new {
@@ -113,7 +110,6 @@
   cursor: pointer;
   height: 30px !important;
   white-space: nowrap;
-  margin-left: 10px;
 
   &:hover {
     background-color: #5358e828;
@@ -242,8 +238,13 @@
 
 /* Estilo para la columna de acciones con botones */
 ::ng-deep .buttons-actions {
-  box-sizing:content-box;
-  flex-wrap: none; /* Permite que los botones "salten" a la siguiente línea si no caben */
+  flex-wrap: none;
+  gap: 10px;
+  padding: 6px;
+
+  button{
+    margin-left: 6px !important;
+  }
 
   /* En pantallas más pequeñas, hacemos que los botones ocupen el 50% del ancho
      para formar dos columnas. Puedes ajustar el ancho según tu diseño. */

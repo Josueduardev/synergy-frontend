@@ -16,8 +16,7 @@
   <div class="card tabla-content">
     <!-- p-table de PrimeNG con scroll vertical, paginación y filtros globales -->
     <p-table #dt3 [value]="proveedores" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
-      [loading]="loading" [paginator]="true" [globalFilterFields]="['razon_social', 'nrc', 'nit']"
-      [tableStyle]="{ 'min-width': '75rem' }">
+      [loading]="loading" [paginator]="true" [globalFilterFields]="['razon_social', 'nrc', 'nit']">
 
       <!-- Encabezado de la tabla -->
       <ng-template pTemplate="header">
@@ -32,7 +31,7 @@
           <th>Minimo</th>
           <th>Máximo</th>
           <th>Banco</th>
-          <th>Código banco</th>
+          <th>Cod. Banco</th>
           <th>Acciones</th>
         </tr>
       </ng-template>

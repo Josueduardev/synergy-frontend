@@ -16,8 +16,7 @@
   <div class="card tabla-content">
     <!-- p-table de PrimeNG con scroll vertical, paginación y filtros globales -->
     <p-table #dt2 [value]="usuarios" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
-      [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cargo']"
-      [tableStyle]="{ 'min-width': '75rem' }">
+      [loading]="loading" [paginator]="true" [globalFilterFields]="['nombres', 'apellidos', 'cargo']">
 
       <!-- Encabezado de la tabla -->
       <ng-template pTemplate="header">
@@ -78,13 +77,13 @@
 
     </p-table>
     <!-- Confirmación de acción (Eliminar usuario) -->
-    <p-dialog [header]="'Eliminar usuario'" [(visible)]="modalAccionVisible"
-      [style]="{width: '30vw'}">
+    <p-dialog [header]="'Eliminar usuario'" [(visible)]="modalAccionVisible" [style]="{width: '30vw'}">
       <p>¿Está seguro de que desea ejecutar esta acción?</p>
       <p-footer>
         <button pButton [loading]="loading" label="Sí" icon="pi pi-check" class="p-button-success"
           (click)="deleteUser()"></button>
-        <button pButton label="No" icon="pi pi-times" class="p-button-danger" (click)="modalAccionVisible = false;"></button>
+        <button pButton label="No" icon="pi pi-times" class="p-button-danger"
+          (click)="modalAccionVisible = false;"></button>
       </p-footer>
     </p-dialog>
   </div>

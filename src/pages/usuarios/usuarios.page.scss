@@ -3,9 +3,7 @@
   display: flex;
   flex-direction: column;
   background-color: #f5f7fb;
-
-  /* Altura temporal, se puede ajustar según necesidad */
-  height: 120px;
+  height: 100%;
 }
 
 .filtros-container {
@@ -14,7 +12,10 @@
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-  height: 100%;
+}
+
+.card.tabla-content{
+  margin-bottom: 2rem;
 }
 
 .new {
@@ -35,7 +36,7 @@
 
 /* Ajustar la tabla para usar todo el ancho y permitir scroll horizontal */
 ::ng-deep p-table {
-  margin-top: 30px;
+  margin-top: 1rem;
   width: 100%;
   overflow-x: auto; /* Permitir scroll horizontal si el ancho es menor */
   display: block;
@@ -81,7 +82,7 @@
 
 /* Celdas del cuerpo de la tabla */
 ::ng-deep p-table td {
-  padding: 16px 24px;
+  padding: 12px 18px;
   text-align: center;
   text-align: justify;
   border: none;
@@ -90,7 +91,6 @@
   word-wrap: break-word; /* Forzar ajuste de texto largo */
   overflow-wrap: break-word; /* Compatibilidad con navegadores modernos */
   white-space: normal; /* Permitir ajuste de texto */
-  max-width: 150px; /* Tamaño máximo de las columnas */
   border-right: 1px solid #e9ecef74; /* Separar columnas con líneas */
   border-bottom: 1px solid #e9ecef74; /* Separar filas con líneas */
   color: #898989;
@@ -243,7 +243,10 @@
 /* Estilo para la columna de acciones con botones */
 ::ng-deep .buttons-actions {
   box-sizing:content-box;
-  flex-wrap: none; /* Permite que los botones "salten" a la siguiente línea si no caben */
+  flex-wrap: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   /* En pantallas más pequeñas, hacemos que los botones ocupen el 50% del ancho
      para formar dos columnas. Puedes ajustar el ancho según tu diseño. */
