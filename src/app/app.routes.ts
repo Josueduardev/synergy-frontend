@@ -15,16 +15,18 @@ import { ConfiguracionesPage } from '../pages/usuarios/configuraciones/configura
 import { DesembolsosPage } from '../pages/desembolsos/desembolsos.page';
 import { ProveedoresPage } from '../pages/proveedores/proveedores.page';
 import { EditarProveedores } from '../pages/proveedores/editar/EditarProveedores.page';
+import { ReporteSolicitudesComponent } from '../pages/reportes/reporte-solicitudes/reporte-solicitudes.component';
+import { ReporteDesembolsosComponent } from '../pages/reportes/reporte-desembolsos/reporte-desembolsos.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: SharedComponent,
     children: [
-      { 
-        path: '', 
-        redirectTo: 'home', 
-        pathMatch: 'full' 
+      {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
       },
       {
         path: 'home',
@@ -62,13 +64,12 @@ export const routes: Routes = [
             data: { breadcrumb: 'Detalle' },
           },
         ],
-      }, 
+      },
       {
         path: 'desembolso',
         data: { breadcrumb: 'Desembolso' },
         canActivate: [AuthGuardApp],
         children: [
-
           {
             path: 'sin-procesar',
             component: DesembolsosPage,
@@ -87,8 +88,8 @@ export const routes: Routes = [
         path: 'ajustes',
         component: ConfiguracionesPage,
         canActivate: [AuthGuardApp],
-        data: { 
-          breadcrumb: 'Configuraciones de la cuenta' 
+        data: {
+          breadcrumb: 'Configuraciones de la cuenta'
         },
       },
       {
@@ -150,7 +151,25 @@ export const routes: Routes = [
             component: EditarProveedores,
             canActivate: [AuthGuardApp],
             data: { breadcrumb: ['Usuarios', 'Editar proveedor'] },
-          }
+          },
+        ],
+      },
+      {
+        path: 'reportes',
+        data: { breadcrumb: 'Reportes' },
+        children: [
+          {
+            path: 'solicitudes',
+            component: ReporteSolicitudesComponent,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Solicitudes' },
+          },
+          {
+            path: 'desembolsos',
+            component: ReporteDesembolsosComponent,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Desembolsos' },
+          },
         ],
       },
     ],

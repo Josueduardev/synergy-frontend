@@ -1,16 +1,11 @@
 .detalle-solicitud-header-buttom {
-  margin: 1rem;
+  margin: 0.3rem 1rem;
 }
 
 .detalle-solicitud-container {
   padding: 20px;
   background-color: #ffffff;
-  margin: 2rem 15rem;
-}
-
-/* Estilo para el encabezado de la sección de cliente */
-.detalle-solicitud-header {
-  margin-bottom: 20px;
+  margin: 0 15rem 2rem;
 }
 
 .detalle-solicitud-header h1 {
@@ -19,15 +14,14 @@
   text-align: center;
   color: #333;
   text-transform: uppercase;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .detalle-solicitud-header p {
   font-size: 1.1rem;
   padding-bottom: 0.2rem;
   margin-left: 8rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1rem;
 }
 
 /* Estilos para la tabla */
