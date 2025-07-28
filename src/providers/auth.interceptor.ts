@@ -11,8 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status === 401 
-                    || error.message.includes("Token de autorización inválido") 
+                if (error.status === 401
+                    || error.message.includes("Token de autorización inválido")
+                    || error.message.includes("Token de autorización vencido")
                     || error.message.includes("El token proporcionado no corresponde al usuario")) {
                     localStorage.clear();
                     this.router.navigate(['/login']);
