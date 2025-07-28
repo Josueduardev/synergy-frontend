@@ -1,8 +1,9 @@
 ::ng-deep .desembolsos-content {
-    display: flex;
-    flex-direction: column;
-    background-color: #f5f7fb;
-    height: 169px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fb;
+  height: 100%;
+  gap: 1.2rem;
 }
 
 @media (max-width: 768px) {

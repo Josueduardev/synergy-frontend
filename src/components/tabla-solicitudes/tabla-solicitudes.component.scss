@@ -5,6 +5,15 @@
   width: 100%;
   padding: 0 2rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+th.select-all{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Tabla */
@@ -54,7 +63,7 @@
 
 /* Celdas del cuerpo de la tabla */
 ::ng-deep p-table td {
-  padding: 16px 24px;
+  padding: 12px 18px;
   text-align: center;
   text-align: justify;
   border: none;
@@ -244,30 +253,27 @@
 }
 
 .estado-verde {
-  margin-top: 10px;
-  color: #8BDD69; 
-  background-color: #E1F6D9; 
+  color: #8BDD69;
+  background-color: #E1F6D9;
   padding: 0.5rem;
-  border-radius: 20px; 
+  border-radius: 20px;
   text-align: center;
-  display: inline-block; 
+  display: inline-block;
 }
 
 .estado-rojo {
-  margin-top: 10px;
-  color: #dd6969; 
-  background-color: #f6d9d9; 
+  color: #dd6969;
+  background-color: #f6d9d9;
   padding: 0.5rem;
-  border-radius: 20px; 
+  border-radius: 20px;
   text-align: center;
-  display: inline-block; 
+  display: inline-block;
 }
 
 
 .title-checkbox{
-  margin-left: 10px;
-  margin-bottom: 10px;
   font-size: 0.8rem;
+  margin-left: 0.5rem;
   color: #5459EA;
 }
 
@@ -295,16 +301,16 @@
 
 /* Reducir el tamaño del input para NRC */
 ::ng-deep p-columnFilter input[placeholder='Buscar por NRC'] {
-  font-size: 0.7rem; 
-  padding: 0.2rem 0.4rem; 
-  width: 107px; 
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  width: 107px;
 }
 
 /* Reducir el tamaño del input para Teléfono */
 ::ng-deep p-columnFilter input[placeholder='Buscar por teléfono'] {
-  font-size: 0.7rem; 
-  padding: 0.2rem 0.4rem; 
-  width: 145px; 
+  font-size: 0.7rem;
+  padding: 0.2rem 0.4rem;
+  width: 145px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -315,7 +321,7 @@
 .aprobadas-estilos ::ng-deep p-table td:nth-child(3),
 .aprobadas-estilos ::ng-deep p-table th:nth-child(5),
 .aprobadas-estilos ::ng-deep p-table td:nth-child(5) {
-  width: 110px; 
+  width: 110px;
   max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
@@ -324,7 +330,7 @@
 
 .aprobadas-estilos ::ng-deep p-table th:nth-child(4),
 .aprobadas-estilos ::ng-deep p-table td:nth-child(4) {
-  width: 140px; 
+  width: 140px;
   max-width: 220px;
   white-space: nowrap;
   overflow: hidden;

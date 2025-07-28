@@ -16,7 +16,7 @@
         <th>Monto</th>
         <th>Interés</th>
         <th *ngIf="tieneSolicitudesAprobadas() || tieneSolicitudesDenegadas()">Estado</th>
-        <th *ngIf="tieneSolicitudesAprobadas()">
+        <th class="select-all" *ngIf="tieneSolicitudesAprobadas()">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox> <!-- Checkbox para seleccionar todo -->
           <span class="title-checkbox">Seleccionar todo</span> <!-- Texto "Seleccionar todo" -->
         </th>
@@ -66,9 +66,10 @@
         <td style="text-transform: uppercase;">{{ solicitud.factura.proveedor.telefono }}</td>
         <td style="text-transform: uppercase;">{{ solicitud.factura.monto | currency:'$' }}</td>
         <td style="text-transform: uppercase;">{{ solicitud.subtotal | currency:'$' }}</td>
-        <td *ngIf="tieneSolicitudesAprobadas() || tieneSolicitudesDenegadas()"
-          [ngClass]="{'estado-verde': tieneSolicitudesAprobadas(), 'estado-rojo': tieneSolicitudesDenegadas()}">
-          {{solicitud.estado}}
+        <td *ngIf="tieneSolicitudesAprobadas() || tieneSolicitudesDenegadas()">
+          <span [ngClass]="{'estado-verde': tieneSolicitudesAprobadas(), 'estado-rojo': tieneSolicitudesDenegadas()}">
+            {{solicitud.estado}}
+          </span>
         </td>
         <td *ngIf="tieneSolicitudesAprobadas()">
           <p-tableCheckbox [value]="solicitud" *ngIf="tieneSolicitudesAprobadas()" class="checkbox"></p-tableCheckbox>

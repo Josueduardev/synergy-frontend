@@ -1,7 +1,6 @@
 <div class="card tabla-content">
-    <p-table #dt2 [value]="desembolso" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
-        [loading]="loading" [paginator]="true" [(selection)]="selectedDesembolsos"
-        [globalFilterFields]="[
+  <p-table #dt2 [value]="desembolso" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
+    [loading]="loading" [paginator]="true" [(selection)]="selectedDesembolsos" [globalFilterFields]="[
             'solicitud.factura.proveedor.razon_social',
             'solicitud.factura.proveedor.correo_electronico',
             'solicitud.factura.proveedor.nrc',
@@ -9,111 +8,103 @@
             'solicitud.factura.proveedor.telefono',
             'monto_final',
             'interes'
-        ]"
-        [tableStyle]="{ 'min-width': '75rem' }"
-        [ngClass]="{'aprobadas-estilos': tieneDesembolsosProcesados() || tieneDesembolsosPagados()}">
+        ]" [tableStyle]="{ 'min-width': '75rem' }"
+    [ngClass]="{'aprobadas-estilos': tieneDesembolsosProcesados() || tieneDesembolsosPagados()}">
 
-        <!-- Encabezados con Filtros -->
-        <ng-template pTemplate="header">
-            <tr class="custom-header-row">
-                <th>Cliente</th>
-                <th>Correo</th>
-                <th>NIT Emisor</th>
-                <th>Encargado</th>
-                <th>Teléfono</th>
-                <th>Monto</th>
-                <th>Interés</th>
-                <th *ngIf="tieneDesembolsosProcesados()">Días restantes de pago</th>
-                <th></th>
-                <th>
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                    <span class="title-checkbox">Seleccionar todo</span>
-                </th>
-            </tr>
+    <!-- Encabezados con Filtros -->
+    <ng-template pTemplate="header">
+      <tr class="custom-header-row">
+        <th>Cliente</th>
+        <th>Correo</th>
+        <th>NIT Emisor</th>
+        <th>Encargado</th>
+        <th>Teléfono</th>
+        <th>Monto</th>
+        <th>Interés</th>
+        <th *ngIf="tieneDesembolsosProcesados()">Días restantes de pago</th>
+        <th></th>
+        <th>
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          <span class="title-checkbox">Seleccionar todo</span>
+        </th>
+      </tr>
 
-            <tr class="custom-header-row">
-                <th>
-                    <p-columnFilter type="text" field="solicitud.factura.proveedor.razon_social" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por cliente"
-                        ariaLabel="Filtrar Cliente"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="solicitud.factura.proveedor.correo_electronico" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por correo"
-                        ariaLabel="Filtrar Correo"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="solicitud.factura.proveedor.nrc" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por NIT" ariaLabel="Filtrar NRC"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="solicitud.nombre_cliente" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por encargado"
-                        ariaLabel="Filtrar Encargado"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="solicitud.factura.proveedor.telefono" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por teléfono"
-                        ariaLabel="Filtrar Teléfono"></p-columnFilter>
-                </th>
-                <!-- <th> -->
-                    <!-- <p-columnFilter type="text" field="monto_final" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por monto"
-                        ariaLabel="Filtrar Monto"></p-columnFilter>
-                </th>
-                <th>
-                    <p-columnFilter type="text" field="interes" [showButtons]="false"
-                        [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
-                        [matchMode]="'contains'" placeholder="Buscar por interés"
-                        ariaLabel="Filtrar Interés"></p-columnFilter>
-                </th> -->
-                <th *ngIf="tieneDesembolsosProcesados()"></th>
-            </tr>
-        </ng-template>
+      <tr class="custom-header-row">
+        <th>
+          <p-columnFilter type="text" field="solicitud.factura.proveedor.razon_social" [showButtons]="false"
+            [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
+            [matchMode]="'contains'" placeholder="Buscar por cliente" ariaLabel="Filtrar Cliente"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="solicitud.factura.proveedor.correo_electronico" [showButtons]="false"
+            [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
+            [matchMode]="'contains'" placeholder="Buscar por correo" ariaLabel="Filtrar Correo"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="solicitud.factura.proveedor.nrc" [showButtons]="false" [showMenu]="false"
+            [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
+            placeholder="Buscar por NIT" ariaLabel="Filtrar NRC"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="solicitud.nombre_cliente" [showButtons]="false" [showMenu]="false"
+            [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
+            placeholder="Buscar por encargado" ariaLabel="Filtrar Encargado"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="solicitud.factura.proveedor.telefono" [showButtons]="false"
+            [showMenu]="false" [showApplyButton]="false" [showClearButton]="false" [showOperator]="false"
+            [matchMode]="'contains'" placeholder="Buscar por teléfono" ariaLabel="Filtrar Teléfono"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="monto_final" [showButtons]="false" [showMenu]="false"
+            [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
+            placeholder="Buscar por monto" ariaLabel="Filtrar Monto"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="interes" [showButtons]="false" [showMenu]="false" [showApplyButton]="false"
+            [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'" placeholder="Buscar por interés"
+            ariaLabel="Filtrar Interés"></p-columnFilter>
+        </th>
+        <th *ngIf="tieneDesembolsosProcesados()"></th>
+      </tr>
+    </ng-template>
 
-        <!-- Cuerpo de la Tabla con la clase 'uppercase' solo en las celdas -->
-        <ng-template pTemplate="body" let-desembolso>
-            <tr>
-                <td style="text-transform: uppercase;">{{ desembolso.solicitud.factura.proveedor.razon_social }}</td>
-                <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.correo_electronico }}</td>
-                <td style="text-transform: none;">{{ desembolso.solicitud.nit }}</td>
-                <td style="text-transform: uppercase;">{{ desembolso.solicitud.nombre_cliente }}</td>
-                <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.telefono }}</td>
-                <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
-                <td style="text-transform: uppercase;">{{ desembolso.interes }}</td>
-                <td [ngClass]="'estado-azul'" *ngIf="tieneDesembolsosProcesados()">
-                    {{ desembolso.estado }} días
-                </td>
-                <td>
-                    <button pButton type="button" label="VER PDF" class="button-info"
-                        (click)="verPDF(desembolso)"></button>
-                </td>
-                <td>
-                    <p-tableCheckbox [value]="desembolso" class="checkbox"></p-tableCheckbox>
-                </td>
-            </tr>
-        </ng-template>
+    <!-- Cuerpo de la Tabla con la clase 'uppercase' solo en las celdas -->
+    <ng-template pTemplate="body" let-desembolso>
+      <tr>
+        <td style="text-transform: uppercase;">{{ desembolso.solicitud.factura.proveedor.razon_social }}</td>
+        <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.correo_electronico }}</td>
+        <td style="text-transform: none;">{{ desembolso.solicitud.nit }}</td>
+        <td style="text-transform: uppercase;">{{ desembolso.solicitud.nombre_cliente }}</td>
+        <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.telefono }}</td>
+        <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
+        <td style="text-transform: uppercase;">{{ desembolso.interes }}</td>
+        <td [ngClass]="'estado-azul'" *ngIf="tieneDesembolsosProcesados()">
+          {{ desembolso.estado }} días
+        </td>
+        <td>
+          <button pButton type="button" label="VER PDF" class="button-info" (click)="verPDF(desembolso)"></button>
+        </td>
+        <td>
+          <p-tableCheckbox [value]="desembolso" class="checkbox"></p-tableCheckbox>
+        </td>
+      </tr>
+    </ng-template>
 
-        <!-- Mensaje cuando no hay datos -->
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td [attr.colspan]="tieneDesembolsosProcesados() ? '11' : '9'" class="text-center"
-                    style="text-transform: uppercase;">
-                    No hay registros disponibles.
-                </td>
-            </tr>
-        </ng-template>
+    <!-- Mensaje cuando no hay datos -->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="tieneDesembolsosProcesados() ? '11' : '9'" class="text-center"
+          style="text-transform: uppercase;">
+          No hay registros disponibles.
+        </td>
+      </tr>
+    </ng-template>
 
-        <!-- Footer del Paginador -->
-        <ng-template pTemplate="paginatorleft">
-            <div class="total-records">{{ desembolso.length }} registros</div>
-        </ng-template>
+    <!-- Footer del Paginador -->
+    <ng-template pTemplate="paginatorleft">
+      <div class="total-records">{{ desembolso.length }} registros</div>
+    </ng-template>
 
-    </p-table>
+  </p-table>
 </div>

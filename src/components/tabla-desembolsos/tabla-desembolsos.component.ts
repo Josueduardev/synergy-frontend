@@ -42,10 +42,10 @@ export class TablasDesembolsosComponents implements OnInit {
 
   // Método para descargar  desembolso
   verPDF(desembolso: any): void {
-
+    this.router.navigate(['desembolso/detalle-desembolso?desembolso_id=', desembolso.id]);
   }
 
-  // Metodo para verificar si hay solicitudes aprobadas 
+  // Metodo para verificar si hay solicitudes aprobadas
   tieneDesembolsosProcesados(): boolean {
     return this.desembolso.some(s => s.estado === 5);
   }

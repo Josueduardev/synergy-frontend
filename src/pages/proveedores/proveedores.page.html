@@ -94,13 +94,13 @@
 
     </p-table>
     <!-- Confirmación de acción (Eliminar usuario) -->
-    <p-dialog [header]="'Eliminar Proveedor'" [(visible)]="modalAccionVisible"
-      [style]="{width: '30vw'}">
+    <p-dialog [header]="'Eliminar Proveedor'" [(visible)]="modalAccionVisible" [style]="{width: '30vw'}">
       <p>¿Está seguro de que desea ejecutar esta acción?</p>
       <p-footer>
-        <button pButton [loading]="loading" label="Sí" icon="pi pi-check" class="p-button-success" 
-        (click)="deleteProveedor()"></button>
-        <button pButton label="No" icon="pi pi-times" class="p-button-danger" (click)="modalAccionVisible = false;"></button>
+        <button pButton [loading]="loading" label="Sí" icon="pi pi-check" class="p-button-success"
+          (click)="deleteProveedor()"></button>
+        <button pButton label="No" icon="pi pi-times" class="p-button-danger"
+          (click)="modalAccionVisible = false;"></button>
       </p-footer>
     </p-dialog>
   </div>

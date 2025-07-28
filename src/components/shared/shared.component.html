@@ -1,17 +1,15 @@
 <div class="layout">
-    <!-- Sidebar -->
-    <app-sidebar [visible]="sidebarVisible"></app-sidebar>
+  <!-- Sidebar -->
+  <app-sidebar [visible]="sidebarVisible"></app-sidebar>
 
-    <!-- Contenido Principal -->
-    <div class="main-content" [class.with-sidebar]="sidebarVisible">
-      <!-- Navbar -->
-      <app-navbar
-        >
-      </app-navbar>
+  <!-- Contenido Principal -->
+  <div class="main-content" [class.with-sidebar]="sidebarVisible">
+    <!-- Navbar -->
+    <app-navbar></app-navbar>
 
-      <!-- Contenido dinámico -->
-      <div class="content">
-        <router-outlet></router-outlet>
-      </div>
+    <!-- Contenido dinámico -->
+    <div class="content">
+      <router-outlet></router-outlet>
     </div>
   </div>
+</div>

@@ -101,7 +101,7 @@ export class DetalleSolicitudPage implements OnInit {
     }
     this.cliente = solicitud.factura.proveedor?.razon_social ?? '';  // Asigna una cadena vacía si es undefined
     this.aprobador = this.storageProvider.userNameSession ? this.storageProvider.userNameSession : 'Desconocido';  // Asigna un valor predeterminado si es undefined
-    this.fecha = new Date().toLocaleDateString();  // Asigna la fecha actual en formato "DD/MM/YYYY"
+    this.fecha = new Date().toLocaleDateString('en-GB');  // Asigna la fecha actual en formato "DD/MM/YYYY"
   }
 
   validarEstado() {
@@ -169,7 +169,7 @@ export class DetalleSolicitudPage implements OnInit {
       const name_User = this.storageProvider.userNameSession as string;
       const lastName_User = this.storageProvider.userLastNameSession as string;
       const nombre_usuario_bitacora = name_User + ' ' + lastName_User;
-      
+
       this.synergyProvider.denyRequest(this.currentSolicitud.id.toString(), id_aprobador, this.comentario, id_usuario_bitacora, nombre_usuario_bitacora).then(
         (resp) => {
           this.messageService.add({ severity: 'success', summary: 'Denegación', detail: "La solicitud se ha denegado exitosamente." });
