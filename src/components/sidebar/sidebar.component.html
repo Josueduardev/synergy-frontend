@@ -22,19 +22,12 @@
         <ng-container *ngFor="let item of permisos">
           <li *ngIf="shouldShowMenu(item)">
             <!-- Menú Padre -->
-            <a 
-              (click)="toggleMenu(item)" 
-              [routerLink]="!item.children?.length ? item.menu.path : (null)" 
-              routerLinkActive="active"
-            >
+            <a (click)="toggleMenu(item)" [routerLink]="!item.children?.length ? item.menu.path : (null)"
+              routerLinkActive="active">
               <i [class]="item.menu.icon" style="margin-right: 15px;"></i> {{ item.menu.menu }}
-              <i 
-                *ngIf="item.children?.length" 
-                class="pi pi-chevron-right dropdown-icon" 
-                [class.open]="item.isOpen"
-              ></i>
+              <i *ngIf="item.children?.length" class="pi pi-chevron-right dropdown-icon" [class.open]="item.isOpen"></i>
             </a>
-      
+
             <ul class="submenu" *ngIf="item.isOpen">
               <ng-container *ngFor="let subItem of item.children">
                 <li *ngIf="subItem.menu.descripcion == 'MENU' || subItem.menu.descripcion == 'SUBMENU'">
@@ -47,7 +40,7 @@
           </li>
         </ng-container>
       </ul>
-      
+
     </div>
 
     <!-- Pie del Sidebar -->

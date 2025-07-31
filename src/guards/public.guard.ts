@@ -27,7 +27,7 @@ export class PublicGuard implements CanActivate {
     }
 
     // Para otras rutas públicas, redirigir a home si hay un token
-    this.router.navigate(['/home']);
+    this.router.navigate(['/solicitudes/sin-aprobar']);
     return false;
   }
 }

@@ -111,7 +111,7 @@ export class LoginPage {
     this.storeProv.userIDRolSession = this.currentUserIDRol;
 
     this.messageService.add({ severity: 'success', summary: summary, detail: detail });
-    this.router.navigate(['/home']); // Redirige al home
+    this.router.navigate(['/solicitudes/sin-aprobar']); // Redirige al home
   }
 
   restablecer(){
