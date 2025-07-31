@@ -46,11 +46,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Mostrar BIENVENIDO por 3 segundos, luego cambiar a SINERGY
+    // Mostrar BIENVENIDO por 2 segundos, luego cambiar a SINERGY
     setTimeout(() => {
       this.showBienvenido = false;
-    }, 3000);
+    }, 2000);
 
+    // Construir breadcrumbs al inicializar
+    this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
+
+    // Construir breadcrumbs cuando cambie la navegación
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {

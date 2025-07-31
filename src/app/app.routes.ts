@@ -25,7 +25,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'home',
+        redirectTo: 'solicitudes/sin-aprobar',
         pathMatch: 'full'
       },
       {
@@ -36,26 +36,26 @@ export const routes: Routes = [
       },
       {
         path: 'solicitudes',
-        data: { breadcrumb: 'Solicitudes' },
+        // data: { breadcrumb: 'Solicitudes' },
         canActivate: [AuthGuardApp],
         children: [
-          {
-            path: 'aprobadas',
-            component: SolicitudesPage,
-            canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Aprobadas' },
-          },
           {
             path: 'sin-aprobar',
             component: SolicitudesPage,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Sin Aprobar' },
+            data: { breadcrumb: 'Solicitudes Sin Aprobar' },
+          },
+          {
+            path: 'aprobadas',
+            component: SolicitudesPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Solicitudes Aprobadas' },
           },
           {
             path: 'denegadas',
             component: SolicitudesPage,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Denegadas' },
+            data: { breadcrumb: 'Solicitudes Denegadas' },
           },
           {
             path: 'detalle/:id',
@@ -67,20 +67,20 @@ export const routes: Routes = [
       },
       {
         path: 'desembolso',
-        data: { breadcrumb: 'Desembolso' },
+        // data: { breadcrumb: 'Desembolso' },
         canActivate: [AuthGuardApp],
         children: [
           {
             path: 'sin-procesar',
             component: DesembolsosPage,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Sin Procesar' },
+            data: { breadcrumb: 'Desembolsos Sin Procesar' },
           },
           {
             path: 'procesadas',
             component: DesembolsosPage,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Procesados' },
+            data: { breadcrumb: 'Desembolsos Procesados' },
           }
         ],
       },
