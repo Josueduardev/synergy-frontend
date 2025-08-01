@@ -9,8 +9,11 @@
     <input type="number" [(ngModel)]="numeroIngresado" />
 
     <div class="modal-buttons">
-      <button (click)="cerrarModal()">Cancelar</button>
-      <button (click)="procesar()">Procesar</button>
+      <button (click)="cerrarModal()" [disabled]="loading">Cancelar</button>
+      <button (click)="procesar()" [disabled]="loading">
+        <span *ngIf="!loading">Procesar</span>
+        <span *ngIf="loading">Procesando...</span>
+      </button>
     </div>
   </div>
 </div>
