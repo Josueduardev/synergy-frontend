@@ -172,8 +172,4 @@ export class FiltrosDesembolsoComponent {
       });
     }
   }
-
-  onKeyUpSearch(event: any) {
-    this.onSearch.emit(event.target.value);
-  }
 }
