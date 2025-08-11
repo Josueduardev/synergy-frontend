@@ -177,24 +177,4 @@ export class TablaSolicitudesComponent implements OnInit {
       return [];
     }
   }
-
-  /**
-   * Limpiar selecciones guardadas
-   */
-  clearSelectedSolicitudes(): void {
-    this.selectedSolicitudes = [];
-    if (this.storageKey) {
-      localStorage.removeItem(this.storageKey);
-    }
-  }
-
-  /**
-   * Obtener información de paginación para mostrar
-   */
-  getPaginationInfo(): string {
-    const start = this.first + 1;
-    const end = Math.min(this.first + this.rows, this.totalRecords);
-    return `Mostrando ${start} - ${end} de ${this.totalRecords} registros`;
-  }
-
 }

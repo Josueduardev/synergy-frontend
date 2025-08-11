@@ -1,6 +1,8 @@
 <div class="card tabla-content">
-  <p-table #dt2 [value]="desembolso" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
-    [loading]="loading" [paginator]="true" [(selection)]="selectedDesembolsos" [globalFilterFields]="[
+  <p-table #dt2 [value]="desembolsos" [lazy]="true" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="rows"
+    [first]="first" [loading]="loading" [paginator]="true" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
+    (onPage)="handlePageChange($event)" [(selection)]="selectedDesembolsos" [globalFilterFields]="[
             'solicitud.factura.proveedor.razon_social',
             'solicitud.factura.proveedor.correo_electronico',
             'solicitud.factura.proveedor.nrc',
@@ -71,7 +73,7 @@
       </tr>
     </ng-template>
 
-    <!-- Cuerpo de la Tabla con la clase 'uppercase' solo en las celdas -->
+    <!-- Cuerpo de la Tabla -->
     <ng-template pTemplate="body" let-desembolso>
       <tr>
         <td style="text-transform: uppercase;">{{ desembolso.solicitud.factura.proveedor.razon_social }}</td>
@@ -105,7 +107,7 @@
 
     <!-- Footer del Paginador -->
     <ng-template pTemplate="paginatorleft">
-      <div class="total-records">{{ desembolso.length }} registros</div>
+      <div class="total-records">{{ desembolsos.length }} registros</div>
     </ng-template>
 
   </p-table>

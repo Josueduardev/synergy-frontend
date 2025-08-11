@@ -1,29 +1,41 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
-import { desembolso } from '../../models/Desembolsos.model.'; // Asegúrate de que la ruta sea correcta
+import { desembolso } from '../../models/Desembolsos.model.';
 
 @Component({
-  selector: 'app-tabla-desembolsos ',
+  selector: 'app-tabla-desembolsos',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, PaginatorModule,],
+  imports: [CommonModule, TableModule, ButtonModule, InputTextModule, PaginatorModule],
   templateUrl: './tabla-desembolsos.component.html',
   styleUrls: ['./tabla-desembolsos.component.scss'],
 })
 export class TablasDesembolsosComponents implements OnInit {
-  @Input() desembolso: desembolso[] = [];  // Recibimos las solicitudes del componente padre
-  selectedDesembolsos: desembolso[] = []; // Almacena las desembolsos seleccionadas
-  cols: any[] = [];
-  loading: boolean = false;
+  // ✅ Propiedades de entrada para paginación
+  @Input() desembolsos: desembolso[] = [];
+  @Input() totalRecords: number = 0;
+  @Input() rows: number = 10;
+  @Input() currentPage: number = 1;
+  @Input() first: number = 0;
+  @Input() loading: boolean = false;
 
-  constructor(private router: Router) { } // Inyectar Router
+  // ✅ Output para cambios de página
+  @Output() onPageChange = new EventEmitter<any>();
+
+  selectedDesembolsos: desembolso[] = [];
+  cols: any[] = [];
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    // Definición de columnas con tipos de filtros
+    this.initializeColumns();
+  }
+
+  private initializeColumns(): void {
     this.cols = [
       { field: 'factura.proveedor.razon_social', header: 'Cliente', filterType: 'text' },
       { field: 'factura.proveedor.correo_electronico', header: 'Correo', filterType: 'text' },
@@ -35,28 +47,27 @@ export class TablasDesembolsosComponents implements OnInit {
     ];
   }
 
-  onPageChange(event: any): void {
-    console.log('Cambio de página:', event);
-    // Aquí puedes emitir eventos o hacer algo con la página seleccionada
+  // ✅ Método para manejar cambios de página
+  handlePageChange(event: any): void {
+    console.log('Cambio de página en tabla desembolsos:', event);
+    this.onPageChange.emit(event);
   }
 
-  // Método para descargar  desembolso
+  // Método para descargar desembolso
   verPDF(desembolso: any): void {
     this.router.navigate(['desembolso/detalle-desembolso?desembolso_id=', desembolso.id]);
   }
 
-  // Metodo para verificar si hay solicitudes aprobadas
+  // Metodo para verificar si hay desembolsos procesados
   tieneDesembolsosProcesados(): boolean {
-    return this.desembolso.some(s => s.estado === 5);
+    return this.desembolsos.some(s => s.estado === 5);
   }
 
   tieneDesembolsosPagados(): boolean {
-    return this.desembolso.some(s => s.estado === 7);
+    return this.desembolsos.some(s => s.estado === 7);
   }
 
-  // Método para obtener las solicitudes seleccionadas
   obtenerDesembolsosSeleccionados(): void {
-    console.log("Solicitudes seleccionadas:", this.selectedDesembolsos);
+    console.log("Desembolsos seleccionados:", this.selectedDesembolsos);
   }
-
 }

@@ -1,4 +1,7 @@
 <div class="desembolsos-content">
-    <app-filtros-desembolso (filtersChanges)="applyFilters($event)"></app-filtros-desembolso>
-    <app-tabla-desembolsos [desembolso]="desembolsos" (onPageChange)="onPageChange($event)"></app-tabla-desembolsos>
+  <app-filtros-desembolso (filtersChanges)="applyFilters($event)"></app-filtros-desembolso>
+
+  <app-tabla-desembolsos [desembolsos]="desembolsos" [totalRecords]="totalRecords" [rows]="perPage" [currentPage]="page"
+    (onPageChange)="onPageChange($event)">
+  </app-tabla-desembolsos>
 </div>
