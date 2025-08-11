@@ -1,10 +1,11 @@
 <div class="card tabla-content">
-  <p-table #dt2 [value]="solicitudes" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="10"
-    [loading]="loading" [paginator]="true" [(selection)]="selectedSolicitudes"
-    [globalFilterFields]="['factura.proveedor.razon_social', 'factura.proveedor.correo_electronico', 'factura.proveedor.nrc', 'nombre_cliente', 'factura.proveedor.telefono', 'factura.monto', 'interes']"
+  <p-table #dt2 [value]="solicitudes" [lazy]="true" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords"
+    [loading]="loading" [scrollable]="true" scrollHeight="60vh" dataKey="id" [first]="first"
+    [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
+    (onPage)="handlePageChange($event)" (onFilter)="handleFilter($event)" [(selection)]="selectedSolicitudes"
     [tableStyle]="{ 'min-width': '75rem' }"
     [ngClass]="{'aprobadas-estilos': tieneSolicitudesAprobadas() || tieneSolicitudesDenegadas()}"
-    [(selection)]="selectedSolicitudes" (selectionChange)="onSelectedSolicitudesChange()" dataKey="id">
+    (selectionChange)="onSelectedSolicitudesChange()" styleClass="p-datatable-sm p-datatable-striped">
     <!-- Encabezados con Filtros -->
     <ng-template pTemplate="header">
       <tr class="custom-header-row">
@@ -93,7 +94,6 @@
         </td>
       </tr>
     </ng-template>
-
 
     <!-- Footer del Paginador -->
     <ng-template pTemplate="paginatorleft">

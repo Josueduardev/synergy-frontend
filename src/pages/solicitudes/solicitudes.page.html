@@ -1,4 +1,7 @@
 <div class="solicitudes-content">
   <app-filtros (filtersChanges)="applyFilters($event)"></app-filtros>
-  <app-tabla-solicitudes [solicitudes]="solicitudes" (onPageChange)="onPageChange($event)"></app-tabla-solicitudes>
+
+  <app-tabla-solicitudes [solicitudes]="solicitudes" [totalRecords]="totalRecords" [rows]="perPage" [currentPage]="page"
+    (onPageChange)="onPageChange($event)">
+  </app-tabla-solicitudes>
 </div>

@@ -64,28 +64,28 @@ export class FiltrosComponent {
   typeRoute(tipo: string) {
     // Solicitudes aprobadas
     if (tipo === 'aprobadas') {
-      this.filtros = { estado: 2 }; 
-      this.mostrarBotonDesembolsar = true; 
+      this.filtros = { estado: 2 };
+      this.mostrarBotonDesembolsar = true;
       // Solicitudes denegadas
     } else if (tipo === 'denegadas') {
-      this.filtros = { estado: 3 }; 
-      this.mostrarBotonDesembolsar = false; 
+      this.filtros = { estado: 3 };
+      this.mostrarBotonDesembolsar = false;
       // Desemsolbosos proesados
     } else if (tipo === 'procesadas') {
-      this.filtros = { estado: 6 }; 
+      this.filtros = { estado: 6 };
       this.mostrarBotonDescargar = true;
-      this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonDesembolsar = false;
     }
     // Desembolsos sin procesar
     else if (tipo === 'sin-procesar') {
-      this.filtros = { estado: 5 }; 
+      this.filtros = { estado: 5 };
       this.mostrarBotonDescargar = false;
-      this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonDesembolsar = false;
     }
     // Este es de solicitudes sin procesar.
     else {
-      this.filtros = { estado: 1 }; 
-      this.mostrarBotonDesembolsar = false; 
+      this.filtros = { estado: 1 };
+      this.mostrarBotonDesembolsar = false;
     }
     console.log("Botón de desembolsar:", this.mostrarBotonDesembolsar);
     this.loadSolicitudes();
@@ -96,7 +96,6 @@ export class FiltrosComponent {
   // Cargar solicitudes según los filtros
   loadSolicitudes() {
     console.log('Filtros aplicados:', this.filtros);
-    // Aquí podrías hacer una llamada HTTP para obtener las solicitudes filtradas
     this.filtersChanges.emit(this.filtros); // Emitir los filtros al componente padre
   }
 
@@ -147,11 +146,6 @@ export class FiltrosComponent {
     }
   }
 
-  // Función de búsqueda
-  buscar() {
-    console.log('Buscando:', this.searchText);
-  }
-
   // Mostrar modal
   mostrarModal() {
     this.mostrarModalFiltros = true;
@@ -170,9 +164,5 @@ export class FiltrosComponent {
         ...filtros // Incluir los filtros recibidos del modal
       });
     }
-  }
-
-  onKeyUpSearch(event: any) {
-    this.onSearch.emit(event.target.value);
   }
 }

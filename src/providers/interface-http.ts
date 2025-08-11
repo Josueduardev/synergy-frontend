@@ -56,7 +56,7 @@ export interface Root12 {
   data: {
       current_page: number;
       per_page: number;
-      solicitudes: Solicitud;
+      solicitudes: Solicitud[];
       total_pages: number;
   };
   message: string;
