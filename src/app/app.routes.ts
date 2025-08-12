@@ -15,8 +15,7 @@ import { ConfiguracionesPage } from '../pages/usuarios/configuraciones/configura
 import { DesembolsosPage } from '../pages/desembolsos/desembolsos.page';
 import { ProveedoresPage } from '../pages/proveedores/proveedores.page';
 import { EditarProveedores } from '../pages/proveedores/editar/EditarProveedores.page';
-import { ReporteSolicitudesComponent } from '../pages/reportes/reporte-solicitudes/reporte-solicitudes.component';
-import { ReporteDesembolsosComponent } from '../pages/reportes/reporte-desembolsos/reporte-desembolsos.component';
+import { ReporteDesembolsosComponent } from '../pages/reporte-desembolsos/reporte-desembolsos.component';
 
 export const routes: Routes = [
   {
@@ -156,19 +155,12 @@ export const routes: Routes = [
       },
       {
         path: 'reportes',
-        data: { breadcrumb: 'Reportes' },
         children: [
-          {
-            path: 'solicitudes',
-            component: ReporteSolicitudesComponent,
-            canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Solicitudes' },
-          },
           {
             path: 'desembolsos',
             component: ReporteDesembolsosComponent,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Desembolsos' },
+            data: { breadcrumb: 'Reportes de Desembolsos' },
           },
         ],
       },
