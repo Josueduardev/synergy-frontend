@@ -63,6 +63,41 @@ export class HttpProvider {
         });
     }
 
+    patch(endpoint: string, payload?: any, tokenMemory?: string) {
+        return new Promise<any>((resolve, reject) => {
+
+            let peticion = environment.apiURL + endpoint;
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            } else {
+                // Se setea el token en dado caso que se
+                // necesite realizar una operacion como restablecer contraseña
+                if (tokenMemory) {
+                    headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+                }
+            }
+
+            console.log("Llamando al endpoint (PATCH): ", endpoint, payload);
+            this.http.patch(
+                peticion,
+                payload,
+                {
+                    headers,
+                    observe: 'response'
+                }
+            ).subscribe((response) => {
+                this.evaluateStatus(resolve, reject, response);
+
+            }, (error: HttpErrorResponse) => {
+                console.log(error)
+                this.evaluateStatus(resolve, reject, error);
+            });
+
+        });
+    }
+
     // Descarga binaria (Blob) por GET (para archivos como Excel)
     getBlob(endpoint: string, tokenMemory?: string) {
         return new Promise<Blob>((resolve, reject) => {

@@ -2,7 +2,7 @@
   <p-table #dt2 [value]="desembolsos" [lazy]="true" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="rows"
     [first]="first" [loading]="loading" [paginator]="true" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
-    (onPage)="handlePageChange($event)" [(selection)]="selectedDesembolsos" [globalFilterFields]="[
+    (onPage)="handlePageChange($event)" [(selection)]="selectedDesembolsos" (selectionChange)="onSelectionChange($event)" [globalFilterFields]="[
             'solicitud.factura.proveedor.razon_social',
             'solicitud.factura.proveedor.correo_electronico',
             'solicitud.factura.proveedor.nrc',
@@ -84,7 +84,7 @@
         <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.interes }}</td>
         <td [ngClass]="'estado-azul'" *ngIf="tieneDesembolsosProcesados()">
-          {{ desembolso.estado }} días
+          {{ desembolso.dias_restantes ?? desembolso.estado }} días
         </td>
         <td>
           <button pButton type="button" label="VER DETALLES" class="button-info"

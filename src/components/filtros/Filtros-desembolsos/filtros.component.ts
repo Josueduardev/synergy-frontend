@@ -11,6 +11,7 @@ import { DesembolsarButtonComponent } from '../desembolsar-button/desembolsar-bu
 import { ModalFiltrosAvanzadosComponent } from '../modal-filtros-avanzados/modal-filtros-avanzados.component';
 import { DescargarButtonComponent } from '../descargar-button/descargar-button.component';
 import { ModalFiltrosAvanzadosDesembolsosComponent } from './modal-filtros-avanzados-desembolsos.component';
+import { SynergyProvider } from '../../../providers/synergy.provider';
 
 @Component({
   selector: 'app-filtros-desembolso',
@@ -36,6 +37,7 @@ export class FiltrosDesembolsoComponent {
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
   mostrarBotonDesembolsar: boolean = true; // Controla la visibilidad del botón de desembolsar
+  mostrarBotonProcesar: boolean = false;   // Botón para procesar desembolsos sin procesar
   mostrarBotonDescargar: boolean = false; // Controla la visibilidad del botón de descargar
   @Input() onlySearch = false; // Muestra solo el campo de busqueda
 
@@ -46,7 +48,7 @@ export class FiltrosDesembolsoComponent {
   @Output() filtersChanges = new EventEmitter<any>();
   @Output() onSearch = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute, private messageService: MessageService) {
+  constructor(private route: ActivatedRoute, private messageService: MessageService, private synergyProvider: SynergyProvider) {
     // Llamamos al método que determina el filtro según la ruta
     this.applyRouteFilter();
 
@@ -67,26 +69,31 @@ export class FiltrosDesembolsoComponent {
     if (tipo === 'aprobadas') {
       this.filtros = { estado: 2 }; 
       this.mostrarBotonDesembolsar = true; 
+      this.mostrarBotonProcesar = false;
       // Solicitudes denegadas
     } else if (tipo === 'denegadas') {
       this.filtros = { estado: 3 }; 
       this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonProcesar = false;
       // Desemsolbosos proesados
     } else if (tipo === 'procesadas') {
       this.filtros = { estado: 6 }; 
       this.mostrarBotonDescargar = true;
       this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonProcesar = false;
     }
     // Desembolsos sin procesar
     else if (tipo === 'sin-procesar') {
       this.filtros = { estado: 5 }; 
       this.mostrarBotonDescargar = false;
       this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonProcesar = true;
     }
     // Este es de solicitudes sin procesar.
     else {
       this.filtros = { estado: 1 }; 
       this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonProcesar = false;
     }
     console.log("Botón de desembolsar:", this.mostrarBotonDesembolsar);
     this.loadSolicitudes();
@@ -170,6 +177,27 @@ export class FiltrosDesembolsoComponent {
         ...this.filtros, // Incluir filtros ya aplicados (como el estado)
         ...filtros // Incluir los filtros recibidos del modal
       });
+    }
+  }
+
+  // Procesar desembolsos seleccionados (estado -> 7)
+  async procesarDesembolsos() {
+    try {
+      const ids: number[] = JSON.parse(localStorage.getItem('desembolsosSeleccionados') || '[]');
+      if (!ids || ids.length === 0) {
+        this.messageService.add({ severity: 'warn', summary: 'Procesar', detail: 'Seleccione al menos un desembolso.' });
+        return;
+      }
+      this.messageService.add({ severity: 'info', summary: 'Procesando', detail: 'Actualizando desembolsos seleccionados...' });
+      const resp = await this.synergyProvider.actualizarDesembolsos(ids);
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: resp?.message || 'Desembolsos actualizados.' });
+      // limpiar selección
+      localStorage.removeItem('desembolsosSeleccionados');
+      // recargar lista aplicando filtros actuales
+      this.loadSolicitudes();
+    } catch (error: any) {
+      console.error('Error al procesar desembolsos:', error);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.message || 'No se pudo procesar.' });
     }
   }
 }

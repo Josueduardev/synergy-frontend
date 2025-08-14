@@ -70,4 +70,14 @@ export class TablasDesembolsosComponents implements OnInit {
   obtenerDesembolsosSeleccionados(): void {
     console.log("Desembolsos seleccionados:", this.selectedDesembolsos);
   }
+
+  // Sincronizar cambios de selección a localStorage para que el botón de filtros pueda procesarlos
+  onSelectionChange(selected: any[]) {
+    try {
+      const ids = (selected || []).map((d: any) => d?.id).filter((id: any) => typeof id === 'number');
+      localStorage.setItem('desembolsosSeleccionados', JSON.stringify(ids));
+    } catch (e) {
+      console.error('Error guardando desembolsos seleccionados:', e);
+    }
+  }
 }
