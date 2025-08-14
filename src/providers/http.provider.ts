@@ -63,6 +63,67 @@ export class HttpProvider {
         });
     }
 
+    // Descarga binaria (Blob) por GET (para archivos como Excel)
+    getBlob(endpoint: string, tokenMemory?: string) {
+        return new Promise<Blob>((resolve, reject) => {
+            const peticion = environment.apiURL + endpoint;
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            } else if (tokenMemory) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+            }
+
+            console.log("Llamando (blob) al endpoint: ", endpoint);
+            this.http.get(peticion, {
+                headers,
+                observe: 'response',
+                responseType: 'blob' as 'json'
+            }).subscribe((response: any) => {
+                if (response.status >= 200 && response.status < 300) {
+                    resolve(response.body as Blob);
+                } else {
+                    this.evaluateStatus(resolve, reject, response);
+                }
+            }, (error: HttpErrorResponse) => {
+                console.log(error)
+                // Si viene blob con error, intentar leer el mensaje
+                this.evaluateStatus(resolve, reject, error);
+            });
+        });
+    }
+
+    // Descarga binaria (Blob) por POST (para archivos como Excel)
+    postBlob(endpoint: string, payload?: any, tokenMemory?: string) {
+        return new Promise<Blob>((resolve, reject) => {
+            const peticion = environment.apiURL + endpoint;
+            console.log("Llamando (blob) al endpoint: ", endpoint, payload);
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` })
+            } else if (tokenMemory) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` })
+            }
+
+            this.http.post(peticion, payload, {
+                headers,
+                observe: 'response',
+                responseType: 'blob' as 'json'
+            }).subscribe((response: any) => {
+                if (response.status >= 200 && response.status < 300) {
+                    resolve(response.body as Blob);
+                } else {
+                    this.evaluateStatus(resolve, reject, response);
+                }
+            }, (error: HttpErrorResponse) => {
+                console.log(error)
+                this.evaluateStatus(resolve, reject, error);
+            });
+        });
+    }
+
     put(endpoint: string, payload?: any, tokenMemory?: string) {
         return new Promise<any>((resolve, reject) => {
 

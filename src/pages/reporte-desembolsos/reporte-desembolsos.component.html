@@ -1,1 +1,95 @@
-<p>reporte-desembolsos works!</p>
+<div class="reporte-container">
+  <!-- Header del reporte -->
+  <div class="reporte-header">
+    <h1>Reporte de Cuentas por Pagar</h1>
+    <p>Genera reportes de facturas pendientes de pago con clasificación por rangos de vencimiento</p>
+  </div>
+
+  <!-- Botones de acción -->
+  <div class="reporte-actions">
+    <div class="action-buttons">
+      <button pButton type="button" label="Generar Reporte Completo" icon="pi pi-file-excel" class="p-button-success"
+        [loading]="loading" (click)="generarReporteCompleto()">
+      </button>
+
+      <button pButton type="button" label="Generar Reporte Seleccionado" icon="pi pi-file-excel" class="p-button-info"
+        [loading]="loading" [disabled]="selectedInvoices.length === 0" (click)="generarReporteSeleccionado()">
+        <span *ngIf="selectedInvoices.length > 0"> ({{ selectedInvoices.length }} seleccionadas) </span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tabla de facturas -->
+  <div class="facturas-table">
+    <h3>Facturas Disponibles para Reporte</h3>
+
+    <p-table [value]="facturas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
+      currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} facturas"
+      [tableStyle]="{ 'min-width': '100%' }" dataKey="id">
+
+      <!-- Header con checkbox para seleccionar todo -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 4rem">
+            <p-checkbox [(ngModel)]="selectAll" [binary]="true" (onChange)="toggleSelectAll($event)"></p-checkbox>
+          </th>
+          <th>Proveedor ID</th>
+          <th>Proveedor</th>
+          <th>No. Factura</th>
+          <th>Fecha Emisión</th>
+          <th>Fecha Vencimiento</th>
+          <th>Monto</th>
+          <th>Estado</th>
+        </tr>
+      </ng-template>
+
+      <!-- Cuerpo de la tabla -->
+      <ng-template pTemplate="body" let-factura>
+        <tr>
+          <td>
+            <p-checkbox [(ngModel)]="selectedInvoices" [value]="factura.id"
+              (onChange)="onCheckboxChange($event, factura.id)"></p-checkbox>
+          </td>
+          <td>{{ factura.proveedor_id || '-' }}</td>
+          <td>{{ factura.proveedor_razon_social }}</td>
+          <td>{{ factura.no_factura }}</td>
+          <td>{{ factura.fecha_emision | date:'dd/MM/yyyy' }}</td>
+          <td>{{ factura.fecha_vence | date:'dd/MM/yyyy' }}</td>
+          <td>{{ factura.monto | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>
+            <span class="estado-badge" [ngClass]="'estado-' + (factura.estado || '').toLowerCase()">
+              {{ factura.estado == 7 ? "Pagada" : "Pendiente" }}
+            </span>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Mensaje cuando no hay datos -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="9" class="text-center">
+            No hay facturas disponibles para generar reporte.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <!-- Información del reporte -->
+  <div class="reporte-info">
+    <div class="info-card">
+      <h4>Información del Reporte</h4>
+      <ul>
+        <li><strong>Reporte Completo:</strong> Genera un Excel con todas las facturas <strong>Pagadas</strong> por parte del beneficiario
+          del Factoraje</li>
+        <li><strong>Reporte Seleccionado:</strong> Genera un Excel solo con las facturas que selecciones</li>
+        <li><strong>Clasificación por Rangos:</strong> El reporte clasifica las facturas por días de vencimiento (0-30,
+          31-60, 61-90, 91-120)</li>
+        <li><strong>Formato:</strong> Archivo Excel (.xlsx) con formato profesional</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Toast para mensajes -->
+<p-toast></p-toast>

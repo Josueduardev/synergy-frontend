@@ -1,0 +1,275 @@
+.reporte-container {
+  padding: 10px;
+  background-color: #ffffff;
+  margin: 0 5rem 2rem;
+}
+
+/* Header del reporte */
+.reporte-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--surface-100, #f5f6f8);
+  border: 1px solid var(--surface-300, #e5e7eb);
+  border-radius: 10px;
+  color: var(--text-color, #1f2937);
+}
+
+.reporte-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-shadow: none;
+}
+
+.reporte-header p {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* Botones de acción */
+.reporte-actions {
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  min-width: 200px;
+  height: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.action-buttons button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Tabla de facturas */
+.facturas-table {
+  margin-bottom: 2rem;
+}
+
+.facturas-table h3 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+/* Estilos de la tabla */
+::ng-deep p-table {
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep p-table th {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 2px solid #dee2e6;
+}
+
+::ng-deep p-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f3f4;
+  vertical-align: middle;
+}
+
+::ng-deep p-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Checkbox personalizado */
+::ng-deep p-table .p-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+::ng-deep p-table .p-checkbox .p-checkbox-box {
+  border: 2px solid var(--primary-color, #10b981);
+  border-radius: 4px;
+}
+
+::ng-deep p-table .p-checkbox .p-checkbox-box.p-highlight {
+  background-color: var(--primary-color, #10b981);
+  border-color: var(--primary-color, #10b981);
+}
+
+/* Badges de estado */
+.estado-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.estado-pendiente {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.estado-aprobada {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.estado-procesada {
+  background-color: #cce5ff;
+  color: #004085;
+  border: 1px solid #b3d7ff;
+}
+
+.estado-completada {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+/* Información del reporte */
+.reporte-info {
+  margin-top: 2rem;
+}
+
+.info-card {
+  background: var(--surface-50, #ffffff);
+  border: 1px solid var(--surface-300, #e5e7eb);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.info-card h4 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.info-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  color: #555;
+  font-size: 1rem;
+}
+
+.info-card li:last-child {
+  border-bottom: none;
+}
+
+.info-card strong {
+  color: #333;
+  font-weight: 600;
+}
+
+/* Paginador */
+::ng-deep p-table .p-paginator {
+  background-color: var(--surface-100, #f5f6f8);
+  border-top: 1px solid var(--surface-300, #e5e7eb);
+  padding: 1rem;
+}
+
+::ng-deep p-table .p-paginator .p-paginator-pages .p-paginator-page {
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+::ng-deep p-table .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background-color: var(--primary-color, #10b981);
+  border-color: var(--primary-color, #10b981);
+  color: var(--primary-color-text, #ffffff);
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .reporte-container {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .reporte-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .reporte-header p {
+    font-size: 1rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-buttons button {
+    min-width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  ::ng-deep p-table {
+    font-size: 0.9rem;
+  }
+
+  ::ng-deep p-table th,
+  ::ng-deep p-table td {
+    padding: 0.5rem;
+  }
+
+  .info-card {
+    padding: 1rem;
+  }
+}
+
+/* Toast personalizado */
+::ng-deep .p-toast .p-toast-message {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+::ng-deep .p-toast .p-toast-message.p-toast-message-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+::ng-deep .p-toast .p-toast-message.p-toast-message-error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+::ng-deep .p-toast .p-toast-message.p-toast-message-warn {
+  background-color: #fff3cd;
+  border-color: #ffeaa7;
+  color: #856404;
+}
+
+::ng-deep .p-toast .p-toast-message.p-toast-message-info {
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+  color: #0c5460;
+}

@@ -516,4 +516,29 @@ export class SynergyProvider {
     });
   }
 
+  // Generar reporte de cuentas por pagar (todas las facturas)
+  generarReporteCuentasPorPagar() {
+    return new Promise<Blob>((resolve, reject) => {
+      this.httpProvider.getBlob('reporte/generar-reporte-facturas').then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  // Generar reporte de cuentas por pagar (facturas seleccionadas)
+  generarReporteCuentasPorPagarSeleccionadas(selectedInvoices: number[]) {
+    return new Promise<Blob>((resolve, reject) => {
+      const sender = {
+        selected_invoices: selectedInvoices
+      };
+      this.httpProvider.postBlob('reporte/generar-reporte-facturas-seleccionadas', sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
 }
