@@ -53,9 +53,9 @@ export class TablasDesembolsosComponents implements OnInit {
     this.onPageChange.emit(event);
   }
 
-  // Método para descargar desembolso
-  verPDF(desembolso: any): void {
-    this.router.navigate(['desembolso/detalle-desembolso?desembolso_id=', desembolso.id]);
+  // Método para ver detalle del desembolso
+  verDetalle(desembolso: any): void {
+    this.router.navigate(['desembolso/detalle-desembolso', desembolso.id]);
   }
 
   // Metodo para verificar si hay desembolsos procesados
