@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
-import { Root0, Root10, Root11, Root12, Root13, Root14, Root15, Root16, Root17, Root17u, Root18, Root19, Root20, Root21 } from './interface-http';
+import { Root0, Root10, Root11, Root12, Root13, Root14, Root15, Root16, Root17, Root17u, Root18, Root19, Root20, Root21, Root22 } from './interface-http';
 import { Factura } from '../models/factura.model';
 
 @Injectable()
@@ -481,14 +481,34 @@ export class SynergyProvider {
     });
   }
 
+  getUniqueRequestDesembolso(id: number) {
+    return new Promise<Root21>((resolve, reject) => {
+      this.httpProvider.get(`desembolso/detalle-desembolso?desembolso_id=${id}`).then(data => {
+        resolve(data)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  }
+
   processRequests(ids: string[], numeroInicial: number = 1): Promise<any> {
     return new Promise((resolve, reject) => {
       const sender = {
         ids: ids,
         numero_inicial: numeroInicial
       };
-      
+
       this.httpProvider.post(`solicitud/procesar-solicitudes`, sender).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+
+  getDetailDisbursement(id: string) {
+    return new Promise<Root22>((resolve, reject) => {
+      this.httpProvider.get(`desembolso/detalle-desembolso?desembolso_id=${id}`).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);

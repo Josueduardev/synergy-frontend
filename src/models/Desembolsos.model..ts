@@ -12,8 +12,31 @@ export interface desembolso {
   iva:            number;
   nombre_cliente: string;
   subtotal:       number;
-  total:          number;
+  total:            number;
   fecha_solicitud: string;
   fecha_aprobacion: string;
   comentario: string;
+}
+
+export interface DetalleDesembolso {
+  estado: number;
+  fecha_desembolso: string;
+  id: number;
+  metodo_pago: string;
+  monto_final: number;
+  no_transaccion: string;
+  proveedor: {
+    correo_electronico: string;
+    id: string;
+    razon_social: string;
+    telefono: string;
+  };
+}
+
+export interface DetalleDesembolsoResponse {
+  code: number;
+  data: {
+    desembolso: DetalleDesembolso;
+  };
+  message: string;
 }

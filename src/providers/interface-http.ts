@@ -3,7 +3,7 @@ import { Factura } from "../models/factura.model";
 import { Usuario, UsuarioOne } from '../models/usuario.model';
 import { Roles } from '../models/roles.model';
 import { Proveedor } from '../models/proveedor.model';
-import { desembolso } from '../models/Desembolsos.model.';
+import { desembolso, DetalleDesembolso } from '../models/Desembolsos.model.';
 
 // Obtener detalles de factura
 export interface Root10{
@@ -71,6 +71,14 @@ export interface Root21 {
       per_page: number;
       desembolsos: desembolso[];
       total_pages: number;
+  };
+  message: string;
+  code: number;
+}
+
+export interface Root22 {
+  data: {
+    desembolso: DetalleDesembolso;
   };
   message: string;
   code: number;

@@ -16,6 +16,7 @@ import { DesembolsosPage } from '../pages/desembolsos/desembolsos.page';
 import { ProveedoresPage } from '../pages/proveedores/proveedores.page';
 import { EditarProveedores } from '../pages/proveedores/editar/EditarProveedores.page';
 import { ReporteDesembolsosComponent } from '../pages/reporte-desembolsos/reporte-desembolsos.component';
+import { DetalleDesembolsoComponent } from '../pages/desembolsos/detalle-desembolso/detalle-desembolso.component';
 
 export const routes: Routes = [
   {
@@ -80,6 +81,12 @@ export const routes: Routes = [
             component: DesembolsosPage,
             canActivate: [AuthGuardApp],
             data: { breadcrumb: 'Desembolsos Procesados' },
+          },
+          {
+            path: 'detalle-desembolso/:id',
+            component: DetalleDesembolsoComponent,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Detalle Desembolso' },
           }
         ],
       },

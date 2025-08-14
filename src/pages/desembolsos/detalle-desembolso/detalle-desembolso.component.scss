@@ -1,0 +1,123 @@
+.detalle-desembolso-header-buttom {
+  margin: 0.3rem 1rem;
+}
+
+.detalle-desembolso-container {
+  padding: 20px;
+  background-color: #ffffff;
+  margin: 0 15rem 2rem;
+}
+
+.detalle-desembolso-header h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+}
+
+.detalle-desembolso-header p {
+  font-size: 1.1rem;
+  padding-bottom: 0.2rem;
+  margin-left: 8rem;
+  margin-bottom: 1rem;
+}
+
+/* Estilos para la tabla */
+::ng-deep p-table th {
+  background-color: #f5f7fb;
+  color: #686868;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+::ng-deep p-table td {
+  color: #898989;
+  text-align: left;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  border-top: 1px solid #f6f6f6;
+}
+
+/* Ancho de las columnas */
+::ng-deep p-table th:first-child,
+::ng-deep p-table td:first-child {
+  width: 50%;
+}
+
+::ng-deep p-table th:nth-child(2),
+::ng-deep p-table td:nth-child(2) {
+  width: 50%;
+}
+
+/* Colores de fondo de las columnas */
+::ng-deep p-table td.concepto-column {
+  background-color: #fcfcfc;
+}
+
+::ng-deep p-table td.valor-column {
+  background-color: #ffffff;
+}
+
+/* Botón "Regresar a Desembolsos" */
+.no-bg-blue {
+  background: none;
+  color: #2B3674;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+::ng-deep .no-bg-blue span {
+  font-size: 0.9rem;
+}
+
+/* Sección de la parte inferior (fecha) */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  color: #2B3674;
+}
+
+.bottom p {
+  font-size: 0.85rem;
+  margin: 0;
+  padding: 0.2rem 0;
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .detalle-desembolso-container {
+    margin: 1rem; /* Reducir márgenes en pantallas pequeñas */
+    padding: 1rem; /* Menos padding para adaptarse a pantallas pequeñas */
+  }
+
+  .detalle-desembolso-header p {
+    margin-left: 0; /* Quitar margen lateral en pantallas pequeñas */
+    text-align: center; /* Centrar el texto del subtítulo */
+  }
+
+  /* Ajustar la tabla para pantallas pequeñas */
+  ::ng-deep p-table th,
+  ::ng-deep p-table td {
+    padding: 0.5rem 0.5rem; /* Reducir padding interno */
+  }
+
+  ::ng-deep p-table th {
+    padding-left: 1rem; /* Menos espacio a la izquierda */
+  }
+
+  ::ng-deep p-table td {
+    padding-left: 1rem; /* Menos espacio a la izquierda */
+  }
+
+  /* Ajustar texto inferior */
+  .bottom p {
+    font-size: 0.8rem; /* Un poco más pequeño en pantallas pequeñas */
+  }
+}

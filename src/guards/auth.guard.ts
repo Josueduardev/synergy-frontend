@@ -32,9 +32,11 @@ export class AuthGuardApp implements CanActivate {
       }
 
       const requestedRoute = state.url;
+
       const hasPermission = this.hasPermission(userPermissions, requestedRoute);
 
       if (!hasPermission) {
+          console.log('❌ AuthGuard - Acceso denegado, redirigiendo a no-autorizado');
           this.router.navigate(['/no-autorizado']);
           return false;
       }
@@ -44,22 +46,44 @@ export class AuthGuardApp implements CanActivate {
     private hasPermission(nodes: PermissionNode[], route: string): boolean {
         // Expresión regular para detectar rutas con un ID al final (por ejemplo, /editar/1)
         const routeWithoutId = route.replace(/\/\d+$/, '');
-        console.log(routeWithoutId)
 
-        for (const node of nodes) {
-            // Verificar si el nodo actual tiene la ruta sin ID
-            if (node.menu.path === routeWithoutId) {
-                return true;
-            }
-
-            // Verificar si los hijos del nodo tienen la ruta sin ID
-            if (node.children && this.hasPermission(node.children, routeWithoutId)) {
-                return true;
-            }
+        // Primero intentar encontrar la ruta exacta
+        if (this.findExactRoute(nodes, routeWithoutId)) {
+            return true;
         }
+
+        // Si no se encuentra la ruta exacta, buscar en rutas padre
+        const parentRoute = this.getParentRoute(routeWithoutId);
+        if (parentRoute && this.findExactRoute(nodes, parentRoute)) {
+            return true;
+        }
+
         return false; // No tiene permisos para la ruta
     }
 
+    private findExactRoute(nodes: PermissionNode[], route: string): boolean {
+        for (const node of nodes) {
+            // Verificar si el nodo actual tiene la ruta exacta
+            if (node.menu.path === route) {
+                return true;
+            }
+
+            // Verificar si los hijos del nodo tienen la ruta exacta
+            if (node.children && this.findExactRoute(node.children, route)) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    private getParentRoute(route: string): string | null {
+        // Obtener la ruta padre (por ejemplo, /desembolso/detalle-desembolso -> /desembolso)
+        const parts = route.split('/').filter(part => part.length > 0);
+        if (parts.length > 1) {
+            return '/' + parts[0];
+        }
+        return null;
+    }
+}
 
 
