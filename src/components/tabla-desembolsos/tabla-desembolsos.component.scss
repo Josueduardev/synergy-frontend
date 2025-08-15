@@ -250,6 +250,12 @@
     }
 }
 
+th.select-all{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .estado-azul {
     margin: 2px auto;
     color: #61aee1;
@@ -274,7 +280,6 @@
 
 .title-checkbox {
     margin-left: 10px;
-    margin-bottom: 10px;
     font-size: 0.8rem;
     color: #5459EA;
 }
