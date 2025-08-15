@@ -5,11 +5,11 @@
     (onPage)="handlePageChange($event)" [(selection)]="selectedDesembolsos" (selectionChange)="onSelectionChange($event)" [globalFilterFields]="[
             'solicitud.factura.proveedor.razon_social',
             'solicitud.factura.proveedor.correo_electronico',
-            'solicitud.factura.proveedor.nrc',
+            'solicitud.factura.no_factura',
             'solicitud.nombre_cliente',
             'solicitud.factura.proveedor.telefono',
             'monto_final',
-            'interes'
+            'metodo_pago'
         ]" [tableStyle]="{ 'min-width': '75rem' }"
     [ngClass]="{'aprobadas-estilos': tieneDesembolsosProcesados() || tieneDesembolsosPagados()}">
 
@@ -18,14 +18,14 @@
       <tr class="custom-header-row">
         <th>Cliente</th>
         <th>Correo</th>
-        <th>NIT Emisor</th>
+        <th>No. factura</th>
         <th>Encargado</th>
         <th>Teléfono</th>
-        <th>Monto</th>
-        <th>Interés</th>
+        <th>Monto a desembolsar</th>
+        <th>Método de pago</th>
         <th *ngIf="tieneDesembolsosProcesados()">Días restantes de pago</th>
-        <th></th>
-        <th>
+        <th *ngIf="tieneDesembolsosPagados()"></th>
+        <th *ngIf="tieneDesembolsosProcesados()">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           <span class="title-checkbox">Seleccionar todo</span>
         </th>
@@ -43,9 +43,9 @@
             [matchMode]="'contains'" placeholder="Buscar por correo" ariaLabel="Filtrar Correo"></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="solicitud.factura.proveedor.nrc" [showButtons]="false" [showMenu]="false"
+          <p-columnFilter type="text" field="solicitud.factura.no_factura" [showButtons]="false" [showMenu]="false"
             [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
-            placeholder="Buscar por NIT" ariaLabel="Filtrar NRC"></p-columnFilter>
+            placeholder="Buscar por No. factura" ariaLabel="Filtrar No. factura"></p-columnFilter>
         </th>
         <th>
           <p-columnFilter type="text" field="solicitud.nombre_cliente" [showButtons]="false" [showMenu]="false"
@@ -63,13 +63,12 @@
             placeholder="Buscar por monto" ariaLabel="Filtrar Monto"></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="interes" [showButtons]="false" [showMenu]="false" [showApplyButton]="false"
-            [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'" placeholder="Buscar por interés"
-            ariaLabel="Filtrar Interés"></p-columnFilter>
+          <p-columnFilter type="text" field="metodo_pago" [showButtons]="false" [showMenu]="false" [showApplyButton]="false"
+            [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'" placeholder="Buscar por método de pago"
+            ariaLabel="Filtrar Método de pago"></p-columnFilter>
         </th>
         <th *ngIf="tieneDesembolsosProcesados()"></th>
-        <th></th>
-        <th></th>
+        <th *ngIf="tieneDesembolsosProcesados()"></th>
       </tr>
     </ng-template>
 
@@ -78,19 +77,19 @@
       <tr>
         <td style="text-transform: uppercase;">{{ desembolso.solicitud.factura.proveedor.razon_social }}</td>
         <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.correo_electronico }}</td>
-        <td style="text-transform: none;">{{ desembolso.solicitud.nit }}</td>
+        <td style="text-transform: none;">{{ desembolso.solicitud.factura.no_factura }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.solicitud.nombre_cliente }}</td>
         <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.telefono }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
-        <td style="text-transform: uppercase;">{{ desembolso.interes }}</td>
-        <td [ngClass]="'estado-azul'" *ngIf="tieneDesembolsosProcesados()">
-          {{ desembolso.dias_restantes ?? desembolso.estado }} días
+        <td style="text-transform: uppercase;">{{ desembolso.metodo_pago }}</td>
+        <td *ngIf="tieneDesembolsosProcesados()">
+          <span [ngClass]="'estado-azul'">{{ desembolso.dias_restantes }} días</span>
         </td>
-        <td>
-          <button pButton type="button" label="VER DETALLES" class="button-info"
+        <td *ngIf="tieneDesembolsosPagados()">
+          <button  pButton type="button" label="VER DETALLES" class="button-info"
             (click)="verDetalle(desembolso)"></button>
         </td>
-        <td>
+        <td *ngIf="tieneDesembolsosProcesados()">
           <p-tableCheckbox [value]="desembolso" class="checkbox"></p-tableCheckbox>
         </td>
       </tr>
@@ -99,7 +98,7 @@
     <!-- Mensaje cuando no hay datos -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td [attr.colspan]="tieneDesembolsosProcesados() ? '11' : '9'" class="text-center"
+        <td [attr.colspan]="tieneDesembolsosProcesados() ? '10' : '8'" class="text-center"
           style="text-transform: uppercase;">
           No hay registros disponibles.
         </td>

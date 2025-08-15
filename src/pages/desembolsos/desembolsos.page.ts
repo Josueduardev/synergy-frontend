@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SynergyProvider } from '../../providers/synergy.provider';
-import { desembolso } from '../../models/Desembolsos.model.';
+import { DesembolsoListado } from '../../models/Desembolsos.model.';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute } from '@angular/router';
 import { SidebarProvider } from '../../providers/sidebar.provider';
@@ -16,7 +16,7 @@ import { FiltrosDesembolsoComponent } from '../../components/filtros/Filtros-des
   imports: [FiltrosDesembolsoComponent, TablasDesembolsosComponents],
 })
 export class DesembolsosPage implements OnInit {
-  desembolsos: desembolso[] = [];  // Asegúrate de que sea un arreglo de tipo Solicitud
+  desembolsos: DesembolsoListado[] = [];
   filtros: any = {};  // Aquí guardamos los filtros seleccionados
   loading = false
 
@@ -80,10 +80,11 @@ export class DesembolsosPage implements OnInit {
       // Asegúrate de que 'desembolsos' sea un arreglo
       if (response?.data?.desembolsos) {
 
-        // Asegurar que siempre sea un array
-        this.desembolsos = Array.isArray(response.data.desembolsos)
-        ? response.data.desembolsos
-        : [response.data.desembolsos];
+        // Asegurar que siempre sea un array y tipar como DesembolsoListado[]
+        const lista = Array.isArray(response.data.desembolsos)
+          ? response.data.desembolsos
+          : [response.data.desembolsos];
+        this.desembolsos = (lista as unknown) as DesembolsoListado[];
 
 
       // ✅ CORREGIR: Calcular correctamente el total de registros

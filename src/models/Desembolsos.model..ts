@@ -18,6 +18,48 @@ export interface desembolso {
   comentario: string;
 }
 
+// Tipado para la respuesta del endpoint de listado de desembolsos
+// Backend: routes/desembolsos_route.py -> obtener_desembolsos
+export interface ProveedorListado {
+  id: string;
+  razon_social: string;
+  correo_electronico: string;
+  telefono: string;
+}
+
+export interface FacturaListado {
+  id: number;
+  no_factura: string;
+  monto: number;
+  fecha_emision: string;
+  fecha_vence: string;
+  proveedor: ProveedorListado;
+}
+
+export interface SolicitudListado {
+  id: number;
+  nombre_cliente: string;
+  contacto: string;
+  email: string;
+  iva: number;
+  subtotal: number;
+  total: number;
+  id_estado: number;
+  estado: string | null;
+  factura: FacturaListado;
+}
+
+export interface DesembolsoListado {
+  id: number;
+  fecha_desembolso: string;
+  monto_final: number;
+  metodo_pago: string;
+  estado: number;
+  fecha_actualizacion: string | null;
+  dias_restantes: number;
+  solicitud: SolicitudListado;
+}
+
 export interface DetalleDesembolso {
   estado: number;
   fecha_desembolso: string;

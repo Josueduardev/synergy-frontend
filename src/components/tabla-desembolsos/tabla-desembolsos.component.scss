@@ -251,19 +251,14 @@
 }
 
 .estado-azul {
-    margin: 10px auto;
-    /* margen superior/inferior y centrado horizontal */
+    margin: 2px auto;
     color: #61aee1;
     padding: 0.5rem 2rem;
-    /* un poco más de espacio horizontal para mejor forma */
     border-radius: 20px;
     text-align: center;
     display: block;
-    /* necesario para que el margin auto funcione */
     border: 2px solid #61aee1;
-    /* borde visible por todos lados */
     width: fit-content;
-    /* solo el ancho necesario */
 }
 
 

@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { Router } from '@angular/router';
-import { desembolso } from '../../models/Desembolsos.model.';
+import { DesembolsoListado } from '../../models/Desembolsos.model.';
 
 @Component({
   selector: 'app-tabla-desembolsos',
@@ -16,7 +16,7 @@ import { desembolso } from '../../models/Desembolsos.model.';
 })
 export class TablasDesembolsosComponents implements OnInit {
   // ✅ Propiedades de entrada para paginación
-  @Input() desembolsos: desembolso[] = [];
+  @Input() desembolsos: DesembolsoListado[] = [];
   @Input() totalRecords: number = 0;
   @Input() rows: number = 10;
   @Input() currentPage: number = 1;
@@ -26,7 +26,7 @@ export class TablasDesembolsosComponents implements OnInit {
   // ✅ Output para cambios de página
   @Output() onPageChange = new EventEmitter<any>();
 
-  selectedDesembolsos: desembolso[] = [];
+  selectedDesembolsos: DesembolsoListado[] = [];
   cols: any[] = [];
 
   constructor(private router: Router) {}
@@ -37,13 +37,13 @@ export class TablasDesembolsosComponents implements OnInit {
 
   private initializeColumns(): void {
     this.cols = [
-      { field: 'factura.proveedor.razon_social', header: 'Cliente', filterType: 'text' },
-      { field: 'factura.proveedor.correo_electronico', header: 'Correo', filterType: 'text' },
-      { field: 'factura.proveedor.nrc', header: 'NRC Emisor', filterType: 'text' },
-      { field: 'nombre_cliente', header: 'Encargado', filterType: 'text' },
-      { field: 'factura.proveedor.telefono', header: 'Teléfono', filterType: 'text' },
-      { field: 'factura.monto', header: 'Monto', filterType: 'text' },
-      { field: 'interes', header: 'Interés', filterType: 'text' },
+      { field: 'solicitud.factura.proveedor.razon_social', header: 'Cliente', filterType: 'text' },
+      { field: 'solicitud.factura.proveedor.correo_electronico', header: 'Correo', filterType: 'text' },
+      { field: 'solicitud.factura.no_factura', header: 'No. factura', filterType: 'text' },
+      { field: 'solicitud.nombre_cliente', header: 'Encargado', filterType: 'text' },
+      { field: 'solicitud.factura.proveedor.telefono', header: 'Teléfono', filterType: 'text' },
+      { field: 'monto_final', header: 'Monto a desembolsar', filterType: 'text' },
+      { field: 'metodo_pago', header: 'Método de pago', filterType: 'text' },
     ];
   }
 
