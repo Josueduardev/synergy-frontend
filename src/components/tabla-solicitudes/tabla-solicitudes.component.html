@@ -1,5 +1,5 @@
 <div class="card tabla-content">
-  <p-table #dt2 [value]="solicitudes" [lazy]="true" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords"
+  <p-table #dt2 [value]="displayedSolicitudes" [lazy]="true" [paginator]="true" [rows]="rows" [totalRecords]="totalRecords"
     [loading]="loading" [scrollable]="true" scrollHeight="60vh" dataKey="id" [first]="first"
     [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
     (onPage)="handlePageChange($event)" (onFilter)="handleFilter($event)" [(selection)]="selectedSolicitudes"

@@ -28,6 +28,10 @@ export class TablaSolicitudesComponent implements OnInit {
 
   selectedSolicitudes: Solicitud[] = [];
   cols: any[] = [];
+  // Estado para filtros locales y datos filtrados del lote actual
+  private filterMeta: any = {};
+  filteredSolicitudes: Solicitud[] = [];
+  private filtersActive: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -40,6 +44,8 @@ export class TablaSolicitudesComponent implements OnInit {
     // Si cambian las solicitudes, verificar selecciones guardadas
     if (changes['solicitudes'] && changes['solicitudes'].currentValue) {
       this.loadSelectedSolicitudes();
+      // Reaplicar filtros sobre el nuevo lote (página)
+      this.applyFilters();
     }
   }
 
@@ -98,14 +104,63 @@ export class TablaSolicitudesComponent implements OnInit {
     this.onPageChange.emit(event);
   }
 
+  // Dataset mostrado en la tabla (filtrado sobre el lote actual)
+  get displayedSolicitudes(): Solicitud[] {
+    return this.filtersActive ? this.filteredSolicitudes : this.solicitudes;
+  }
+
+  // Capturar filtros del p-table y aplicarlos localmente sin tocar paginación
   handleFilter(event: any): void {
-    // Al filtrar, reseteamos a la primera página
-    const lazyEvent = {
-      first: 0,
-      rows: this.rows,
-      filters: event.filters
-    };
-    this.onPageChange.emit(lazyEvent);
+    this.filterMeta = event?.filters || {};
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    const data = this.solicitudes || [];
+    const filters = this.filterMeta || {};
+
+    // Detectar si hay algún filtro activo
+    const hasAnyFilter = Object.values(filters).some((f: any) => Array.isArray(f?.constraints) ? f.constraints.some((c: any) => c?.value) : !!f?.value);
+    this.filtersActive = hasAnyFilter;
+    if (!this.filtersActive) {
+      this.filteredSolicitudes = [];
+      return;
+    }
+
+    this.filteredSolicitudes = data.filter((row: any) => this.matchesAll(row, filters));
+  }
+
+  private matchesAll(row: any, filters: any): boolean {
+    for (const field of Object.keys(filters)) {
+      const meta = filters[field];
+      if (!this.matches(row, field, meta)) return false;
+    }
+    return true;
+  }
+
+  private matches(row: any, fieldPath: string, meta: any): boolean {
+    const constraints = Array.isArray(meta?.constraints) ? meta.constraints : [{ value: meta?.value, matchMode: meta?.matchMode }];
+    const value = this.getByPath(row, fieldPath);
+    const valueStr = (value !== null && value !== undefined) ? String(value).toLowerCase() : '';
+
+    return constraints.every((c: any) => {
+      const search = (c?.value !== null && c?.value !== undefined) ? String(c.value).toLowerCase() : '';
+      if (!search) return true;
+      const mode = c?.matchMode || 'contains';
+      switch (mode) {
+        case 'contains':
+        default:
+          return valueStr.includes(search);
+      }
+    });
+  }
+
+  private getByPath(obj: any, path: string): any {
+    try {
+      return path.split('.').reduce((acc: any, key: string) => (acc && acc[key] !== undefined) ? acc[key] : undefined, obj);
+    } catch {
+      return undefined;
+    }
   }
 
   // Método para redirigir al detalle de la solicitud

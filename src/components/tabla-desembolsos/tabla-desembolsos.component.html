@@ -1,8 +1,8 @@
 <div class="card tabla-content">
-  <p-table #dt2 [value]="desembolsos" [lazy]="true" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="rows"
+  <p-table #dt2 [value]="displayedDesembolsos" [lazy]="true" [scrollable]="true" scrollHeight="60vh" dataKey="id" [rows]="rows"
     [first]="first" [loading]="loading" [paginator]="true" [totalRecords]="totalRecords" [showCurrentPageReport]="true"
     currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} registros"
-    (onPage)="handlePageChange($event)" [(selection)]="selectedDesembolsos"
+    (onPage)="handlePageChange($event)" (onFilter)="handleFilter($event)" [(selection)]="selectedDesembolsos"
     (selectionChange)="onSelectionChange($event)" [globalFilterFields]="[
             'solicitud.factura.proveedor.razon_social',
             'solicitud.factura.proveedor.correo_electronico',
@@ -24,7 +24,7 @@
         <th>Teléfono</th>
         <th>Monto a desembolsar</th>
         <th>Método de pago</th>
-        <th *ngIf="tieneDesembolsosProcesados()">Días restantes de pago</th>
+        <th *ngIf="tieneDesembolsosPagados()">Días restantes de pago</th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
         <th class="select-all"  *ngIf="tieneDesembolsosProcesados()">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
@@ -70,6 +70,7 @@
         </th>
         <th *ngIf="tieneDesembolsosProcesados()"></th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
+        <th *ngIf="tieneDesembolsosPagados()"></th>
         <th *ngIf="tieneDesembolsosProcesados()"></th>
       </tr>
     </ng-template>
@@ -84,7 +85,7 @@
         <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.telefono }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.metodo_pago }}</td>
-        <td *ngIf="tieneDesembolsosProcesados()">
+        <td *ngIf="tieneDesembolsosPagados()">
           <span [ngClass]="'estado-azul'">{{ desembolso.dias_restantes }} días</span>
         </td>
         <td *ngIf="tieneDesembolsosPagados()">
@@ -100,7 +101,7 @@
     <!-- Mensaje cuando no hay datos -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td [attr.colspan]="tieneDesembolsosProcesados() ? '10' : '8'" class="text-center"
+        <td [attr.colspan]="tieneDesembolsosPagados() ? '9' : '8'" class="text-center"
           style="text-transform: uppercase;">
           No hay registros disponibles.
         </td>

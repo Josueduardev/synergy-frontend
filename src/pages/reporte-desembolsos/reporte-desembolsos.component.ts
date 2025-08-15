@@ -50,13 +50,8 @@ export class ReporteDesembolsosComponent implements OnInit {
   async cargarDesembolsos() {
     try {
       this.loading = true;
-      const resp = await this.synergyProvider.getRequestDesem(1, 100, {});
-      const lista = (resp?.data?.desembolsos || []).filter((d: any) => {
-        // Mostrar solo desembolsos con estado=7 (pagada). El backend usa 7 en los reportes.
-        const est = d?.estado;
-        return est === 7 || est === '7' || String(est).toLowerCase() === 'pagada';
-      });
-      this.facturas = lista.map((d: any) => {
+      const resp = await this.synergyProvider.getRequestDesemPagadas(1, 100);
+      this.facturas = resp?.data?.desembolsos.map((d: any) => {
         const solicitud = d?.solicitud || {};
         const factura = solicitud?.factura || {};
         const proveedor = factura?.proveedor || {};

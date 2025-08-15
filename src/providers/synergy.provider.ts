@@ -469,6 +469,7 @@ export class SynergyProvider {
       ...filtros // Añadimos los filtros aquí
     };
 
+
     // Convertimos el objeto params en una cadena de consulta URL
     const queryString = new URLSearchParams(params).toString();
 
@@ -481,6 +482,17 @@ export class SynergyProvider {
     });
   }
 
+
+  getRequestDesemPagadas(page: number, per_page: number){
+    return new Promise<Root21>((resolve, reject) => {
+      this.httpProvider.get(`desembolso/obtener-desembolsos?page=${page}&per_page=${per_page}&estado=7`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
+  }
+  
   getUniqueRequestDesembolso(id: number) {
     return new Promise<Root21>((resolve, reject) => {
       this.httpProvider.get(`desembolso/detalle-desembolso?desembolso_id=${id}`).then(data => {
