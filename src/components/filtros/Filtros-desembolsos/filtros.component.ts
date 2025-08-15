@@ -36,10 +36,10 @@ export class FiltrosDesembolsoComponent {
   placeholder: string = 'Desde - Hasta'; // Texto del placeholder
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
-  mostrarBotonDesembolsar: boolean = true; // Controla la visibilidad del botón de desembolsar
-  mostrarBotonProcesar: boolean = false;   // Botón para procesar desembolsos sin procesar
-  mostrarBotonDescargar: boolean = false; // Controla la visibilidad del botón de descargar
-  @Input() onlySearch = false; // Muestra solo el campo de busqueda
+  mostrarBotonDesembolsar: boolean = true;
+  mostrarBotonProcesar: boolean = false; 
+  mostrarBotonDescargar: boolean = false;
+  @Input() onlySearch = false
 
   filtros: any = {}; // Filtros que serán aplicados
 
@@ -68,7 +68,7 @@ export class FiltrosDesembolsoComponent {
     // Solicitudes aprobadas
     if (tipo === 'aprobadas') {
       this.filtros = { estado: 2 }; 
-      this.mostrarBotonDesembolsar = true; 
+      this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = false;
       // Solicitudes denegadas
     } else if (tipo === 'denegadas') {
@@ -82,11 +82,16 @@ export class FiltrosDesembolsoComponent {
       this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = false;
     }
+    // Este es de solicitudes pagadas
+    else if (tipo === 'pagadas') {
+      this.filtros = { estado: 7 };
+      this.mostrarBotonDescargar = true;
+      this.mostrarBotonDesembolsar = false;
+      this.mostrarBotonProcesar = false;
+    }
     // Desembolsos sin procesar
     else if (tipo === 'sin-procesar') {
       this.filtros = { estado: 5 }; 
-      this.mostrarBotonDescargar = false;
-      this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = true;
     }
     // Este es de solicitudes sin procesar.
@@ -153,11 +158,6 @@ export class FiltrosDesembolsoComponent {
       this.calendar.hideOverlay();
       console.log('Calendar overlay closed.');
     }
-  }
-
-  // Función de búsqueda
-  buscar() {
-    console.log('Buscando:', this.searchText);
   }
 
   // Mostrar modal

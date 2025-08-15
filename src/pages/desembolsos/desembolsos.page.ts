@@ -46,10 +46,8 @@ export class DesembolsosPage implements OnInit {
 
   typeRoute(tipo:string){
     if(tipo=='procesadas'){
-      this.filtros={estado: 6}
-    }else if(tipo=='pagadas'){
       this.filtros={estado: 7}
-    }else{
+    } else{
       this.filtros={estado: 5}
     }
     this.loadDesembolsos();

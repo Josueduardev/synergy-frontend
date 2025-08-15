@@ -16,9 +16,9 @@
       </ng-template>
     </p-calendar>
     <app-filtros-button (abrirModal)="mostrarModal()"></app-filtros-button>
-    <app-descargar-button></app-descargar-button>
-    <app-desembolsar-button></app-desembolsar-button>
-    <button pButton type="button" label="Procesar" class="btn-desembolsar" (click)="procesarDesembolsos()"></button>
+    <!-- <app-descargar-button></app-descargar-button> -->
+    <!-- <app-desembolsar-button></app-desembolsar-button> -->
+    <button pButton type="button" *ngIf="filtros?.estado === 5" label="Procesar" class="btn-desembolsar" (click)="procesarDesembolsos()"></button>
   </div>
 
   <!-- Modal Filtros Avanzados -->
