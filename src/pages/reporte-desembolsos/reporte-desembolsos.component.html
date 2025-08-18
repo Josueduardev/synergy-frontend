@@ -25,13 +25,13 @@
 
     <p-table [value]="facturas" [paginator]="true" [rows]="10" [showCurrentPageReport]="true"
       currentPageReportTemplate="Mostrando {first} - {last} de {totalRecords} facturas"
-      [tableStyle]="{ 'min-width': '100%' }" dataKey="id">
+      [tableStyle]="{ 'min-width': '100%' }" dataKey="id" [(selection)]="selectedInvoices">
 
       <!-- Header con checkbox para seleccionar todo -->
       <ng-template pTemplate="header">
         <tr>
           <th style="width: 4rem">
-            <p-checkbox [(ngModel)]="selectAll" [binary]="true" (onChange)="toggleSelectAll($event)"></p-checkbox>
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           </th>
           <th>Proveedor ID</th>
           <th>Proveedor</th>
@@ -47,8 +47,7 @@
       <ng-template pTemplate="body" let-factura>
         <tr>
           <td>
-            <p-checkbox [(ngModel)]="selectedInvoices" [value]="factura.id"
-              (onChange)="onCheckboxChange($event, factura.id)"></p-checkbox>
+            <p-tableCheckbox [value]="factura"></p-tableCheckbox>
           </td>
           <td>{{ factura.proveedor_id || '-' }}</td>
           <td>{{ factura.proveedor_razon_social }}</td>
@@ -80,7 +79,8 @@
     <div class="info-card">
       <h4>Información del Reporte</h4>
       <ul>
-        <li><strong>Reporte Completo:</strong> Genera un Excel con todas las facturas <strong>Pagadas</strong> por parte del beneficiario
+        <li><strong>Reporte Completo:</strong> Genera un Excel con todas las facturas <strong>Pagadas</strong> por parte
+          del beneficiario
           del Factoraje</li>
         <li><strong>Reporte Seleccionado:</strong> Genera un Excel solo con las facturas que selecciones</li>
         <li><strong>Clasificación por Rangos:</strong> El reporte clasifica las facturas por días de vencimiento (0-30,

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
-import { CheckboxModule } from 'primeng/checkbox';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { SynergyProvider } from '../../providers/synergy.provider';
@@ -13,7 +12,7 @@ import { HasActionPermission } from '../../directivas/has-action-permission.dire
 @Component({
   selector: 'app-reporte-desembolsos',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, ButtonModule, CheckboxModule, ToastModule, HasActionPermission],
+  imports: [CommonModule, FormsModule, TableModule, ButtonModule, ToastModule, HasActionPermission],
   providers: [SynergyProvider, MessageService],
   templateUrl: './reporte-desembolsos.component.html',
   styleUrls: ['./reporte-desembolsos.component.scss']
@@ -21,8 +20,7 @@ import { HasActionPermission } from '../../directivas/has-action-permission.dire
 export class ReporteDesembolsosComponent implements OnInit {
 
   loading = false;
-  selectedInvoices: number[] = [];
-  selectAll: boolean = false;
+  selectedInvoices: any[] = [];
   // Datos reales desde API (desembolsos con factura relacionada)
   facturas: Array<{
     id: number; // id de desembolso (para selección y reporte seleccionado)
@@ -63,7 +61,7 @@ export class ReporteDesembolsosComponent implements OnInit {
           fecha_emision: factura.fecha_emision || '',
           fecha_vence: factura.fecha_vence || '',
           monto: Number(factura.monto ?? 0),
-          estado: String(d.estado ?? '') 
+          estado: String(d.estado ?? '')
         };
       });
     } catch (error) {
@@ -124,7 +122,10 @@ export class ReporteDesembolsosComponent implements OnInit {
         detail: `Preparando reporte para ${this.selectedInvoices.length} factura(s) seleccionada(s)...`
       });
 
-      const response = await this.synergyProvider.generarReporteCuentasPorPagarSeleccionadas(this.selectedInvoices);
+      // Extraer los IDs de las facturas seleccionadas
+      const facturaIds = this.selectedInvoices.map(factura => factura.id);
+
+      const response = await this.synergyProvider.generarReporteCuentasPorPagarSeleccionadas(facturaIds);
 
       console.log(response)
       // Crear y descargar el archivo
@@ -170,37 +171,5 @@ export class ReporteDesembolsosComponent implements OnInit {
       console.error('Error al descargar archivo:', error);
       throw new Error('Error al procesar la descarga del archivo');
     }
-  }
-
-  // Seleccionar/deseleccionar todas las facturas
-  toggleSelectAll(event: any) {
-    const checked = !!event?.checked;
-    this.selectedInvoices = checked ? this.facturas.map(f => f.id) : [];
-  }
-
-  // Verificar si todas las facturas están seleccionadas
-  isAllSelected(): boolean {
-    return this.selectedInvoices.length === this.facturas.length;
-  }
-
-  // Verificar si algunas facturas están seleccionadas
-  isPartialSelected(): boolean {
-    return this.selectedInvoices.length > 0 && this.selectedInvoices.length < this.facturas.length;
-  }
-
-
-
-  // Manejar cambio de checkbox individual
-  onCheckboxChange(event: any, facturaId: number): void {
-    const checked = !!event?.checked;
-    if (checked) {
-      if (!this.selectedInvoices.includes(facturaId)) {
-        this.selectedInvoices.push(facturaId);
-      }
-    } else {
-      this.selectedInvoices = this.selectedInvoices.filter(id => id !== facturaId);
-    }
-    // Sincronizar estado del checkbox de cabecera
-    this.selectAll = this.selectedInvoices.length > 0 && this.selectedInvoices.length === this.facturas.length;
   }
 }
