@@ -101,7 +101,8 @@ export class DetalleDesembolsoComponent implements OnInit {
       3: 'Completado',
       4: 'Rechazado',
       5: 'Cancelado',
-      6: 'Aprobado'
+      6: 'Aprobado',
+      7: 'Pagado'
     };
     return estados[estado as keyof typeof estados] || 'Desconocido';
   }
