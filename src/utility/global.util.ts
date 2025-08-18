@@ -19,6 +19,14 @@ export class Email {
   }
 }
 
+export function getCurrentDateFormatted(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0'); // Enero es 0
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}${month}${day}`; // Formato YYYYMMDD
+}
+
 export class MenuPermisssion {
 
   static format(permisos: Permission[]): PermissionNode[] {

@@ -8,6 +8,7 @@ import { ToastModule } from 'primeng/toast';
 import { SynergyProvider } from '../../providers/synergy.provider';
 import { SidebarProvider } from '../../providers/sidebar.provider';
 import { HasActionPermission } from '../../directivas/has-action-permission.directive';
+import { getCurrentDateFormatted } from '../../utility/global.util';
 
 @Component({
   selector: 'app-reporte-desembolsos',
@@ -83,8 +84,9 @@ export class ReporteDesembolsosComponent implements OnInit {
 
       const response = await this.synergyProvider.generarReporteCuentasPorPagar();
 
+      const safeDate = getCurrentDateFormatted();
       // Crear y descargar el archivo
-      this.descargarArchivo(response, 'reporte_cuentas_por_pagar.xlsx');
+      this.descargarArchivo(response, `reporte_facturas_${safeDate}.xlsx`);
 
       this.messageService.add({
         severity: 'success',
@@ -127,9 +129,8 @@ export class ReporteDesembolsosComponent implements OnInit {
 
       const response = await this.synergyProvider.generarReporteCuentasPorPagarSeleccionadas(facturaIds);
 
-      console.log(response)
-      // Crear y descargar el archivo
-      this.descargarArchivo(response, 'reporte_cuentas_por_pagar_seleccionadas.xlsx');
+      const safeDate = getCurrentDateFormatted();
+      this.descargarArchivo(response, `reporte_facturas_seleccionadas_${safeDate}.xlsx`);
 
       this.messageService.add({
         severity: 'success',
