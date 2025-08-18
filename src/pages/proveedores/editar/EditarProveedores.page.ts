@@ -12,8 +12,8 @@ import { Roles } from '../../../models/roles.model';
 
 @Component({
   selector: 'app-editarProveedores',
-  templateUrl: './editarProveedores.page.html',
-  styleUrls: ['./editarProveedores.page.scss'],
+  templateUrl: './EditarProveedores.page.html',
+  styleUrls: ['./EditarProveedores.page.scss'],
   standalone: true,
   providers: [SynergyProvider],
   imports: [
