@@ -83,6 +83,12 @@ export const routes: Routes = [
             data: { breadcrumb: 'Desembolsos Procesados' },
           },
           {
+            path: 'pagados',
+            component: DesembolsosPage,
+            canActivate: [AuthGuardApp],
+            data: { breadcrumb: 'Desembolsos Pagados por ICC' },
+          },
+          {
             path: 'detalle-desembolso/:id',
             component: DetalleDesembolsoComponent,
             canActivate: [AuthGuardApp],

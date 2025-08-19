@@ -39,6 +39,7 @@ export class FiltrosDesembolsoComponent {
   mostrarBotonDesembolsar: boolean = true;
   mostrarBotonProcesar: boolean = false; 
   mostrarBotonDescargar: boolean = false;
+  mostrarBotonCompletar: boolean = false;
   @Input() onlySearch = false
 
   filtros: any = {}; // Filtros que serán aplicados
@@ -70,29 +71,34 @@ export class FiltrosDesembolsoComponent {
       this.filtros = { estado: 2 }; 
       this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = false;
+      this.mostrarBotonCompletar = false;
       // Solicitudes denegadas
     } else if (tipo === 'denegadas') {
       this.filtros = { estado: 3 }; 
       this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = false;
+      this.mostrarBotonCompletar = false;
       // Desemsolbosos proesados
     } else if (tipo === 'procesadas') {
-      this.filtros = { estado: 6 }; 
+      this.filtros = { estado: 7 }; 
       this.mostrarBotonDescargar = true;
+      this.mostrarBotonCompletar = true;
       this.mostrarBotonDesembolsar = false; 
       this.mostrarBotonProcesar = false;
     }
-    // Este es de solicitudes pagadas
-    else if (tipo === 'pagadas') {
-      this.filtros = { estado: 7 };
-      this.mostrarBotonDescargar = true;
+    else if (tipo === 'pagados') {
+      this.filtros = { estado: 8 }; 
+      this.mostrarBotonDescargar = false;
       this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
+      this.mostrarBotonCompletar = false;
     }
     // Desembolsos sin procesar
     else if (tipo === 'sin-procesar') {
       this.filtros = { estado: 5 }; 
       this.mostrarBotonProcesar = true;
+      this.mostrarBotonCompletar = false;
+      this.mostrarBotonCompletar = false;
     }
     // Este es de solicitudes sin procesar.
     else {
@@ -191,6 +197,26 @@ export class FiltrosDesembolsoComponent {
       this.messageService.add({ severity: 'info', summary: 'Procesando', detail: 'Actualizando desembolsos seleccionados...' });
       const resp = await this.synergyProvider.actualizarDesembolsos(ids);
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: resp?.message || 'Desembolsos actualizados.' });
+      // limpiar selección
+      localStorage.removeItem('desembolsosSeleccionados');
+      // recargar lista aplicando filtros actuales
+      this.loadSolicitudes();
+    } catch (error: any) {
+      console.error('Error al procesar desembolsos:', error);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.message || 'No se pudo procesar.' });
+    }
+  }
+
+  async pagarDesembolsos() {
+    try {
+      const ids: number[] = JSON.parse(localStorage.getItem('desembolsosSeleccionados') || '[]');
+      if (!ids || ids.length === 0) {
+        this.messageService.add({ severity: 'warn', summary: 'Procesar', detail: 'Seleccione al menos un desembolso.' });
+        return;
+      }
+      this.messageService.add({ severity: 'info', summary: 'Procesando', detail: 'Actualizando desembolsos seleccionados...' });
+      const resp = await this.synergyProvider.pagarDesembolsos(ids);
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: resp?.message || 'Desembolsos pagados.' });
       // limpiar selección
       localStorage.removeItem('desembolsosSeleccionados');
       // recargar lista aplicando filtros actuales

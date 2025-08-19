@@ -43,11 +43,11 @@ export class SidebarComponent implements OnInit {
     const hasSubmenu = item.children?.some(
       (subItem: any) => subItem.menu.descripcion === 'MENU' || subItem.menu.descripcion === 'SUBMENU'
     );
-    
+
     // Mostrar el menú solo si no está excluido o tiene submenús válidos
     return !(excludedMenus.includes(item.menu.id) && !hasSubmenu);
   }
-  
+
 
   toggleSidebar() {
     this.visible = !this.visible;

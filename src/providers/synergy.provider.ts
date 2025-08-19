@@ -492,15 +492,15 @@ export class SynergyProvider {
       });
     });
   }
-  
-  getUniqueRequestDesembolso(id: number) {
+
+  getRequestDesemCompletadas(page: number, per_page: number){
     return new Promise<Root21>((resolve, reject) => {
-      this.httpProvider.get(`desembolso/detalle-desembolso?desembolso_id=${id}`).then(data => {
-        resolve(data)
-      }).catch(err => {
-        reject(err)
-      })
-    })
+      this.httpProvider.get(`desembolso/obtener-desembolsos?page=${page}&per_page=${per_page}&estado=8`).then(data => {
+        resolve(data);
+      }).catch(error => {
+        reject(error);
+      });
+    });
   }
 
   // Actualizar estado de desembolsos seleccionados (procesar)
@@ -516,6 +516,19 @@ export class SynergyProvider {
       });
     });
   }
+    // Actualizar estado de desembolsos seleccionados (procesar)
+    pagarDesembolsos(ids: number[]) {
+      return new Promise<any>((resolve, reject) => {
+        const sender = {
+          desembolsos: ids
+        };
+        this.httpProvider.patch(`desembolso/pagar-desembolsos`, sender).then(data => {
+          resolve(data);
+        }).catch(error => {
+          reject(error);
+        });
+      });
+    }
 
   processRequests(ids: string[], numeroInicial: number = 1): Promise<any> {
     return new Promise((resolve, reject) => {

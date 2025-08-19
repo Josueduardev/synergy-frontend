@@ -26,7 +26,7 @@
         <th>Método de pago</th>
         <th *ngIf="tieneDesembolsosPagados()">Días restantes de pago</th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
-        <th class="select-all"  *ngIf="tieneDesembolsosProcesados()">
+        <th class="select-all"  *ngIf="tieneDesembolsosProcesados() || tieneDesembolsosPagados()">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           <span class="title-checkbox">Seleccionar todo</span>
         </th>
@@ -71,6 +71,7 @@
         <th *ngIf="tieneDesembolsosProcesados()"></th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
+        <th *ngIf="tieneDesembolsosPagados()"></th>
         <th *ngIf="tieneDesembolsosProcesados()"></th>
       </tr>
     </ng-template>
@@ -92,7 +93,7 @@
           <button pButton type="button" label="VER DETALLES" class="button-info"
             (click)="verDetalle(desembolso)"></button>
         </td>
-        <td *ngIf="tieneDesembolsosProcesados()">
+        <td *ngIf="tieneDesembolsosProcesados() || tieneDesembolsosPagados()">
           <p-tableCheckbox [value]="desembolso" class="checkbox"></p-tableCheckbox>
         </td>
       </tr>
@@ -101,7 +102,7 @@
     <!-- Mensaje cuando no hay datos -->
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td [attr.colspan]="tieneDesembolsosPagados() ? '9' : '8'" class="text-center"
+        <td [attr.colspan]="tieneDesembolsosPagados() ? '10' : '9'" class="text-center"
           style="text-transform: uppercase;">
           No hay registros disponibles.
         </td>

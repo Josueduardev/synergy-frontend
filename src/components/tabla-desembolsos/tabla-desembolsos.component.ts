@@ -142,6 +142,10 @@ export class TablasDesembolsosComponents implements OnInit, OnChanges {
     return this.desembolsos.some(s => s.estado === 7);
   }
 
+  tieneDesembolsosPagadosICC(): boolean {
+    return this.desembolsos.some(s => s.estado === 8);
+  }
+
   obtenerDesembolsosSeleccionados(): void {
     console.log("Desembolsos seleccionados:", this.selectedDesembolsos);
   }
