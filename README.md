@@ -2,26 +2,123 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.11.
 
-## Development server
+## Requisitos Previos
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Antes de ejecutar este proyecto, necesitas tener instalado:
 
-## Code scaffolding
+- **Node.js** versión 18.17.0 o superior (recomendado LTS)
+- **npm** (viene incluido con Node.js)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Verificar instalación
+```bash
+node --version
+npm --version
+```
 
-## Build
+## Instalación y Ejecución del Proyecto
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### 1. Clonar/Descargar el proyecto
+```bash
+git clone https://github.com/Josueduardev/synergy-frontend
+cd synergy-frontend
 
-## Running unit tests
+# O simplemente extraer el archivo ZIP en tu carpeta deseada
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 2. Instalar dependencias
+```bash
+npm install
+```
 
-## Running end-to-end tests
+**Nota importante**: No necesitas instalar Angular CLI globalmente. El proyecto ya incluye la versión correcta como dependencia de desarrollo.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 3. Ejecutar el proyecto
+```bash
+npm start
+```
 
-## Further help
+O alternativamente:
+```bash
+npm run start
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 4. Acceder a la aplicación
+Una vez que el servidor esté corriendo, navega a `http://localhost:4200/` en tu navegador.
+
+La aplicación se recargará automáticamente si cambias alguno de los archivos fuente.
+
+## Comandos Disponibles
+
+- `npm start` - Inicia el servidor de desarrollo
+- `npm run build` - Construye el proyecto para producción
+- `npm run watch` - Construye el proyecto en modo watch
+- `npm test` - Ejecuta las pruebas unitarias
+
+## Solución de Problemas Comunes
+
+### Error: "ng command not found"
+**Solución**: No necesitas instalar Angular CLI globalmente. Usa `npm start` en su lugar.
+
+### Error: "Node version incompatible"
+**Solución**: Asegúrate de tener Node.js versión 18.17.0 o superior.
+
+### Error: "npm install failed"
+**Solución**: 
+1. Elimina la carpeta `node_modules` y el archivo `package-lock.json`
+2. Ejecuta `npm cache clean --force`
+3. Vuelve a ejecutar `npm install`
+
+### Error: "Port 4200 already in use"
+**Solución**: 
+1. Cambia el puerto: `npm start -- --port 4201`
+2. O encuentra y cierra el proceso que está usando el puerto 4200
+
+## Estructura del Proyecto
+
+- `src/app/` - Componentes principales de la aplicación
+- `src/pages/` - Páginas de la aplicación
+- `src/components/` - Componentes reutilizables
+- `src/models/` - Modelos de datos
+- `src/guards/` - Guards de autenticación
+- `src/interceptors/` - Interceptores HTTP
+
+## Tecnologías Utilizadas
+
+- Angular 17.3.0
+- PrimeNG 17.18.12
+- TypeScript 5.4.2
+- RxJS 7.8.0
+
+## Desarrollo
+
+### Generar nuevos componentes
+```bash
+npx ng generate component nombre-componente
+```
+
+### Generar otros elementos
+```bash
+npx ng generate directive|pipe|service|class|guard|interface|enum nombre
+```
+
+## Construcción para Producción
+
+```bash
+npm run build
+```
+
+Los archivos de construcción se almacenarán en el directorio `dist/`.
+
+## Pruebas
+
+```bash
+npm test
+```
+
+Ejecuta las pruebas unitarias usando Karma.
+
+## Más Ayuda
+
+Para obtener más ayuda sobre Angular CLI:
+- `npx ng help`
+- [Angular CLI Overview and Command Reference](https://angular.io/cli)
