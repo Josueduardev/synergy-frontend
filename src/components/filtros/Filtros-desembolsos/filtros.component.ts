@@ -9,7 +9,6 @@ import { MessageService } from 'primeng/api';
 import { FiltrosButtonComponent } from '../filtros-button/filtros-button.component';
 import { DesembolsarButtonComponent } from '../desembolsar-button/desembolsar-button.component';
 import { ModalFiltrosAvanzadosComponent } from '../modal-filtros-avanzados/modal-filtros-avanzados.component';
-import { DescargarButtonComponent } from '../descargar-button/descargar-button.component';
 import { ModalFiltrosAvanzadosDesembolsosComponent } from './modal-filtros-avanzados-desembolsos.component';
 import { SynergyProvider } from '../../../providers/synergy.provider';
 
@@ -25,7 +24,6 @@ import { SynergyProvider } from '../../../providers/synergy.provider';
     FiltrosButtonComponent,
     DesembolsarButtonComponent,
     ModalFiltrosAvanzadosDesembolsosComponent,
-    DescargarButtonComponent
   ],
   templateUrl: './filtros.component.html',
   styleUrls: ['./filtros.component.scss'],
@@ -37,7 +35,7 @@ export class FiltrosDesembolsoComponent {
   mostrarModalFiltros: boolean = false; // Controla la visibilidad del modal
 
   mostrarBotonDesembolsar: boolean = true;
-  mostrarBotonProcesar: boolean = false; 
+  mostrarBotonProcesar: boolean = false;
   mostrarBotonDescargar: boolean = false;
   mostrarBotonCompletar: boolean = false;
   @Input() onlySearch = false
@@ -68,26 +66,26 @@ export class FiltrosDesembolsoComponent {
   typeRoute(tipo: string) {
     // Solicitudes aprobadas
     if (tipo === 'aprobadas') {
-      this.filtros = { estado: 2 }; 
-      this.mostrarBotonDesembolsar = false; 
+      this.filtros = { estado: 2 };
+      this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
       this.mostrarBotonCompletar = false;
       // Solicitudes denegadas
     } else if (tipo === 'denegadas') {
-      this.filtros = { estado: 3 }; 
-      this.mostrarBotonDesembolsar = false; 
+      this.filtros = { estado: 3 };
+      this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
       this.mostrarBotonCompletar = false;
       // Desemsolbosos proesados
     } else if (tipo === 'procesadas') {
-      this.filtros = { estado: 7 }; 
+      this.filtros = { estado: 7 };
       this.mostrarBotonDescargar = true;
       this.mostrarBotonCompletar = true;
-      this.mostrarBotonDesembolsar = false; 
+      this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
     }
     else if (tipo === 'pagados') {
-      this.filtros = { estado: 8 }; 
+      this.filtros = { estado: 8 };
       this.mostrarBotonDescargar = false;
       this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
@@ -95,15 +93,15 @@ export class FiltrosDesembolsoComponent {
     }
     // Desembolsos sin procesar
     else if (tipo === 'sin-procesar') {
-      this.filtros = { estado: 5 }; 
+      this.filtros = { estado: 5 };
       this.mostrarBotonProcesar = true;
       this.mostrarBotonCompletar = false;
       this.mostrarBotonCompletar = false;
     }
     // Este es de solicitudes sin procesar.
     else {
-      this.filtros = { estado: 1 }; 
-      this.mostrarBotonDesembolsar = false; 
+      this.filtros = { estado: 1 };
+      this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
     }
     console.log("Botón de desembolsar:", this.mostrarBotonDesembolsar);
