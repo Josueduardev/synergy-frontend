@@ -17,10 +17,16 @@
     </p-calendar>
     <app-filtros-button (abrirModal)="mostrarModal()"></app-filtros-button>
     <!-- <app-desembolsar-button></app-desembolsar-button> -->
-    <button pButton type="button" *ngIf="filtros?.estado === 5" label="Procesar" icon="pi pi-cog"
-      class="btn-desembolsar" (click)="procesarDesembolsos()"></button>
-    <button pButton type="button" *ngIf="filtros?.estado === 7" label="Completar" icon="pi pi-money-bill"
-      class="btn-desembolsar" (click)="pagarDesembolsos()"></button>
+
+    <div *ngIf="mostrarBotonProcesar">
+      <app-procesar-button></app-procesar-button>
+    </div>  
+
+    <div *ngIf="mostrarBotonCompletar">
+      <app-completar-button></app-completar-button>
+    </div>
+
+
   </div>
 
   <!-- Modal Filtros Avanzados -->

@@ -7,10 +7,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
 import { FiltrosButtonComponent } from '../filtros-button/filtros-button.component';
-import { DesembolsarButtonComponent } from '../desembolsar-button/desembolsar-button.component';
-import { ModalFiltrosAvanzadosComponent } from '../modal-filtros-avanzados/modal-filtros-avanzados.component';
 import { ModalFiltrosAvanzadosDesembolsosComponent } from './modal-filtros-avanzados-desembolsos.component';
 import { SynergyProvider } from '../../../providers/synergy.provider';
+import { ProcesarButtonComponent } from "../procesar-button/procesar-button.component";
+import { CompletarButtonComponent } from "../completar-button/completar-button.component";
+import { DesembolsarButtonComponent } from "../desembolsar-button/desembolsar-button.component";
 
 @Component({
   selector: 'app-filtros-desembolso',
@@ -22,9 +23,11 @@ import { SynergyProvider } from '../../../providers/synergy.provider';
     InputTextModule,
     ButtonModule,
     FiltrosButtonComponent,
-    DesembolsarButtonComponent,
     ModalFiltrosAvanzadosDesembolsosComponent,
-  ],
+    ProcesarButtonComponent,
+    CompletarButtonComponent,
+    DesembolsarButtonComponent
+],
   templateUrl: './filtros.component.html',
   styleUrls: ['./filtros.component.scss'],
 })
@@ -79,7 +82,7 @@ export class FiltrosDesembolsoComponent {
       // Desemsolbosos proesados
     } else if (tipo === 'procesadas') {
       this.filtros = { estado: 7 };
-      this.mostrarBotonDescargar = true;
+      this.mostrarBotonDescargar = false;
       this.mostrarBotonCompletar = true;
       this.mostrarBotonDesembolsar = false;
       this.mostrarBotonProcesar = false;
@@ -95,7 +98,6 @@ export class FiltrosDesembolsoComponent {
     else if (tipo === 'sin-procesar') {
       this.filtros = { estado: 5 };
       this.mostrarBotonProcesar = true;
-      this.mostrarBotonCompletar = false;
       this.mostrarBotonCompletar = false;
     }
     // Este es de solicitudes sin procesar.
@@ -184,26 +186,6 @@ export class FiltrosDesembolsoComponent {
     }
   }
 
-  // Procesar desembolsos seleccionados (estado -> 7)
-  async procesarDesembolsos() {
-    try {
-      const ids: number[] = JSON.parse(localStorage.getItem('desembolsosSeleccionados') || '[]');
-      if (!ids || ids.length === 0) {
-        this.messageService.add({ severity: 'warn', summary: 'Procesar', detail: 'Seleccione al menos un desembolso.' });
-        return;
-      }
-      this.messageService.add({ severity: 'info', summary: 'Procesando', detail: 'Actualizando desembolsos seleccionados...' });
-      const resp = await this.synergyProvider.actualizarDesembolsos(ids);
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: resp?.message || 'Desembolsos actualizados.' });
-      // limpiar selección
-      localStorage.removeItem('desembolsosSeleccionados');
-      // recargar lista aplicando filtros actuales
-      this.loadSolicitudes();
-    } catch (error: any) {
-      console.error('Error al procesar desembolsos:', error);
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.message || 'No se pudo procesar.' });
-    }
-  }
 
   async pagarDesembolsos() {
     try {
