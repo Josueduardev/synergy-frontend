@@ -11,7 +11,6 @@ import { ModalFiltrosAvanzadosDesembolsosComponent } from './modal-filtros-avanz
 import { SynergyProvider } from '../../../providers/synergy.provider';
 import { ProcesarButtonComponent } from "../procesar-button/procesar-button.component";
 import { CompletarButtonComponent } from "../completar-button/completar-button.component";
-import { DesembolsarButtonComponent } from "../desembolsar-button/desembolsar-button.component";
 
 @Component({
   selector: 'app-filtros-desembolso',
@@ -26,7 +25,6 @@ import { DesembolsarButtonComponent } from "../desembolsar-button/desembolsar-bu
     ModalFiltrosAvanzadosDesembolsosComponent,
     ProcesarButtonComponent,
     CompletarButtonComponent,
-    DesembolsarButtonComponent
 ],
   templateUrl: './filtros.component.html',
   styleUrls: ['./filtros.component.scss'],

@@ -3,7 +3,6 @@
   align-items: center;
   margin: 0 2rem;
   padding: 1rem;
-  gap: 0.5rem;
   background-color: #f5f7fb;
 
   ::ng-deep .p-inputtext{
@@ -34,6 +33,7 @@
     display: flex;
     align-items: center;
     position: relative;
+    gap: 0.4rem;
     flex-shrink: 0;
 
     .calendar-icon {
