@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, ViewChild, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Calendar, CalendarModule } from 'primeng/calendar';
@@ -48,7 +48,7 @@ export class FiltrosDesembolsoComponent {
   @Output() filtersChanges = new EventEmitter<any>();
   @Output() onSearch = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute, private messageService: MessageService, private synergyProvider: SynergyProvider) {
+  constructor(    private router: Router, private route: ActivatedRoute, private messageService: MessageService, private synergyProvider: SynergyProvider) {
     // Llamamos al método que determina el filtro según la ruta
     this.applyRouteFilter();
 
@@ -109,6 +109,10 @@ export class FiltrosDesembolsoComponent {
   }
 
 
+
+  redirigirReportes() {
+    return this.router.navigate(['/reportes/desembolsos']);
+  }
 
   // Cargar solicitudes según los filtros
   loadSolicitudes() {

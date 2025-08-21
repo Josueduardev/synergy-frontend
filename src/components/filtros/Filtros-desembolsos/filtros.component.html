@@ -18,9 +18,17 @@
     <app-filtros-button (abrirModal)="mostrarModal()"></app-filtros-button>
     <!-- <app-desembolsar-button></app-desembolsar-button> -->
 
+    <div *ngIf="mostrarBotonCompletar">
+      <button pButton type="button" class="btn-desembolsar" (click)="redirigirReportes()">
+        <i class="pi pi-file-export"></i> Redirigir a reportes
+      </button>
+    </div>
+
     <div *ngIf="mostrarBotonProcesar">
       <app-procesar-button></app-procesar-button>
-    </div>  
+    </div>
+
+
 
     <div *ngIf="mostrarBotonCompletar">
       <app-completar-button></app-completar-button>

@@ -173,7 +173,7 @@ export const routes: Routes = [
             path: 'desembolsos',
             component: ReporteDesembolsosComponent,
             canActivate: [AuthGuardApp],
-            data: { breadcrumb: 'Reportes de Desembolsos' },
+            data: { breadcrumb: 'Reportes de Desembolsos Procesados' },
           },
         ],
       },
