@@ -185,25 +185,4 @@ export class FiltrosDesembolsoComponent {
       });
     }
   }
-
-
-  async pagarDesembolsos() {
-    try {
-      const ids: number[] = JSON.parse(localStorage.getItem('desembolsosSeleccionados') || '[]');
-      if (!ids || ids.length === 0) {
-        this.messageService.add({ severity: 'warn', summary: 'Procesar', detail: 'Seleccione al menos un desembolso.' });
-        return;
-      }
-      this.messageService.add({ severity: 'info', summary: 'Procesando', detail: 'Actualizando desembolsos seleccionados...' });
-      const resp = await this.synergyProvider.pagarDesembolsos(ids);
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: resp?.message || 'Desembolsos pagados.' });
-      // limpiar selección
-      localStorage.removeItem('desembolsosSeleccionados');
-      // recargar lista aplicando filtros actuales
-      this.loadSolicitudes();
-    } catch (error: any) {
-      console.error('Error al procesar desembolsos:', error);
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: error?.message || 'No se pudo procesar.' });
-    }
-  }
 }
