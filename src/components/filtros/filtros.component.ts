@@ -9,7 +9,6 @@ import { FiltrosButtonComponent } from './filtros-button/filtros-button.componen
 import { DesembolsarButtonComponent } from './desembolsar-button/desembolsar-button.component';
 import { ModalFiltrosAvanzadosComponent } from './modal-filtros-avanzados/modal-filtros-avanzados.component';
 import { MessageService } from 'primeng/api';
-import { DescargarButtonComponent } from './descargar-button/descargar-button.component';
 
 @Component({
   selector: 'app-filtros',
@@ -23,7 +22,6 @@ import { DescargarButtonComponent } from './descargar-button/descargar-button.co
     FiltrosButtonComponent,
     DesembolsarButtonComponent,
     ModalFiltrosAvanzadosComponent,
-    DescargarButtonComponent
   ],
   templateUrl: './filtros.component.html',
   styleUrls: ['./filtros.component.scss'],
