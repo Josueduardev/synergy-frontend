@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpProvider } from './http.provider';
 import { Root0, Root10, Root11, Root12, Root13, Root14, Root15, Root16, Root17, Root17u, Root18, Root19, Root20, Root21, Root22 } from './interface-http';
 import { Factura } from '../models/factura.model';
+import { getCurrentDateFormatted } from '../utility/global.util';
 
 @Injectable()
 export class SynergyProvider {
@@ -530,14 +531,65 @@ export class SynergyProvider {
       });
     }
 
-  processRequests(ids: string[], numeroInicial: number = 1): Promise<any> {
+  /**
+   * Procesa las solicitudes seleccionadas y devuelve un archivo Excel con los desembolsos
+   * @param ids Array de IDs de solicitudes a procesar
+   * @param numeroInicial Número inicial para la numeración incremental
+   * @returns Promise<Blob> - Archivo Excel con los desembolsos
+   */
+  processRequests(ids: string[], numeroInicial: number = 1): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const sender = {
         ids: ids,
         numero_inicial: numeroInicial
       };
 
-      this.httpProvider.post(`solicitud/procesar-solicitudes`, sender).then(data => {
+      this.httpProvider.postBlob(`solicitud/procesar-solicitudes`, sender).then(data => {
+        resolve(data);
+        console.log(data)
+      }).catch(error => {
+        // Si el error viene como blob, intentar leer el mensaje de error
+        if (error instanceof Blob) {
+          this.handleBlobError(error).then(errorMessage => {
+            reject(new Error(errorMessage));
+          }).catch(() => {
+            reject(new Error('Error al procesar las solicitudes'));
+          });
+        } else {
+          reject(error);
+        }
+      });
+    });
+  }
+
+  /**
+   * Maneja errores que vienen como blob desde el backend
+   */
+  private async handleBlobError(blob: Blob): Promise<string> {
+    try {
+      const text = await blob.text();
+      // Intentar parsear como JSON para obtener el mensaje de error
+      try {
+        const errorData = JSON.parse(text);
+        return errorData.message || errorData.detail || 'Error al procesar las solicitudes';
+      } catch {
+        // Si no es JSON, devolver el texto como está
+        return text || 'Error al procesar las solicitudes';
+      }
+    } catch {
+      return 'Error al procesar las solicitudes';
+    }
+  }
+
+  /**
+   * Genera un PDF individual para una solicitud específica
+   * Este método usa el endpoint /generar-pdf que sí devuelve PDFs
+   * @param idSolicitud ID de la solicitud para generar el PDF
+   * @returns Promise<Blob> - Archivo PDF de la solicitud
+   */
+  generateRequestPDF(idSolicitud: string): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      this.httpProvider.getBlob(`solicitud/generar-pdf?id_solicitud=${idSolicitud}`).then(data => {
         resolve(data);
       }).catch(error => {
         reject(error);
