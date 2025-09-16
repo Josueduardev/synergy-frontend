@@ -130,7 +130,11 @@ export class DesembolsarButtonComponent implements OnInit {
         // Crear elemento de descarga - El backend devuelve Excel, no PDF
         const link = document.createElement('a');
         link.href = blobUrl;
-        link.download = `Desembolsos_${new Date().toISOString().split('T')[0]}.xlsx`;
+        const fecha = new Date();
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const año = fecha.getFullYear();
+        link.download = `Desembolsos ${dia}${mes}${año}.xlsx`;
 
         // Simular clic para descargar
         document.body.appendChild(link);
