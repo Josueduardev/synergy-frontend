@@ -98,7 +98,7 @@ export class DesembolsarButtonComponent implements OnInit {
     this.processSolicitudes();
   }
 
-  async processSolicitudes(numeroIngresado: number = this.numeroIngresado ?? 0, id_solicitudes: string[] = this.id_solicitudes) {
+  async processSolicitudes(numeroIngresado: string = this.numeroIngresado?.toString() ?? "1", id_solicitudes: string[] = this.id_solicitudes) {
     this.loading = true;
     this.id_solicitudes = JSON.parse(localStorage.getItem('solicitudesSeleccionadas') || '[]');
 

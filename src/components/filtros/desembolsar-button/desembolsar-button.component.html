@@ -6,7 +6,7 @@
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-content">
     <h3>Ingrese un número</h3>
-    <input type="number" [(ngModel)]="numeroIngresado" />
+    <input type="text" [(ngModel)]="numeroIngresado" />
 
     <div class="modal-buttons">
       <button (click)="cerrarModal()" [disabled]="loading">Cancelar</button>
