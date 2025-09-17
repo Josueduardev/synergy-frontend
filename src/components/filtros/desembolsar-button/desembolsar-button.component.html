@@ -5,8 +5,26 @@
 <!-- Modal -->
 <div class="modal" *ngIf="mostrarModal">
   <div class="modal-content">
-    <h3>Ingrese un número</h3>
-    <input type="text" [(ngModel)]="numeroIngresado" />
+    <h3>Parámetros del desembolso</h3>
+    <div class="form-field">
+      <label for="numeroInicial">Número Correlativo</label>
+      <input id="numeroInicial" type="text" [(ngModel)]="numeroIngresado" />
+    </div>
+
+    <div class="form-field">
+      <label for="fechaDesembolso">Fecha de desembolso</label>
+      <p-calendar
+      id="fechaDesembolso"
+      [(ngModel)]="fechaSeleccionada"
+      [minDate]="minDate"
+      dateFormat="dd/mm/yy"
+      inputId="fechaDesembolsoInput"
+      placeholder="Selecciona una fecha"
+      [style]="{ width: '100%', marginBottom: '1rem' }"
+      [inputStyle]="{ padding: '0.8rem', fontSize: '0.95rem' }"
+      [panelStyle]="{ fontSize: '0.95rem', padding: '0.8rem'}"
+    ></p-calendar>
+    </div>
 
     <div class="modal-buttons">
       <button (click)="cerrarModal()" [disabled]="loading">Cancelar</button>

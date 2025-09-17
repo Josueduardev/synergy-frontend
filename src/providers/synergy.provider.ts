@@ -537,11 +537,12 @@ export class SynergyProvider {
    * @param numeroInicial Número inicial para la numeración incremental
    * @returns Promise<Blob> - Archivo Excel con los desembolsos
    */
-  processRequests(ids: string[], numeroInicial: string = "1"): Promise<Blob> {
+  processRequests(ids: string[], numeroInicial: string = "1", fecha_iso: string = ""): Promise<Blob> {
     return new Promise((resolve, reject) => {
       const sender = {
         ids: ids,
-        numero_inicial: numeroInicial
+        numero_inicial: numeroInicial,
+        fecha_iso: fecha_iso
       };
 
       this.httpProvider.postBlob(`solicitud/procesar-solicitudes`, sender).then(data => {

@@ -5,19 +5,24 @@ import { SidebarProvider } from '../../../providers/sidebar.provider';
 import { SynergyProvider } from '../../../providers/synergy.provider';
 import { MessageService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CalendarModule } from 'primeng/calendar';
 
 @Component({
   selector: 'app-desembolsar-button',
   standalone: true,
   templateUrl: './desembolsar-button.component.html',
   styleUrls: ['./desembolsar-button.component.scss'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, CalendarModule]
 })
 export class DesembolsarButtonComponent implements OnInit {
   mostrarModal: boolean = false;
   numeroIngresado: number | null = null;
   id_solicitudes: string[] = [];
+  fecha_iso: string = "";
   loading: boolean = false;
+  // Fecha seleccionada desde el datepicker
+  fechaSeleccionada: Date | null = null;
+  minDate: Date = new Date();
 
     constructor(
       private sidebarProvider: SidebarProvider,
@@ -36,6 +41,7 @@ export class DesembolsarButtonComponent implements OnInit {
   cerrarModal(): void {
     this.mostrarModal = false;
     this.numeroIngresado = null;
+    this.fechaSeleccionada = null;
   }
 
   /**
@@ -98,7 +104,7 @@ export class DesembolsarButtonComponent implements OnInit {
     this.processSolicitudes();
   }
 
-  async processSolicitudes(numeroIngresado: string = this.numeroIngresado?.toString() ?? "1", id_solicitudes: string[] = this.id_solicitudes) {
+  async processSolicitudes(numeroIngresado: string = this.numeroIngresado?.toString() ?? "1", id_solicitudes: string[] = this.id_solicitudes, _fecha_iso?: string) {
     this.loading = true;
     this.id_solicitudes = JSON.parse(localStorage.getItem('solicitudesSeleccionadas') || '[]');
 
@@ -114,7 +120,9 @@ export class DesembolsarButtonComponent implements OnInit {
     }
 
     try {
-      const response = await this.synergyProvider.processRequests(this.id_solicitudes, numeroIngresado);
+      // Formatear la fecha seleccionada al formato requerido por el backend (YYYYMMDD)
+      const fecha_iso = this.formatFechaYYYYMMDD(this.fechaSeleccionada);
+      const response = await this.synergyProvider.processRequests(this.id_solicitudes, numeroIngresado, fecha_iso);
       console.log('Response from processRequests:', response);
 
       // Generar y descargar el archivo Excel
@@ -194,5 +202,16 @@ export class DesembolsarButtonComponent implements OnInit {
     } finally {
       localStorage.removeItem('solicitudesSeleccionadas');
     }
+  }
+
+  /**
+   * Convierte un objeto Date a string con formato YYYYMMDD. Si no hay fecha, retorna cadena vacía.
+   */
+  private formatFechaYYYYMMDD(date: Date | null): string {
+    if (!date) return "";
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}${month}${day}`;
   }
 }
