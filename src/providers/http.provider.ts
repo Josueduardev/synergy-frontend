@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../enviroments/enviroment';
 import { LocalStorageProvider } from './local-storage.provider';
@@ -156,6 +156,28 @@ export class HttpProvider {
                 console.log(error)
                 this.evaluateStatus(resolve, reject, error);
             });
+        });
+    }
+
+    postBlobWithResponse(endpoint: string, payload?: any, tokenMemory?: string): Promise<HttpResponse<Blob>> {
+        return new Promise<HttpResponse<Blob>>((resolve, reject) => {
+            const peticion = environment.apiURL + endpoint;
+            let headers = new HttpHeaders();
+            const token = this.storeProv.jwtSession;
+            if (token !== null) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+            } else if (tokenMemory) {
+                headers = new HttpHeaders({ 'Authorization': `Bearer ${tokenMemory}` });
+            }
+
+            this.http.post(peticion, payload, {
+                headers,
+                observe: 'response',
+                responseType: 'blob'
+            }).subscribe(
+                response => resolve(response),
+                error => reject(error)
+            );
         });
     }
 

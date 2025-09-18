@@ -122,62 +122,42 @@ export class DesembolsarButtonComponent implements OnInit {
     try {
       // Formatear la fecha seleccionada al formato requerido por el backend (YYYYMMDD)
       const fecha_iso = this.formatFechaYYYYMMDD(this.fechaSeleccionada);
-      const response = await this.synergyProvider.processRequests(this.id_solicitudes, numeroIngresado, fecha_iso);
-      console.log('Response from processRequests:', response);
+      const response = await this.synergyProvider.processRequestsWithFilename(this.id_solicitudes, numeroIngresado, fecha_iso);
+      console.log('Response from processRequestsWithFilename:', response);
 
-      // Generar y descargar el archivo Excel
-      if (response instanceof Blob) {
-        // Verificar que el blob no esté vacío
-        if (response.size === 0) {
-          throw new Error('El archivo generado está vacío');
-        }
-
-        // Crear URL del blob
-        const blobUrl = window.URL.createObjectURL(response);
-
-        // Crear elemento de descarga - El backend devuelve Excel, no PDF
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        const fecha = new Date();
-        const dia = String(fecha.getDate()).padStart(2, '0');
-        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-        const año = fecha.getFullYear();
-        link.download = `Desembolsos ${dia}${mes}${año}.xlsx`;
-
-        // Simular clic para descargar
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Liberar memoria
-        window.URL.revokeObjectURL(blobUrl);
-
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Desembolsar',
-          detail: `Se desembolsarán ${this.id_solicitudes.length} solicitudes seleccionadas. Archivo Excel generado exitosamente.`
-        });
-
-        this.loading = false;
-        this.cerrarModal();
-
-        setTimeout(() => {
-          this.router.navigate(['/desembolso/sin-procesar']);
-        }, 2000);
-      } else {
-        // Fallback por si la respuesta no es un blob
-        console.log('Response is not a blob:', response);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Desembolsar',
-          detail: `Se desembolsarán ${this.id_solicitudes.length} solicitudes seleccionadas.`
-        });
-        this.loading = false;
-        this.cerrarModal();
-        setTimeout(() => {
-          this.router.navigate(['/desembolso/sin-procesar']);
-        }, 2000);
+      // Verificar que el blob no esté vacío
+      if (response.blob.size === 0) {
+        throw new Error('El archivo generado está vacío');
       }
+
+      // Crear URL del blob
+      const blobUrl = window.URL.createObjectURL(response.blob);
+
+      // Crear elemento de descarga usando el nombre del archivo del backend
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = response.filename; // Usar el nombre del archivo del backend
+
+      // Simular clic para descargar
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Liberar memoria
+      window.URL.revokeObjectURL(blobUrl);
+
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Desembolsar',
+        detail: `Se desembolsarán ${this.id_solicitudes.length} solicitudes seleccionadas. Archivo Excel generado exitosamente.`
+      });
+
+      this.loading = false;
+      this.cerrarModal();
+
+      setTimeout(() => {
+        this.router.navigate(['/desembolso/sin-procesar']);
+      }, 2000);
     } catch (error: any) {
       console.error('Error in processSolicitudes:', error);
 

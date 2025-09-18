@@ -531,13 +531,15 @@ export class SynergyProvider {
       });
     }
 
+
   /**
    * Procesa las solicitudes seleccionadas y devuelve un archivo Excel con los desembolsos
+   * Incluye el nombre del archivo del backend en la respuesta
    * @param ids Array de IDs de solicitudes a procesar
    * @param numeroInicial Número inicial para la numeración incremental
-   * @returns Promise<Blob> - Archivo Excel con los desembolsos
+   * @returns Promise<{blob: Blob, filename: string}> - Archivo Excel con los desembolsos y su nombre
    */
-  processRequests(ids: string[], numeroInicial: string = "1", fecha_iso: string = ""): Promise<Blob> {
+  processRequestsWithFilename(ids: string[], numeroInicial: string = "1", fecha_iso: string = ""): Promise<{blob: Blob, filename: string}> {
     return new Promise((resolve, reject) => {
       const sender = {
         ids: ids,
@@ -545,9 +547,40 @@ export class SynergyProvider {
         fecha_iso: fecha_iso
       };
 
-      this.httpProvider.postBlob(`solicitud/procesar-solicitudes`, sender).then(data => {
-        resolve(data);
-        console.log(data)
+      this.httpProvider.postBlobWithResponse(`solicitud/procesar-solicitudes`, sender).then(response => {
+        const blob = response.body as Blob;
+        const contentDisposition = response.headers.get('content-disposition');
+        let filename = 'Desembolsos.xlsx'; // Nombre por defecto
+
+        // Logging completo de headers para debug
+        console.log('All response headers:', response.headers);
+        console.log('Content-Disposition header:', contentDisposition);
+        console.log('Response status:', response.status);
+
+        if (contentDisposition) {
+          // Intentar diferentes patrones para extraer el nombre del archivo
+          // Patrón 1: filename="archivo.xlsx"
+          let filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
+          if (filenameMatch && filenameMatch[1]) {
+            filename = filenameMatch[1];
+          } else {
+            // Patrón 2: filename*=UTF-8''archivo.xlsx
+            filenameMatch = contentDisposition.match(/filename\*=UTF-8''([^;]+)/);
+            if (filenameMatch && filenameMatch[1]) {
+              filename = decodeURIComponent(filenameMatch[1]);
+            } else {
+              // Patrón 3: filename=archivo.xlsx (sin comillas)
+              filenameMatch = contentDisposition.match(/filename=([^;]+)/);
+              if (filenameMatch && filenameMatch[1]) {
+                filename = filenameMatch[1].trim();
+              }
+            }
+          }
+        }
+
+        console.log('Extracted filename:', filename);
+        resolve({ blob, filename });
+        console.log('Response with filename:', { blob, filename });
       }).catch(error => {
         // Si el error viene como blob, intentar leer el mensaje de error
         if (error instanceof Blob) {
