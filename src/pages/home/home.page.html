@@ -1,33 +1,72 @@
 <div class="container-panel">
   <app-filtros-panel (filtersChanges)="applyFilters($event)"></app-filtros-panel>
+  
+  <!-- Header del Dashboard -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Panel de Control</h1>
+    <p class="dashboard-subtitle">Resumen de solicitudes de pronto pago</p>
+  </div>
+
   <div class="dashboard">
-    <!-- Tarjeta principal -->
-    <div class="card total">
-      <div class="card-value">{{ totalSolicitudes }}</div>
-      <div class="card-label">SOLICITUDES</div>
+    <!-- Tarjeta principal mejorada -->
+    <div class="card main-card">
+      <div class="card-icon">
+        <i class="pi pi-chart-bar"></i>
+      </div>
+      <div class="card-content">
+        <div class="card-value">{{ totalSolicitudes }}</div>
+        <div class="card-label">Total de Solicitudes</div>
+      </div>
+      <div class="card-trend">
+        <span class="trend-indicator positive">
+          <i class="pi pi-arrow-up"></i>
+          +12%
+        </span>
+      </div>
     </div>
 
-    <!-- Conector vertical que baja desde la tarjeta principal -->
-    <div class="vertical-line"></div>
-
-    <!-- Simulación de línea horizontal con bordes redondeados -->
-    <div class="connection-simulator"></div>
-
-    <!-- Agrupación de las tarjetas inferiores -->
-    <div class="card-group">
-      <a class="card approved" [routerLink]="['/solicitudes/aprobadas']">
-        <div class="card-value">{{ aprobadas }}</div>
-        <div class="card-label">APROBADAS</div>
+    <!-- Grid de tarjetas estadísticas -->
+    <div class="stats-grid">
+      <a class="stat-card approved" [routerLink]="['/solicitudes/aprobadas']">
+        <div class="stat-header">
+          <div class="stat-icon">
+            <i class="pi pi-check-circle"></i>
+          </div>
+          <div class="stat-badge success">Aprobadas</div>
+        </div>
+        <div class="stat-value">{{ aprobadas }}</div>
+        <div class="stat-label">Solicitudes aprobadas</div>
+        <div class="stat-progress">
+          <div class="progress-bar" [style.width]="(aprobadas / totalSolicitudes * 100) + '%'"></div>
+        </div>
       </a>
 
-      <a class="card pending" [routerLink]="['/solicitudes/sin-aprobar']">
-        <div class="card-value">{{ sinAprobar }}</div>
-        <div class="card-label">SIN APROBAR</div>
+      <a class="stat-card pending" [routerLink]="['/solicitudes/sin-aprobar']">
+        <div class="stat-header">
+          <div class="stat-icon">
+            <i class="pi pi-clock"></i>
+          </div>
+          <div class="stat-badge warning">Pendientes</div>
+        </div>
+        <div class="stat-value">{{ sinAprobar }}</div>
+        <div class="stat-label">Sin aprobar</div>
+        <div class="stat-progress">
+          <div class="progress-bar warning" [style.width]="(sinAprobar / totalSolicitudes * 100) + '%'"></div>
+        </div>
       </a>
 
-      <a class="card pending" [routerLink]="['/solicitudes/denegadas']">
-        <div class="card-value">{{ denegadas }}</div>
-        <div class="card-label">DENEGADAS</div>
+      <a class="stat-card denied" [routerLink]="['/solicitudes/denegadas']">
+        <div class="stat-header">
+          <div class="stat-icon">
+            <i class="pi pi-times-circle"></i>
+          </div>
+          <div class="stat-badge danger">Denegadas</div>
+        </div>
+        <div class="stat-value">{{ denegadas }}</div>
+        <div class="stat-label">Solicitudes denegadas</div>
+        <div class="stat-progress">
+          <div class="progress-bar danger" [style.width]="(denegadas / totalSolicitudes * 100) + '%'"></div>
+        </div>
       </a>
     </div>
   </div>

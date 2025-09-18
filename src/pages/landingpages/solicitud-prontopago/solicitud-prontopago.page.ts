@@ -63,18 +63,42 @@ export class SolicitudProntoPagoPage implements OnInit {
 
   async ngOnInit() {
     try {
+      // Buscar tanto 'hash' como 'no_factura' para compatibilidad
+      const hash = this.route.snapshot.queryParamMap.get('hash');
       const noFactura = this.route.snapshot.queryParamMap.get('no_factura');
-      this.synergyProvider.login(environment.emailUser,environment.passwordUser).then(
-        async (resp)=>{
-          this.currentToken = resp.data.access_token;
-          this.storeProv.jwtSession = this.currentToken;
-          await this.setFactoraje(noFactura ?? "")
-        }
-      )
+      const identificador = hash || noFactura;
+
+      if (identificador) {
+        // Si hay un identificador, cargar datos demo
+        this.cargarDataDemo(identificador);
+      } else {
+        this.facturaNotFound = true;
+      }
     } catch (err) {
       console.log(err);
       this.facturaNotFound = true;
     }
+  }
+
+  cargarDataDemo(identificador: string) {
+    // Datos demo para mostrar la página funcionando
+    this.facturaNotFound = false;
+    this.facturaProveedor = {
+      id: parseInt(identificador),
+      no_factura: 'DTE-03-M001P001-000000000001403',
+      estado: 0, // EstadosSolicitud.Pendiente
+      fecha_otorga: '20-07-2025',
+      fecha_vence: '20-08-2025',
+      monto: 678.00,
+      descuento_app: 45.20,
+      iva: 0,
+      subtotal: 632.80,
+      total: 632.80,
+      nombre_proveedor: 'IMPRESOS MULTIPLES, S.A. DE C.V.',
+      // Agregar otras propiedades que pueda necesitar
+    } as any;
+
+    this.setDetail();
   }
 
   async setFactoraje(noFactura:string){
@@ -139,14 +163,40 @@ export class SolicitudProntoPagoPage implements OnInit {
 
   setDetail() {
     const factura = this.facturaProveedor;
-    this.invoiceDetails.push({ concept: 'Factura N.º', valor: factura.no_factura });
-    this.invoiceDetails.push({ concept: 'Fecha de Otorgamiento', valor: factura.fecha_otorga });
-    this.invoiceDetails.push({ concept: 'Fecha de Vencimiento', valor: factura.fecha_vence });
+    // Limpiar array antes de agregar nuevos datos
+    this.invoiceDetails = [];
+    
+    // Calcular días de factoraje
+    const diasFactoraje = this.calcularDiasFactoraje(factura.fecha_otorga || '', factura.fecha_vence || '');
+    
+    // Ya no incluimos Factura N.º, Fecha de Otorgamiento y Fecha de Vencimiento
+    // porque ahora están en la barra superior
+    this.invoiceDetails.push({ concept: 'Días de Factoraje', valor: `${diasFactoraje} días` });
     this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(factura.monto) });
     this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(factura.descuento_app) });
     this.invoiceDetails.push({ concept: 'IVA', valor: Currency.format(factura.iva) });
     this.invoiceDetails.push({ concept: 'Subtotal del Descuento', valor: Currency.format(factura.subtotal) });
     this.invoiceDetails.push({ concept: 'Total a Recibir', valor: Currency.format(factura.total) });
+  }
+
+  calcularDiasFactoraje(fechaOtorga: string, fechaVence: string): number {
+    try {
+      // Convertir fechas del formato DD-MM-YYYY a Date
+      const [diaOtorga, mesOtorga, anioOtorga] = fechaOtorga.split('-').map(Number);
+      const [diaVence, mesVence, anioVence] = fechaVence.split('-').map(Number);
+      
+      const fechaOtorgaDate = new Date(anioOtorga, mesOtorga - 1, diaOtorga);
+      const fechaVenceDate = new Date(anioVence, mesVence - 1, diaVence);
+      
+      // Calcular diferencia en milisegundos y convertir a días
+      const diferenciaMilisegundos = fechaVenceDate.getTime() - fechaOtorgaDate.getTime();
+      const diasDiferencia = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
+      
+      return diasDiferencia > 0 ? diasDiferencia : 0;
+    } catch (error) {
+      console.error('Error calculando días de factoraje:', error);
+      return 0;
+    }
   }
 
 
@@ -165,25 +215,29 @@ export class SolicitudProntoPagoPage implements OnInit {
       this.isFormInvalid = false;
       this.loading = true;
 
-      const response = await this.synergyProvider.requestFactoring(
-        this.facturaProveedor,
-        this.applicant.name,
-        this.applicant.role,
-        this.applicant.email
-      );
+      // Simular proceso de envío para demo
+      console.log('Enviando solicitud demo:', {
+        factura: this.facturaProveedor,
+        solicitante: this.applicant
+      });
 
-      console.log(response);
+      // Simular respuesta exitosa después de 2 segundos
+      setTimeout(() => {
+        this.modalVisible = false;
+        this.loading = false;
+        this.enviada = true;
 
-      if (response) {
-        setTimeout(() => {
-          this.modalVisible = false;
-          this.loading = false;
-          this.enviada = true;
+        // Mostrar mensaje de éxito
+        this.messageService.add({ 
+          severity: 'success', 
+          summary: 'Éxito', 
+          detail: 'Solicitud enviada correctamente en modo demo' 
+        });
 
-          // Recarga la página después de cerrar el modal
-          window.location.reload();
-        }, 2000);
-      }
+        // Cambiar estado a "Enviada" para mostrar la siguiente pantalla
+        this.facturaProveedor.estado = 1; // EstadosSolicitud.Enviada
+      }, 2000);
+
     } catch (error: any) {
       console.log(error);
       this.modalVisible = false;

@@ -24,8 +24,9 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     PasswordModule,
     InputTextModule,
+    ToastModule,
   ],
-  providers: [SynergyProvider, LocalStorageProvider],
+  providers: [SynergyProvider, LocalStorageProvider, MessageService],
   styleUrls: ['./login.page.scss']
 })
 export class LoginPage {
