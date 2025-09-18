@@ -152,7 +152,7 @@ export class DetalleSolicitudPage implements OnInit {
           this.loading = false;
           this.modalAccionVisible = false;
           setTimeout(() => {
-            this.router.navigate(['/solicitudes/aprobadas']);
+            this.router.navigate(['/solicitudes/sin-aprobar']);
           }, 2000);
         },
         (err: any) => {
@@ -176,7 +176,7 @@ export class DetalleSolicitudPage implements OnInit {
           this.loading = false;
           this.modalAccionVisible = false;
           setTimeout(() => {
-            this.router.navigate(['/solicitudes/denegadas']);
+            this.router.navigate(['/solicitudes/sin-aprobar']);
           }, 2000);
         },
         (err: any) => {
