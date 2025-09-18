@@ -1,14 +1,11 @@
-
-<div *ngIf="!facturaNotFound && !enviada && validarEstadoPendinte()" style="min-height: 100vh; background-color: #f8fafc;">
+<div *ngIf="!facturaNotFound && !enviada && validarEstadoPendinte()"
+  style="min-height: 100vh; background-color: #f8fafc;">
 
   <!-- Logo Section -->
   <div style="background-color: white; padding: 32px 0; border-bottom: 1px solid #e2e8f0;">
     <div style="display: flex; justify-content: center;">
-      <img 
-        src="https://jritzygwfhfqrlogqcpy.supabase.co/storage/v1/object/public/logos/EXPRESSPAY.png" 
-        alt="ExpressPay" 
-        style="height: 80px; object-fit: contain;"
-      />
+      <img src="https://jritzygwfhfqrlogqcpy.supabase.co/storage/v1/object/public/logos/EXPRESSPAY.png" alt="ExpressPay"
+        style="height: 80px; object-fit: contain;" />
     </div>
   </div>
 
@@ -16,16 +13,19 @@
   <div style="background-color: #f6f6f6; width: 100%; padding: 20px 0;">
     <div style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-        
+
         <!-- Cliente -->
         <div style="padding: 16px; border-right: 1px solid #d1d1d1;">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div
+              style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
               <i class="pi pi-building" style="color: #666666; font-size: 18px;"></i>
             </div>
             <div style="flex: 1; min-width: 0;">
               <p style="font-size: 14px; margin-bottom: 8px; color: #777777;">Cliente</p>
-              <h3 style="font-size: 14px; line-height: 1.2; word-wrap: break-word; font-weight: 600; color: #333333; margin: 0;">{{facturaProveedor.nombre_proveedor}}</h3>
+              <h3
+                style="font-size: 14px; line-height: 1.2; word-wrap: break-word; font-weight: 600; color: #333333; margin: 0;">
+                {{facturaProveedor.nombre_proveedor}}</h3>
             </div>
           </div>
         </div>
@@ -33,12 +33,15 @@
         <!-- Información de Factura -->
         <div style="padding: 16px; border-right: 1px solid #d1d1d1;">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div
+              style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
               <i class="pi pi-receipt" style="color: #666666; font-size: 18px;"></i>
             </div>
             <div style="flex: 1; min-width: 0;">
               <p style="font-size: 14px; margin-bottom: 8px; color: #777777;">Número de Factura</p>
-              <h3 style="font-size: 14px; line-height: 1.2; word-break: break-all; font-weight: 600; color: #333333; margin: 0;">{{facturaProveedor.no_factura}}</h3>
+              <h3
+                style="font-size: 14px; line-height: 1.2; word-break: break-all; font-weight: 600; color: #333333; margin: 0;">
+                {{facturaProveedor.no_factura}}</h3>
             </div>
           </div>
         </div>
@@ -46,17 +49,20 @@
         <!-- Fechas -->
         <div style="padding: 16px;">
           <div style="display: flex; align-items: center; gap: 16px;">
-            <div style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <div
+              style="width: 48px; height: 48px; border-radius: 50%; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
               <i class="pi pi-calendar" style="color: #666666; font-size: 18px;"></i>
             </div>
             <div style="flex: 1; min-width: 0;">
               <p style="font-size: 14px; margin-bottom: 8px; color: #777777;">Fechas</p>
               <div style="display: flex; flex-direction: column; gap: 4px;">
                 <div style="font-size: 14px; color: #333333;">
-                  <span style="color: #666666;">Otorgamiento:</span> <span style="font-weight: 600;">{{facturaProveedor.fecha_otorga}}</span>
+                  <span style="color: #666666;">Desembolso: </span> <span
+                    style="font-weight: 600;">{{facturaProveedor.fecha_otorga}}</span>
                 </div>
                 <div style="font-size: 14px; color: #333333;">
-                  <span style="color: #666666;">Vencimiento:</span> <span style="font-weight: 600;">{{facturaProveedor.fecha_vence}}</span>
+                  <span style="color: #666666;">Vencimiento:</span> <span
+                    style="font-weight: 600;">{{facturaProveedor.fecha_vence}}</span>
                 </div>
               </div>
             </div>
@@ -69,22 +75,22 @@
   <!-- Main Content -->
   <div style="background-color: #fbfbfb; padding-bottom: 48px;">
     <div style="max-width: 800px; margin: 0 auto; padding: 0 24px;">
-      
+
       <!-- Title Section -->
       <div style="text-align: center; padding: 32px 0;">
         <!-- Espacio para título si es necesario -->
       </div>
 
       <!-- Financial Details Card -->
-      <div style="background-color: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; margin-bottom: 32px;">
+      <div
+        style="background-color: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; margin-bottom: 32px;">
         <div style="padding: 24px;">
           <div style="text-align: center; margin-bottom: 24px;">
             <h3 style="font-weight: 600; color: #333333; margin: 0;">Detalle de Cesión de Factoraje</h3>
           </div>
-          
+
           <div style="display: flex; flex-direction: column; gap: 16px;">
-            <div *ngFor="let detail of invoiceDetails; let last = last" 
-                 [ngStyle]="last ? {
+            <div *ngFor="let detail of invoiceDetails; let last = last" [ngStyle]="last ? {
                    'display': 'flex',
                    'justify-content': 'space-between',
                    'align-items': 'center',
@@ -100,7 +106,8 @@
                    'border-bottom': '1px solid #f0f0f0'
                  }">
               <span [ngStyle]="{'color': '#666666'}">{{ detail.concept }}</span>
-              <span [ngStyle]="last ? {'font-weight': 'bold', 'color': '#333333'} : {'color': '#333333'}">{{ detail.valor }}</span>
+              <span [ngStyle]="last ? {'font-weight': 'bold', 'color': '#333333'} : {'color': '#333333'}">{{
+                detail.valor }}</span>
             </div>
           </div>
         </div>
@@ -108,17 +115,14 @@
 
       <!-- Disclaimer -->
       <div style="text-align: center; font-size: 14px; margin-bottom: 16px;">
-        <p style="color: #666666; margin: 0;">*El monto de descuento por pronto pago puede variar según el día real de desembolso.</p>
+        <p style="color: #666666; margin: 0;">*El monto de descuento por pronto pago puede variar según el día real de
+          desembolso.</p>
       </div>
 
       <!-- Terms and Action -->
       <div style="padding-top: 8px;">
         <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 24px;">
-          <p-checkbox 
-            [(ngModel)]="termsAccepted" 
-            binary="true" 
-            inputId="terms"
-            styleClass="custom-checkbox">
+          <p-checkbox [(ngModel)]="termsAccepted" binary="true" inputId="terms" styleClass="custom-checkbox">
           </p-checkbox>
           <label for="terms" style="font-size: 14px; cursor: pointer; line-height: 1.5; color: #666666;">
             Acepto Términos y Condiciones
@@ -126,12 +130,7 @@
         </div>
 
         <div style="display: flex; justify-content: center;">
-          <button 
-            pButton 
-            label="SOLICITAR" 
-            (click)="showModal()"
-            [disabled]="!termsAccepted"
-            [ngStyle]="{
+          <button pButton label="SOLICITAR" (click)="showModal()" [disabled]="!termsAccepted" [ngStyle]="{
               'background-color': termsAccepted ? '#00afc0' : '#888888',
               'color': 'white',
               'border': 'none',
@@ -148,51 +147,112 @@
       <!-- Legal Text -->
       <div style="margin-top: 24px; padding: 0 16px;">
         <p style="font-size: 12px; line-height: 1.5; text-align: center; color: #666666; margin: 0;">
-          *Restricciones y condiciones aplican. La aceptación del pronto pago implica la aceptación del 18% de interés anual establecido y sus variaciones, según el plazo de días restantes al vencimiento de la factura. El monto final recibido será calculado con base en el descuento aplicado y no se incluyen costos adicionales. Synergy Financial Corp. se reserva el derecho de aprobar o rechazar solicitudes de pronto pago conforme a sus políticas internas.
+          *Restricciones y condiciones aplican. La aceptación del pronto pago implica la aceptación del 18% de interés
+          anual establecido y sus variaciones, según el plazo de días restantes al vencimiento de la factura. El monto
+          final recibido será calculado con base en el descuento aplicado y no se incluyen costos adicionales. Synergy
+          Financial Corp. se reserva el derecho de aprobar o rechazar solicitudes de pronto pago conforme a sus
+          políticas internas.
         </p>
       </div>
     </div>
   </div>
-  <p-dialog [(visible)]="modalVisible" [modal]="true" resizable="false" [style]="{ width: '30rem' }" showHeader="false"
-    styleClass="custom-dialog" [contentStyle]="contentStyle">
-    <div class="modal-content">
-      <br>
-      <div>
-        <button type="button" icon="pi pi-times" class="btn-close p-button-rounded p-button-text "
-          (click)="modalVisible = false">
-          X
+  <p-dialog [(visible)]="modalVisible" [modal]="true" resizable="false" [style]="{ width: '90%', maxWidth: '500px' }"
+    showHeader="false" styleClass="custom-dialog">
+    <div style="padding: 32px; background: white; border-radius: 12px;">
+
+      <!-- Header with Close Button -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <div style="flex: 1; display: flex; justify-content: center; align-items: center; gap: 12px;">
+          <div
+            style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #00afc0 0%, #0891b2 100%); display: flex; align-items: center; justify-content: center;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 6L9 17L4 12" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <h3 style="color: #334155; font-size: 20px; font-weight: 600; margin: 0; font-family: Arial, sans-serif;">
+            Datos del Solicitante</h3>
+        </div>
+        <button type="button" (click)="modalVisible = false"
+          style="width: 32px; height: 32px; border-radius: 50%; border: none; background: #f1f5f9; color: #64748b; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; position: absolute; right: 32px;"
+          onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
         </button>
-        <br>
-        <span class="datos-solicitante">Datos del Solicitante</span>
       </div>
-      <div class="field" style="margin-top: 40px;">
-        <label for="name">Nombre del Solicitante</label>
-        <input pInputText id="name" [(ngModel)]="applicant.name" [class.ng-invalid]="isFormInvalid && !applicant.name"
-          required />
-        <br>
-        <small *ngIf="isFormInvalid && !applicant.name" class="p-error">El nombre es requerido.</small>
+
+      <!-- Form Fields -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+
+        <!-- Nombre Field -->
+        <div>
+          <label for="name"
+            style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Nombre del
+            Solicitante</label>
+          <input pInputText id="name" [(ngModel)]="applicant.name" [class.ng-invalid]="isFormInvalid && !applicant.name"
+            required
+            style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s ease; box-sizing: border-box;"
+            placeholder="Ingresa tu nombre completo" />
+          <small *ngIf="isFormInvalid && !applicant.name"
+            style="color: #ef4444; font-size: 12px; margin-top: 3px; display: block;">
+            El nombre es requerido.
+          </small>
+        </div>
+
+        <!-- Cargo Field -->
+        <div>
+          <label for="role"
+            style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Cargo</label>
+          <input pInputText id="role" [(ngModel)]="applicant.role" [class.ng-invalid]="isFormInvalid && !applicant.role"
+            required
+            style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s ease; box-sizing: border-box;"
+            placeholder="Ej: Gerente Financiero" />
+          <small *ngIf="isFormInvalid && !applicant.role"
+            style="color: #ef4444; font-size: 12px; margin-top: 3px; display: block;">
+            El cargo es requerido.
+          </small>
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label for="email"
+            style="display: block; color: #374151; font-weight: 500; margin-bottom: 6px; font-size: 14px;">Correo
+            Electrónico</label>
+          <input pInputText id="email" [(ngModel)]="applicant.email"
+            [class.ng-invalid]="isFormInvalid && !isValidEmail(applicant.email)" required
+            style="width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; transition: all 0.2s ease; box-sizing: border-box;"
+            placeholder="ejemplo@empresa.com" />
+          <small *ngIf="isFormInvalid && !isValidEmail(applicant.email)"
+            style="color: #ef4444; font-size: 12px; margin-top: 3px; display: block;">
+            Ingresa un correo electrónico válido.
+          </small>
+        </div>
       </div>
-      <div class="field">
-        <label for="role">Cargo</label>
-        <input pInputText id="role" [(ngModel)]="applicant.role" [class.ng-invalid]="isFormInvalid && !applicant.role"
-          required />
-        <br>
-        <small *ngIf="isFormInvalid && !applicant.role" class="p-error">El rol es requerido.</small>
+
+      <!-- Submit Button -->
+      <div style="margin-top: 24px; text-align: center;">
+        <button pButton label="ENVIAR SOLICITUD" [loading]="loading" (click)="send()" [ngStyle]="{
+            'background-color': '#00afc0',
+            'color': 'white',
+            'border': 'none',
+            'padding': '16px 32px',
+            'border-radius': '8px',
+            'font-weight': '600',
+            'font-size': '14px',
+            'cursor': 'pointer',
+            'transition': 'all 0.2s ease',
+            'width': '100%'
+          }">
+        </button>
       </div>
-      <div class="field">
-        <label for="email">Correo Electrónico</label>
-        <input pInputText id="email" [(ngModel)]="applicant.email"
-          [class.ng-invalid]="isFormInvalid && !isValidEmail(applicant.email)" required />
-        <br>
-        <small *ngIf="isFormInvalid && !isValidEmail(applicant.email)" class="p-error">
-          Ingresa un correo electrónico válido.
-        </small>
-      </div>
-      <br>
-      <div class="btn-aceptar-wrap">
-        <button pButton label="ENVIAR" [loading]="loading" (click)="send()"></button>
-      </div>
-      <br>
+
+      <!-- Info Text -->
+      <p
+        style="text-align: center; color: #64748b; font-size: 12px; margin-top: 16px; margin-bottom: 0; line-height: 1.4;">
+        Al enviar, aceptas que procesemos tus datos para gestionar tu solicitud de factoraje.
+      </p>
     </div>
   </p-dialog>
 
@@ -202,34 +262,79 @@
 </div>
 
 <!-- Cuando la solicitud ya se ha enviado -->
-<div *ngIf="validarEstadoEnviada()" style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
-  <div style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/4697/4697876.png" alt="Success Icon" style="width: 80px; height: 80px; margin-bottom: 24px;">
-    <h1 style="color: #10b981; font-size: 32px; font-weight: bold; margin-bottom: 16px;">¡Solicitud Enviada!</h1>
-    <p style="color: #666666; font-size: 16px; line-height: 1.6; margin-bottom: 16px;">
-      Gracias por enviar tu solicitud de cesión de factoraje. Nos pondremos en contacto contigo a través de correo electrónico para informarte si tu solicitud ha sido aprobada o no.
-    </p>
-    <p style="color: #666666; font-size: 16px; line-height: 1.6;">
-      Por favor, verifica tu bandeja de entrada o tu carpeta de spam en las próximas 24 horas.
+<div *ngIf="validarEstadoEnviada()"
+  style="min-height: 100vh; background-color: white; display: flex; flex-direction: column; position: relative;">
+
+  <!-- Main Content -->
+  <div
+    style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+    <div style="max-width: 600px; width: 100%; text-align: center;">
+
+      <!-- Logo -->
+      <div style="margin-bottom: 48px;">
+        <img src="https://jritzygwfhfqrlogqcpy.supabase.co/storage/v1/object/public/logos/EXPRESSPAY.png"
+          alt="ExpressPay" style="height: 80px; object-fit: contain;" />
+      </div>
+
+      <!-- Success Icon -->
+      <div
+        style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #00afc0 0%, #0891b2 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 32px auto;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+            stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <!-- Title -->
+      <h1
+        style="color: #00afc0; font-size: 32px; font-weight: 700; margin-bottom: 24px; font-family: Arial, sans-serif;">
+        ¡Solicitud Enviada!</h1>
+
+      <!-- Description -->
+      <div style="color: #64748b; font-size: 16px; line-height: 1.6;">
+        <p style="margin-bottom: 16px;">
+          Gracias por enviar tu solicitud de cesión de factoraje. Nos pondremos en contacto contigo a través de correo
+          electrónico para informarte si tu solicitud ha sido aprobada o no.
+        </p>
+        <p style="margin: 0;">
+          Por favor, verifica tu bandeja de entrada o tu carpeta de spam en las próximas 24 horas.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="text-align: center; padding: 24px; border-top: 1px solid #f1f5f9;">
+    <p style="color: #94a3b8; font-size: 14px; margin: 0;">
+      <strong>Synergy Financial Corp</strong> - Sistema de Factoraje Automatizado
     </p>
   </div>
+
 </div>
 
 <!-- Vista cuando la solicitud ha sido aprobada -->
-<div *ngIf="validarEstadoAprobada()" style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
-  <div style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon" style="width: 80px; height: 80px; margin-bottom: 24px;">
+<div *ngIf="validarEstadoAprobada()"
+  style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+  <div
+    style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon"
+      style="width: 80px; height: 80px; margin-bottom: 24px;">
     <h1 style="color: #10b981; font-size: 32px; font-weight: bold; margin-bottom: 16px;">¡Solicitud Aprobada!</h1>
     <p style="color: #666666; font-size: 16px; line-height: 1.6;">
-      Felicidades, tu solicitud de cesión de factoraje ha sido aprobada. El pago será procesado y recibirás el monto acordado.
+      Felicidades, tu solicitud de cesión de factoraje ha sido aprobada. El pago será procesado y recibirás el monto
+      acordado.
     </p>
   </div>
 </div>
 
 <!-- Vista cuando la solicitud ha sido denegada -->
-<div *ngIf="validarEstadoDenegada()" style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
-  <div style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
-    <img src="https://cdn-icons-png.flaticon.com/128/1113/1113253.png" alt="Denied Icon" style="width: 80px; height: 80px; margin-bottom: 24px;">
+<div *ngIf="validarEstadoDenegada()"
+  style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+  <div
+    style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
+    <img src="https://cdn-icons-png.flaticon.com/128/1113/1113253.png" alt="Denied Icon"
+      style="width: 80px; height: 80px; margin-bottom: 24px;">
     <h1 style="color: #ef4444; font-size: 32px; font-weight: bold; margin-bottom: 16px;">Solicitud Denegada</h1>
     <p style="color: #666666; font-size: 16px; line-height: 1.6;">
       Lamentablemente, tu solicitud de cesión de factoraje ha sido denegada.
@@ -238,9 +343,12 @@
 </div>
 
 <!-- Vista cuando la solicitud ha caducado -->
-<div *ngIf="validarEstadoCaducada()" style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
-  <div style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
-    <img src="https://cdn-icons-png.flaticon.com/512/10755/10755029.png" alt="Expired Icon" style="width: 80px; height: 80px; margin-bottom: 24px;">
+<div *ngIf="validarEstadoCaducada()"
+  style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+  <div
+    style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/10755/10755029.png" alt="Expired Icon"
+      style="width: 80px; height: 80px; margin-bottom: 24px;">
     <h1 style="color: #f59e0b; font-size: 32px; font-weight: bold; margin-bottom: 16px;">Solicitud Expirada</h1>
     <p style="color: #666666; font-size: 16px; line-height: 1.6;">
       Tu solicitud para aplicar a pronto pago ha caducado.
@@ -249,8 +357,10 @@
 </div>
 
 <!-- En dado caso que no encuentre la factura -->
-<div *ngIf="facturaNotFound" style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
-  <div style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
+<div *ngIf="facturaNotFound"
+  style="min-height: 100vh; background-color: #f8fafc; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 24px;">
+  <div
+    style="background-color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 48px; text-align: center; max-width: 600px;">
     <div style="font-size: 64px; margin-bottom: 24px;">❌</div>
     <h1 style="color: #ef4444; font-size: 32px; font-weight: bold; margin-bottom: 16px;">Error</h1>
     <p style="color: #666666; font-size: 16px; line-height: 1.6;">
