@@ -66,40 +66,20 @@ export class SolicitudProntoPagoPage implements OnInit {
       // Buscar tanto 'hash' como 'no_factura' para compatibilidad
       const hash = this.route.snapshot.queryParamMap.get('hash');
       const noFactura = this.route.snapshot.queryParamMap.get('no_factura');
-      const identificador = hash || noFactura;
-
-      if (identificador) {
-        // Si hay un identificador, cargar datos demo
-        this.cargarDataDemo(identificador);
-      } else {
-        this.facturaNotFound = true;
-      }
+      this.synergyProvider.login(environment.emailUser,environment.passwordUser).then(
+        async (resp)=>{
+          this.currentToken = resp.data.access_token;
+          this.storeProv.jwtSession = this.currentToken;
+          await this.setFactoraje(noFactura ?? "")
+        }
+      )
     } catch (err) {
       console.log(err);
       this.facturaNotFound = true;
     }
   }
 
-  cargarDataDemo(identificador: string) {
-    // Datos demo para mostrar la página funcionando
-    this.facturaNotFound = false;
-    this.facturaProveedor = {
-      id: parseInt(identificador),
-      no_factura: 'DTE-03-M001P001-000000000001403',
-      estado: 0, // EstadosSolicitud.Pendiente
-      fecha_otorga: '20-07-2025',
-      fecha_vence: '20-08-2025',
-      monto: 678.00,
-      descuento_app: 45.20,
-      iva: 0,
-      subtotal: 632.80,
-      total: 632.80,
-      nombre_proveedor: 'IMPRESOS MULTIPLES, S.A. DE C.V.',
-      // Agregar otras propiedades que pueda necesitar
-    } as any;
 
-    this.setDetail();
-  }
 
   async setFactoraje(noFactura:string){
     if (noFactura) {
@@ -165,12 +145,10 @@ export class SolicitudProntoPagoPage implements OnInit {
     const factura = this.facturaProveedor;
     // Limpiar array antes de agregar nuevos datos
     this.invoiceDetails = [];
-    
+
     // Calcular días de factoraje
     const diasFactoraje = this.calcularDiasFactoraje(factura.fecha_otorga || '', factura.fecha_vence || '');
-    
-    // Ya no incluimos Factura N.º, Fecha de Otorgamiento y Fecha de Vencimiento
-    // porque ahora están en la barra superior
+
     this.invoiceDetails.push({ concept: 'Días de Factoraje', valor: `${diasFactoraje} días` });
     this.invoiceDetails.push({ concept: 'Monto de la Factura', valor: Currency.format(factura.monto) });
     this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(factura.descuento_app) });
@@ -181,17 +159,32 @@ export class SolicitudProntoPagoPage implements OnInit {
 
   calcularDiasFactoraje(fechaOtorga: string, fechaVence: string): number {
     try {
-      // Convertir fechas del formato DD-MM-YYYY a Date
-      const [diaOtorga, mesOtorga, anioOtorga] = fechaOtorga.split('-').map(Number);
-      const [diaVence, mesVence, anioVence] = fechaVence.split('-').map(Number);
-      
+      // Aceptar formatos DD-MM-YYYY o DD/MM/YYYY
+      if (!fechaOtorga || !fechaVence) {
+        return 0;
+      }
+
+      const [diaOtorga, mesOtorga, anioOtorga] = fechaOtorga.split(/[\/\-]/).map(Number);
+      const [diaVence, mesVence, anioVence] = fechaVence.split(/[\/\-]/).map(Number);
+
+      // Validar que todos sean números
+      const numeros = [diaOtorga, mesOtorga, anioOtorga, diaVence, mesVence, anioVence];
+      if (numeros.some((n) => Number.isNaN(n))) {
+        return 0;
+      }
+
       const fechaOtorgaDate = new Date(anioOtorga, mesOtorga - 1, diaOtorga);
       const fechaVenceDate = new Date(anioVence, mesVence - 1, diaVence);
-      
+
+      // Validar fechas válidas
+      if (isNaN(fechaOtorgaDate.getTime()) || isNaN(fechaVenceDate.getTime())) {
+        return 0;
+      }
+
       // Calcular diferencia en milisegundos y convertir a días
       const diferenciaMilisegundos = fechaVenceDate.getTime() - fechaOtorgaDate.getTime();
       const diasDiferencia = Math.ceil(diferenciaMilisegundos / (1000 * 60 * 60 * 24));
-      
+
       return diasDiferencia > 0 ? diasDiferencia : 0;
     } catch (error) {
       console.error('Error calculando días de factoraje:', error);
@@ -211,33 +204,31 @@ export class SolicitudProntoPagoPage implements OnInit {
         this.isFormInvalid = true;
         return;
       }
+      this.isFormInvalid = false;
+      this.loading = true;
+
+      const response = await this.synergyProvider.requestFactoring(
+        this.facturaProveedor,
+        this.applicant.name,
+        this.applicant.role,
+        this.applicant.email
+      );
+
+      console.log(response);
 
       this.isFormInvalid = false;
       this.loading = true;
 
-      // Simular proceso de envío para demo
-      console.log('Enviando solicitud demo:', {
-        factura: this.facturaProveedor,
-        solicitante: this.applicant
-      });
+      if (response) {
+        setTimeout(() => {
+          this.modalVisible = false;
+          this.loading = false;
+          this.enviada = true;
 
-      // Simular respuesta exitosa después de 2 segundos
-      setTimeout(() => {
-        this.modalVisible = false;
-        this.loading = false;
-        this.enviada = true;
-
-        // Mostrar mensaje de éxito
-        this.messageService.add({ 
-          severity: 'success', 
-          summary: 'Éxito', 
-          detail: 'Solicitud enviada correctamente en modo demo' 
-        });
-
-        // Cambiar estado a "Enviada" para mostrar la siguiente pantalla
-        this.facturaProveedor.estado = 1; // EstadosSolicitud.Enviada
-      }, 2000);
-
+          // Recarga la página después de cerrar el modal
+          window.location.reload();
+        }, 2000);
+      }
     } catch (error: any) {
       console.log(error);
       this.modalVisible = false;
