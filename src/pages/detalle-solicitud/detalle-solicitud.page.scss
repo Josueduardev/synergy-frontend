@@ -201,3 +201,226 @@ textarea {
     font-size: 0.8rem; /* Un poco más pequeño en pantallas pequeñas */
   }
 }
+
+.page-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.logo-section {
+  background-color: white;
+  padding: 32px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-img {
+  height: 80px;
+  object-fit: contain;
+}
+
+.client-info-section {
+  background-color: #f6f6f6;
+  padding: 20px 0;
+}
+
+.client-info-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.client-info-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.client-icon-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #00afc0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.client-icon {
+  color: white;
+  font-size: 18px;
+}
+
+.client-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.client-label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #777777;
+}
+
+.client-name {
+  font-size: 20px;
+  line-height: 1.2;
+  word-wrap: break-word;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.main-content {
+  background-color: #fbfbfb;
+  padding: 32px 0 48px 0;
+}
+
+.main-content-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.financial-details-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 32px;
+}
+
+.card-padding {
+  padding: 24px;
+}
+
+.card-title-container {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.invoice-details-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.invoice-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.invoice-detail-item-last {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  background-color: #f0fbfc;
+}
+
+.detail-concept {
+  color: #666666;
+}
+
+.detail-value {
+  color: #333333;
+}
+
+.detail-value-last {
+  font-weight: bold;
+  color: #333333;
+}
+
+.add-comment-button-container {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.add-comment-button {
+  background-color: #64748b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.accept-button {
+  background-color: #00bfcb;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.deny-button {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.approver-info-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  text-align: center;
+}
+
+.approver-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.approver-info-text {
+  font-size: 14px;
+  color: #666666;
+  margin: 0;
+}
+
+.approver-info-label {
+  font-weight: 600;
+}
+
+::ng-deep .comment-dialog .p-dialog {
+  width: 50%;
+}
+
+::ng-deep .action-dialog .p-dialog {
+  width: 30vw;
+}
