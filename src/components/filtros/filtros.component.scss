@@ -9,6 +9,7 @@
 
   ::ng-deep .p-inputtext{
     width: 16rem;
+    height: 33px;
   }
 
   .calendar-container {
@@ -72,14 +73,14 @@
         }
 
         span:hover {
-          background-color: #5459ea;
+          background-color: #00bfcb;
           color: #ffffff;
           border-radius: 5px !important;
         }
 
         .p-datepicker-current-day {
-          border-color: #5459ea;
-          color: #5459ea;
+          border-color: #00bfcb;
+          color: #00bfcb;
           font-weight: bold;
         }
 
@@ -114,7 +115,7 @@
         }
 
         .p-button-primary {
-          background-color: #5459ea;
+          background-color: #00bfcb;
           color: #ffffff;
           border: none;
           font-size: 0.8rem;

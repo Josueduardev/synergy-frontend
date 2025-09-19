@@ -17,7 +17,7 @@
 }
 
 .btn-desembolsar:hover {
-  background-color: #5459ea;
+  background-color: #00bfcb;
   color: #ffffff;
 }
 
@@ -64,28 +64,8 @@ input {
 }
 
 input:focus {
-  border-color: #5459ea;
+  border-color: #00bfcb;
   outline: none;
-}
-
-/* PrimeNG Calendar alignment within modal */
-.modal-content .p-calendar {
-  width: 100%;
-  margin-bottom: 1rem; /* igual que el input */
-}
-
-.modal-content .p-calendar .p-inputtext:focus {
-  border-color: #5459ea;
-  outline: none;
-}
-
-/* Aplicar borde activo cuando el wrapper gana foco (clase de PrimeNG) */
-.modal-content .p-inputwrapper-focus .p-inputtext {
-  border-color: #5459ea;
-}
-
-#fechaDesembolso{
-  min-width: 100%;
 }
 
 .modal-buttons {
@@ -93,12 +73,6 @@ input:focus {
   justify-content: center;
   gap: 1rem; /* Espaciado entre botones */
   margin-top: 1rem;
-}
-
-.form-field{
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .modal-buttons button {
@@ -113,7 +87,7 @@ input:focus {
 }
 
 .modal-buttons button:hover {
-  background-color: #5459ea;
+  background-color: #00bfcb;
   color: #fff;
 }
 

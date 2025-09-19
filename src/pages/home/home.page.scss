@@ -1,22 +1,21 @@
 .container-panel {
-  margin: 2rem 4rem;
+  padding: 2rem 2rem 0 2rem;
   background-color: #f8fafc;
-  min-height: 100vh;
 }
 
 /* Header del Dashboard */
 .dashboard-header {
   text-align: center;
-  margin-bottom: 3rem;
-  padding: 2rem 0;
-  
+  margin-bottom: 1rem;
+  padding: 1rem 0;
+
   .dashboard-title {
     font-size: 2.5rem;
     font-weight: 600;
     color: #334155;
     margin: 0 0 0.5rem 0;
   }
-  
+
   .dashboard-subtitle {
     font-size: 1.1rem;
     color: #64748b;
@@ -30,7 +29,7 @@
   flex-direction: column;
   align-items: center;
   gap: 3rem;
-  
+
   /* Tarjeta principal moderna */
   .main-card {
     background: linear-gradient(135deg, #00afc0 0%, #0891b2 100%);
@@ -46,12 +45,12 @@
     position: relative;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
+
     &:hover {
       transform: translateY(-3px);
       box-shadow: 0 12px 35px rgba(0, 175, 192, 0.2);
     }
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -62,7 +61,7 @@
       background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
       pointer-events: none;
     }
-    
+
     .card-icon {
       background: rgba(255, 255, 255, 0.2);
       border-radius: 16px;
@@ -70,23 +69,23 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       i {
         font-size: 2rem;
         color: white;
       }
     }
-    
+
     .card-content {
       flex: 1;
-      
+
       .card-value {
         font-size: 3rem;
         font-weight: 800;
         margin: 0;
         line-height: 1;
       }
-      
+
       .card-label {
         font-size: 1rem;
         opacity: 0.9;
@@ -94,7 +93,7 @@
         font-weight: 500;
       }
     }
-    
+
     .card-trend {
       .trend-indicator {
         background: rgba(255, 255, 255, 0.2);
@@ -105,7 +104,7 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
-        
+
         &.positive {
           color: #059669;
           background: rgba(5, 150, 105, 0.1);
@@ -113,7 +112,7 @@
       }
     }
   }
-  
+
   /* Grid de estadísticas */
   .stats-grid {
     display: grid;
@@ -122,7 +121,7 @@
     width: 100%;
     max-width: 1200px;
   }
-  
+
   .stat-card {
     background: white;
     border-radius: 12px;
@@ -134,13 +133,13 @@
     border: 1px solid #f1f5f9;
     position: relative;
     overflow: hidden;
-    
+
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
       border-color: #e2e8f0;
     }
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -150,13 +149,13 @@
       height: 1px;
       background: #e2e8f0;
     }
-    
+
     .stat-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      
+
       .stat-icon {
         background: #f1f5f9;
         border-radius: 12px;
@@ -164,13 +163,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        
+
         i {
           font-size: 1.5rem;
           color: #64748b;
         }
       }
-      
+
       .stat-badge {
         padding: 0.25rem 0.75rem;
         border-radius: 20px;
@@ -178,24 +177,24 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        
+
         &.success {
           background: #f1f5f9;
           color: #475569;
         }
-        
+
         &.warning {
           background: #f1f5f9;
           color: #475569;
         }
-        
+
         &.danger {
           background: #f1f5f9;
           color: #475569;
         }
       }
     }
-    
+
     .stat-value {
       font-size: 2.5rem;
       font-weight: 800;
@@ -203,60 +202,60 @@
       margin: 0.5rem 0;
       line-height: 1;
     }
-    
+
     .stat-label {
       color: #64748b;
       font-size: 0.875rem;
       font-weight: 500;
       margin-bottom: 1rem;
     }
-    
+
     .stat-progress {
       background: #f1f5f9;
       border-radius: 8px;
       height: 6px;
       overflow: hidden;
-      
+
       .progress-bar {
         height: 100%;
         background: linear-gradient(90deg, #00afc0, #0891b2);
         border-radius: 8px;
         transition: width 0.6s ease;
-        
+
         &.warning {
           background: linear-gradient(90deg, #94a3b8, #64748b);
         }
-        
+
         &.danger {
           background: linear-gradient(90deg, #94a3b8, #64748b);
         }
       }
     }
-    
+
     &.approved {
       .stat-icon {
         background: #f8fafc;
-        
+
         i {
           color: #64748b;
         }
       }
     }
-    
+
     &.pending {
       .stat-icon {
         background: #f8fafc;
-        
+
         i {
           color: #64748b;
         }
       }
     }
-    
+
     &.denied {
       .stat-icon {
         background: #f8fafc;
-        
+
         i {
           color: #64748b;
         }
@@ -270,13 +269,13 @@
   .container-panel {
     margin: 2rem;
   }
-  
+
   .dashboard-header {
     .dashboard-title {
       font-size: 2rem;
     }
   }
-  
+
   .dashboard {
     .main-card {
       max-width: 100%;
@@ -284,7 +283,7 @@
       text-align: center;
       gap: 1rem;
     }
-    
+
     .stats-grid {
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
@@ -296,41 +295,41 @@
   .container-panel {
     margin: 1rem;
   }
-  
+
   .dashboard-header {
     padding: 1rem 0;
     margin-bottom: 2rem;
-    
+
     .dashboard-title {
       font-size: 1.75rem;
     }
-    
+
     .dashboard-subtitle {
       font-size: 1rem;
     }
   }
-  
+
   .dashboard {
     gap: 2rem;
-    
+
     .main-card {
       padding: 1.5rem;
-      
+
       .card-content {
         .card-value {
           font-size: 2.5rem;
         }
       }
     }
-    
+
     .stats-grid {
       grid-template-columns: 1fr;
       gap: 1rem;
     }
-    
+
     .stat-card {
       padding: 1.5rem;
-      
+
       .stat-value {
         font-size: 2rem;
       }
@@ -342,43 +341,43 @@
   .container-panel {
     margin: 0.5rem;
   }
-  
+
   .dashboard-header {
     .dashboard-title {
       font-size: 1.5rem;
     }
   }
-  
+
   .dashboard {
     .main-card {
       padding: 1rem;
-      
+
       .card-content {
         .card-value {
           font-size: 2rem;
         }
-        
+
         .card-label {
           font-size: 0.875rem;
         }
       }
     }
-    
+
     .stat-card {
       padding: 1rem;
-      
+
       .stat-header {
         margin-bottom: 1rem;
-        
+
         .stat-icon {
           padding: 0.5rem;
-          
+
           i {
             font-size: 1.25rem;
           }
         }
       }
-      
+
       .stat-value {
         font-size: 1.75rem;
       }

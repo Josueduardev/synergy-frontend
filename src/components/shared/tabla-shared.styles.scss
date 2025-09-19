@@ -95,7 +95,7 @@
   white-space: nowrap;
 
   &:hover {
-    background-color: #5459ea;
+    background-color: #00bfcb;
   }
 }
 
@@ -128,7 +128,7 @@
 
 ::ng-deep .p-paginator .p-paginator-prev:hover,
 ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #5468ff;
+  background-color: #00bfcb;
   color: #ffffff;
 }
 
@@ -151,14 +151,14 @@
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
-  background-color: #e0e0ff;
-  color: #5468ff;
-  border-color: #5468ff;
+  background-color: #e0f7fa;
+  color: #00bfcb;
+  border-color: #00bfcb;
 }
 
 /* Página activa */
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #5468ff;
+  background-color: #00bfcb;
   color: #ffffff;
   font-weight: bold;
 }

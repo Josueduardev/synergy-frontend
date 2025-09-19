@@ -1,7 +1,7 @@
 
   .container-filtro-panel h3{
     font-size: 1rem;
-    color: #5459ea;
+    color: #00bfcb;
     margin-left: 0.6rem;
   }
 
@@ -66,14 +66,14 @@
         }
 
         span:hover {
-          background-color: #5459ea; /* Hover background color */
+          background-color: #00bfcb; /* Hover background color */
           color: #ffffff;
           border-radius: 5px !important;/* Rounded day cells */
         }
 
         .p-datepicker-current-day {
-          border-color: #5459ea; /* Highlight for selected day */
-          color: #5459ea;
+          border-color: #00bfcb; /* Highlight for selected day */
+          color: #00bfcb;
           font-weight: bold;
         }
 
@@ -109,7 +109,7 @@
         }
 
         .p-button-primary {
-          background-color: #5459ea;
+          background-color: #00bfcb;
           color: #ffffff;
           border: none;
           font-size: 0.8rem;

@@ -105,8 +105,8 @@
 /* Botón tipo info genérico */
 ::ng-deep .button-info {
   background-color: #fff;
-  border: 1px solid #5459ea;
-  color: #5459ea;
+  border: 1px solid #00bfcb;
+  color: #00bfcb;
   border-radius: 20px !important;
   padding: 0.2rem 0.5rem !important;
   font-size: 14px !important;
@@ -116,11 +116,11 @@
   margin-left: 10px;
 
   &:hover {
-    background-color: #5358e828;
+    background-color: #00bfcb28;
   }
 
   &:disabled{
-    background-color: #5358e828;
+    background-color: #00bfcb28;
   }
 }
 
@@ -138,14 +138,14 @@
   white-space: nowrap;
 
   &:hover {
-    background-color: #5459ea;
+    background-color: #00bfcb;
     color: white;
   }
 }
 
 /* Botón estado activo */
 ::ng-deep .button-info-activo {
-  background-color: #5459ea;
+  background-color: #00bfcb;
   border: none;
   color: #fff;
   border-radius: 20px !important;
@@ -186,7 +186,7 @@
 
 ::ng-deep .p-paginator .p-paginator-prev:hover,
 ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #5468ff;
+  background-color: #00bfcb;
   color: #ffffff;
 }
 
@@ -209,14 +209,14 @@
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
-  background-color: #e0e0ff;
-  color: #5468ff;
-  border-color: #5468ff;
+  background-color: #e0f7fa;
+  color: #00bfcb;
+  border-color: #00bfcb;
 }
 
 /* Página activa en el paginador */
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #5468ff;
+  background-color: #00bfcb;
   color: #ffffff;
   font-weight: bold;
 }

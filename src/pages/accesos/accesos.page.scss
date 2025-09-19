@@ -111,8 +111,8 @@
 /* Botón personalizado */
 ::ng-deep .button-info {
   background-color: #fff ; /* Fondo gris claro */
-  border: 1px solid #5459ea;
-  color: #5459ea;
+  border: 1px solid #00bfcb;
+  color: #00bfcb;
   border-radius: 20px !important;
   padding: 0.2rem 0.5rem !important; /* Reducir padding del botón */
   font-size: 14px !important;
@@ -122,7 +122,7 @@
   margin-left: 10px;
 
   &:hover {
-    background-color: #5358e828; /* Color más oscuro al pasar el cursor */
+    background-color: #00bfcb28; /* Color más oscuro al pasar el cursor */
   }
 }
 ::ng-deep .button-info-inactivo {
@@ -138,12 +138,12 @@
   white-space: nowrap; /* Evita que el texto del botón se ajuste */
 
   &:hover {
-    background-color: #5459ea; /* Color más oscuro al pasar el cursor */
+    background-color: #00bfcb; /* Color más oscuro al pasar el cursor */
     color: white;
   }
 }
 ::ng-deep .button-info-activo {
-  background-color: #5459ea ; /* Fondo gris claro */
+  background-color: #00bfcb ; /* Fondo gris claro */
   border: none;
   color: #fff;
   border-radius: 20px !important;
@@ -183,7 +183,7 @@
 
 ::ng-deep .p-paginator .p-paginator-prev:hover,
 ::ng-deep .p-paginator .p-paginator-next:hover {
-  background-color: #5468ff; /* Fondo azul oscuro */
+  background-color: #00bfcb; /* Fondo azul oscuro */
   color: #ffffff; /* Texto blanco */
 }
 
@@ -206,14 +206,14 @@
 }
 
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page:hover {
-  background-color: #e0e0ff; /* Fondo azul claro */
-  color: #5468ff; /* Texto azul oscuro */
-  border-color: #5468ff; /* Borde azul oscuro */
+  background-color: #e0f7fa; /* Fondo azul claro */
+  color: #00bfcb; /* Texto azul oscuro */
+  border-color: #00bfcb; /* Borde azul oscuro */
 }
 
 /* Página activa */
 ::ng-deep .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
-  background-color: #5468ff; /* Fondo azul oscuro */
+  background-color: #00bfcb; /* Fondo azul oscuro */
   color: #ffffff; /* Texto blanco */
   font-weight: bold;
 }
