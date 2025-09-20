@@ -1,49 +1,70 @@
-<!-- Botón para regresar a lista de desembolsos -->
-<div class="detalle-desembolso-header-buttom">
-  <button pButton icon="pi pi-arrow-left" label="Regresar a Desembolsos"
-    class="p-button-rounded p-button-info no-bg-blue" (click)="regresarALaLista()"></button>
-</div>
+<div class="detalle-desembolso__page-container">
 
-<div class="detalle-desembolso-container">
-  <!-- Título Proveedor -->
-  <div class="detalle-desembolso-header">
-    <h1>PROVEEDOR: {{ proveedor }}</h1>
+  <!-- Logo Section -->
+  <div class="detalle-desembolso__logo-section">
+    <div class="detalle-desembolso__logo-container">
+      <img src="https://jritzygwfhfqrlogqcpy.supabase.co/storage/v1/object/public/logos/EXPRESSPAY.png" alt="ExpressPay"
+        class="detalle-desembolso__logo-img" />
+    </div>
   </div>
 
-  <!-- Título de Detalle del Desembolso -->
-  <div class="detalle-desembolso-header" style="display: flex; align-items: center;">
-    <p>Detalle del Desembolso</p>
+  <!-- Client Info Section -->
+  <div class="detalle-desembolso__client-info-section">
+    <div class="detalle-desembolso__client-info-container">
+      <div class="detalle-desembolso__client-info-flex">
+        <div class="detalle-desembolso__client-icon-container">
+          <i class="pi pi-building detalle-desembolso__client-icon"></i>
+        </div>
+        <div class="detalle-desembolso__client-details">
+          <p class="detalle-desembolso__client-label">Cliente</p>
+          <h1 class="detalle-desembolso__client-name">{{ proveedor }}</h1>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Tabla con los detalles -->
-  <div class="detalle-desembolso-table">
-    <p-table [value]="disbursementDetails" class="p-datatable-striped">
-      <!-- Encabezados de la tabla -->
-      <ng-template pTemplate="header">
-        <tr>
-          <th>Concepto</th>
-          <th>Valor</th>
-        </tr>
-      </ng-template>
+  <!-- Main Content -->
+  <div class="detalle-desembolso__main-content">
+    <div class="detalle-desembolso__header">
+      <p class="detalle-desembolso__header-title">Detalle del Desembolso</p>
+    </div>
 
-      <!-- Cuerpo de la tabla -->
-      <ng-template pTemplate="body" let-detail>
-        <tr>
-          <td class="concepto-column">{{ detail.concept }}</td>
-          <td class="valor-column">{{ detail.valor }}</td>
-        </tr>
-      </ng-template>
+    <!-- Tabla con los detalles -->
+    <div class="detalle-desembolso__table">
+      <p-table [value]="disbursementDetails" class="p-datatable-striped">
+        <!-- Encabezados de la tabla -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="detalle-desembolso__table-header">Concepto</th>
+            <th class="detalle-desembolso__table-header">Valor</th>
+          </tr>
+        </ng-template>
 
-      <!-- Mensaje cuando no hay datos -->
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td colspan="2" class="text-center">No hay registros disponibles.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+        <!-- Cuerpo de la tabla -->
+        <ng-template pTemplate="body" let-detail let-last="last">
+          <tr [ngClass]="last ? 'detalle-desembolso__table-row--last' : ''">
+            <td class="concepto-column detalle-desembolso__table-cell detalle-desembolso__table-cell--concept">{{
+              detail.concept }}</td>
+            <td class="valor-column detalle-desembolso__table-cell"
+              [ngClass]="last ? 'detalle-desembolso__table-cell--value-last' : 'detalle-desembolso__table-cell--value'">
+              {{ detail.valor }}</td>
+          </tr>
+        </ng-template>
 
-  <div class="bottom">
-    <p>Fecha de Consulta: {{ fecha }}</p>
+        <!-- Mensaje cuando no hay datos -->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="2" class="text-center detalle-desembolso__empty-message">No hay registros disponibles.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Fecha de Consulta -->
+    <div class="detalle-desembolso__bottom-section">
+      <p class="detalle-desembolso__bottom-text">
+        <span class="detalle-desembolso__bottom-label">Fecha de Consulta:</span> {{ fecha }}
+      </p>
+    </div>
   </div>
 </div>

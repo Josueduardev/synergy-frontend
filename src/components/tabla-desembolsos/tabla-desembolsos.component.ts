@@ -54,6 +54,7 @@ export class TablasDesembolsosComponents implements OnInit, OnChanges {
       { field: 'solicitud.factura.no_factura', header: 'No. factura', filterType: 'text' },
       { field: 'solicitud.nombre_cliente', header: 'Encargado', filterType: 'text' },
       { field: 'solicitud.factura.proveedor.telefono', header: 'Teléfono', filterType: 'text' },
+      { field: 'fecha_desembolso', header: 'Fecha desembolso', filterType: 'text' },
       { field: 'monto_final', header: 'Monto a desembolsar', filterType: 'text' },
       { field: 'metodo_pago', header: 'Método de pago', filterType: 'text' },
     ];

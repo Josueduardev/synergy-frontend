@@ -1,3 +1,224 @@
+/* ===========================================
+   DETALLE DESEMBOLSO - ESTILOS BEM
+   =========================================== */
+
+/* Layout principal */
+.detalle-desembolso {
+  &__page-container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+  }
+
+  &__logo-section {
+    background-color: white;
+    padding: 32px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__logo-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__logo-img {
+    height: 80px;
+    object-fit: contain;
+  }
+
+  &__client-info-section {
+    background-color: #f6f6f6;
+    padding: 20px 0;
+  }
+
+  &__client-info-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__client-info-flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__client-icon-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #00afc0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__client-icon {
+    color: white;
+    font-size: 18px;
+  }
+
+  &__client-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__client-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #777777;
+  }
+
+  &__client-name {
+    font-size: 20px;
+    line-height: 1.2;
+    word-wrap: break-word;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+  }
+
+  &__main-content {
+    background-color: #fbfbfb;
+    padding: 32px 0 48px 0;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+    margin-block: 20px;
+  }
+
+  &__header {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+
+  &__header-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+  }
+
+  &__table {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+
+  &__table-header {
+    color: #666666;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__table-cell {
+    padding: 12px 16px;
+  }
+
+  &__table-cell--concept {
+    color: #666666;
+  }
+
+  &__table-cell--value {
+    color: #333333;
+  }
+
+  &__table-cell--value-last {
+    font-weight: bold;
+    color: #333333;
+  }
+
+  &__table-row--last {
+    background-color: #f0fbfc;
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+
+  &__empty-message {
+    color: #666666;
+    padding: 24px;
+  }
+
+  &__bottom-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    text-align: center;
+  }
+
+  &__bottom-text {
+    font-size: 14px;
+    color: #666666;
+    margin: 0;
+  }
+
+  &__bottom-label {
+    font-weight: 600;
+  }
+}
+
+/* Estilos para la tabla PrimeNG */
+::ng-deep .detalle-desembolso__table p-table th {
+  background-color: #f5f7fb;
+  color: #686868;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+::ng-deep .detalle-desembolso__table p-table td {
+  color: #898989;
+  text-align: left;
+  padding: 0.8rem 1.5rem 0.8rem 8rem;
+  font-size: 1rem;
+  border-top: 1px solid #f6f6f6;
+}
+
+/* Ancho de las columnas */
+::ng-deep .detalle-desembolso__table p-table th:first-child,
+::ng-deep .detalle-desembolso__table p-table td:first-child {
+  width: 50%;
+}
+
+::ng-deep .detalle-desembolso__table p-table th:nth-child(2),
+::ng-deep .detalle-desembolso__table p-table td:nth-child(2) {
+  width: 50%;
+}
+
+/* Colores de fondo de las columnas */
+::ng-deep .detalle-desembolso__table p-table td.concepto-column {
+  background-color: #fcfcfc;
+}
+
+::ng-deep .detalle-desembolso__table p-table td.valor-column {
+  background-color: #ffffff;
+}
+
+/* Botón "Regresar a Desembolsos" */
+.no-bg-blue {
+  background: none;
+  color: #2B3674;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+::ng-deep .no-bg-blue span {
+  font-size: 0.9rem;
+}
+
+/* Estilos legacy para compatibilidad */
 .detalle-desembolso-header-buttom {
   margin: 0.3rem 1rem;
 }
@@ -24,57 +245,6 @@
   margin-bottom: 1rem;
 }
 
-/* Estilos para la tabla */
-::ng-deep p-table th {
-  background-color: #f5f7fb;
-  color: #686868;
-  padding: 0.8rem 1.5rem 0.8rem 8rem;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-::ng-deep p-table td {
-  color: #898989;
-  text-align: left;
-  padding: 0.8rem 1.5rem 0.8rem 8rem;
-  font-size: 1rem;
-  border-top: 1px solid #f6f6f6;
-}
-
-/* Ancho de las columnas */
-::ng-deep p-table th:first-child,
-::ng-deep p-table td:first-child {
-  width: 50%;
-}
-
-::ng-deep p-table th:nth-child(2),
-::ng-deep p-table td:nth-child(2) {
-  width: 50%;
-}
-
-/* Colores de fondo de las columnas */
-::ng-deep p-table td.concepto-column {
-  background-color: #fcfcfc;
-}
-
-::ng-deep p-table td.valor-column {
-  background-color: #ffffff;
-}
-
-/* Botón "Regresar a Desembolsos" */
-.no-bg-blue {
-  background: none;
-  color: #2B3674;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-::ng-deep .no-bg-blue span {
-  font-size: 0.9rem;
-}
-
-/* Sección de la parte inferior (fecha) */
 .bottom {
   display: flex;
   flex-direction: column;
@@ -92,32 +262,42 @@
 
 /* Responsividad para pantallas pequeñas */
 @media (max-width: 768px) {
+  .detalle-desembolso {
+    &__main-content {
+      padding: 0 16px;
+      margin-block: 10px;
+    }
+
+    &__client-info-container {
+      padding: 0 16px;
+    }
+  }
+
   .detalle-desembolso-container {
-    margin: 1rem; /* Reducir márgenes en pantallas pequeñas */
-    padding: 1rem; /* Menos padding para adaptarse a pantallas pequeñas */
+    margin: 1rem;
+    padding: 1rem;
   }
 
   .detalle-desembolso-header p {
-    margin-left: 0; /* Quitar margen lateral en pantallas pequeñas */
-    text-align: center; /* Centrar el texto del subtítulo */
+    margin-left: 0;
+    text-align: center;
   }
 
   /* Ajustar la tabla para pantallas pequeñas */
-  ::ng-deep p-table th,
-  ::ng-deep p-table td {
-    padding: 0.5rem 0.5rem; /* Reducir padding interno */
+  ::ng-deep .detalle-desembolso__table p-table th,
+  ::ng-deep .detalle-desembolso__table p-table td {
+    padding: 0.5rem 0.5rem;
   }
 
-  ::ng-deep p-table th {
-    padding-left: 1rem; /* Menos espacio a la izquierda */
+  ::ng-deep .detalle-desembolso__table p-table th {
+    padding-left: 1rem;
   }
 
-  ::ng-deep p-table td {
-    padding-left: 1rem; /* Menos espacio a la izquierda */
+  ::ng-deep .detalle-desembolso__table p-table td {
+    padding-left: 1rem;
   }
 
-  /* Ajustar texto inferior */
   .bottom p {
-    font-size: 0.8rem; /* Un poco más pequeño en pantallas pequeñas */
+    font-size: 0.8rem;
   }
 }

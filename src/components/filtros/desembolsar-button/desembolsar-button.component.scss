@@ -19,6 +19,15 @@
 .btn-desembolsar:hover {
   background-color: #00bfcb;
   color: #ffffff;
+
+  
+}
+
+
+.form-field{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 /* Modal */

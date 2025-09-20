@@ -9,6 +9,7 @@
             'solicitud.factura.no_factura',
             'solicitud.nombre_cliente',
             'solicitud.factura.proveedor.telefono',
+            'fecha_desembolso',
             'monto_final',
             'metodo_pago'
         ]" [tableStyle]="{ 'min-width': '75rem' }"
@@ -22,11 +23,13 @@
         <th>No. factura</th>
         <th>Encargado</th>
         <th>Teléfono</th>
+        <th>Fecha desembolso</th>
         <th>Monto a desembolsar</th>
         <th>Método de pago</th>
         <th *ngIf="tieneDesembolsosPagados()">Días restantes de pago</th>
         <th *ngIf="tieneDesembolsosPagados()"></th>
-        <th class="select-all"  *ngIf="tieneDesembolsosProcesados() || tieneDesembolsosPagados()">
+        <th *ngIf="tieneDesembolsosProcesados()"></th>
+        <th class="select-all" *ngIf="tieneDesembolsosProcesados() || tieneDesembolsosPagados()">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
           <span class="title-checkbox">Seleccionar todo</span>
         </th>
@@ -59,6 +62,11 @@
             [matchMode]="'contains'" placeholder="Buscar por teléfono" ariaLabel="Filtrar Teléfono"></p-columnFilter>
         </th>
         <th>
+          <p-columnFilter type="text" field="fecha_desembolso" [showButtons]="false" [showMenu]="false"
+            [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
+            placeholder="Buscar por fecha" ariaLabel="Filtrar Fecha"></p-columnFilter>
+        </th>
+        <th>
           <p-columnFilter type="text" field="monto_final" [showButtons]="false" [showMenu]="false"
             [showApplyButton]="false" [showClearButton]="false" [showOperator]="false" [matchMode]="'contains'"
             placeholder="Buscar por monto" ariaLabel="Filtrar Monto"></p-columnFilter>
@@ -84,12 +92,13 @@
         <td style="text-transform: none;">{{ desembolso.solicitud.factura.no_factura }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.solicitud.nombre_cliente }}</td>
         <td style="text-transform: none;">{{ desembolso.solicitud.factura.proveedor.telefono }}</td>
+        <td style="text-transform: uppercase;">{{ desembolso.fecha_desembolso }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.monto_final | currency:'$' }}</td>
         <td style="text-transform: uppercase;">{{ desembolso.metodo_pago }}</td>
         <td *ngIf="tieneDesembolsosPagados()">
           <span [ngClass]="'estado-azul'">{{ desembolso.dias_restantes }} días</span>
         </td>
-        <td *ngIf="tieneDesembolsosPagados()">
+        <td *ngIf="tieneDesembolsosPagados() || tieneDesembolsosProcesados()">
           <button pButton type="button" label="VER DETALLES" class="button-info"
             (click)="verDetalle(desembolso)"></button>
         </td>

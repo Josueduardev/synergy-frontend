@@ -15,12 +15,13 @@
   padding: 2px;
 }
 
-/* Inputs de filtros con ancho completo */
+/* Inputs de filtros con ancho mínimo basado en contenido */
 ::ng-deep p-columnFilter input {
   font-size: 0.75rem;
   padding: 0.3rem 0.4rem;
   height: 2rem;
-  width: 95%;
+  width: min-content;
+  min-width: 100px; /* Ancho mínimo para evitar que sea demasiado pequeño */
   margin: 0;
   line-height: normal;
   border-radius: 4px;
@@ -63,7 +64,6 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
-  max-width: 150px;
   border-right: 1px solid #e9ecef74;
   border-bottom: 1px solid #e9ecef74;
   color: #898989;
@@ -200,7 +200,8 @@
 
   /* Ajustar los filtros */
   ::ng-deep p-columnFilter input {
-    width: 100%; /* En pantallas pequeñas usar todo el ancho */
+    width: min-content; /* Mantener ancho mínimo basado en contenido */
+    min-width: 60px; /* Ancho mínimo más pequeño para móviles */
     padding: 0.2rem; /* Reducir padding aún más */
     font-size: 0.7rem; /* Texto aún más pequeño */
   }
@@ -298,26 +299,41 @@ th.select-all {
   text-overflow: ellipsis;
 }
 
-::ng-deep p-table th:nth-child(3),
-::ng-deep p-table td:nth-child(3) {
-  max-width: 140px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 
-/* Reducir el tamaño del input para NRC */
+/* Inputs específicos con ancho mínimo basado en contenido */
 ::ng-deep p-columnFilter input[placeholder='Buscar por NRC'] {
   font-size: 0.7rem;
   padding: 0.2rem 0.4rem;
-  width: 107px;
+  width: min-content;
+  min-width: 90px;
 }
 
-/* Reducir el tamaño del input para Teléfono */
+
+
+::ng-deep p-columnFilter input[placeholder='Buscar por monto'] {
+  width: min-content;
+  min-width: 80px;
+}
+::ng-deep p-columnFilter input[placeholder='Buscar por fecha'] {
+  width: min-content;
+  min-width: 80px;
+}
+
+::ng-deep p-columnFilter input[placeholder='Buscar por método de pago'] {
+  width: min-content;
+  min-width: 180px;
+}
+
+::ng-deep p-columnFilter input[placeholder='Buscar por correo'] {
+  min-width: 140px;
+}
+
+/* Input para teléfono con ancho mínimo basado en contenido */
 ::ng-deep p-columnFilter input[placeholder='Buscar por teléfono'] {
   font-size: 0.7rem;
   padding: 0.2rem 0.4rem;
-  width: 145px;
+  width: min-content;
+  min-width: 120px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -352,16 +368,17 @@ th.select-all {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: min-content;
 }
 
 .aprobadas-estilos ::ng-deep p-columnFilter input[placeholder='Buscar por NRC'] {
-  width: 107px;
+  min-width: 90px;
 }
 
 .aprobadas-estilos ::ng-deep p-columnFilter input[placeholder='Buscar por teléfono'] {
-  width: 100px;
+  min-width: 100px;
 }
 
 .aprobadas-estilos ::ng-deep p-columnFilter input[placeholder='Buscar por encargado'] {
-  width: 180px;
+  min-width: 150px;
 }

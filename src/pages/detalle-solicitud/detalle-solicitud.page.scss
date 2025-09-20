@@ -1,3 +1,243 @@
+/* ===========================================
+   DETALLE SOLICITUD - ESTILOS BEM
+   =========================================== */
+
+/* Layout principal */
+.detalle-solicitud {
+  &__page-container {
+    min-height: 100vh;
+    background-color: #f8fafc;
+  }
+
+  &__logo-section {
+    background-color: white;
+    padding: 32px 0;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  &__logo-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__logo-img {
+    height: 80px;
+    object-fit: contain;
+  }
+
+  &__client-info-section {
+    background-color: #f6f6f6;
+    padding: 20px 0;
+  }
+
+  &__client-info-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__client-info-flex {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__client-icon-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #00afc0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__client-icon {
+    color: white;
+    font-size: 18px;
+  }
+
+  &__client-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__client-label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #777777;
+  }
+
+  &__client-name {
+    font-size: 20px;
+    line-height: 1.2;
+    word-wrap: break-word;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+  }
+
+  &__main-content {
+    background-color: #fbfbfb;
+    padding: 32px 0 48px 0;
+  }
+
+  &__main-content-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__financial-details-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 32px;
+  }
+
+  &__card-padding {
+    padding: 24px;
+  }
+
+  &__card-title-container {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &__card-title {
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+  }
+
+  &__invoice-details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__invoice-detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__invoice-detail-item--last {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    background-color: #f0fbfc;
+  }
+
+  &__detail-concept {
+    color: #666666;
+  }
+
+  &__detail-value {
+    color: #333333;
+  }
+
+  &__detail-value--last {
+    font-weight: bold;
+    color: #333333;
+  }
+
+  &__add-comment-button-container {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &__add-comment-button {
+    background-color: #64748b;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  &__action-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  &__accept-button {
+    background-color: #00bfcb;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  &__deny-button {
+    background-color: #ef4444;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  &__approver-info-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 24px;
+    text-align: center;
+  }
+
+  &__approver-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__approver-info-text {
+    font-size: 14px;
+    color: #666666;
+    margin: 0;
+  }
+
+  &__approver-info-label {
+    font-weight: 600;
+  }
+
+  &__modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 1rem;
+  }
+}
+
+/* Estilos para modales */
+::ng-deep .detalle-solicitud__comment-dialog .p-dialog {
+  width: 50%;
+}
+
+::ng-deep .detalle-solicitud__action-dialog .p-dialog {
+  width: 30vw;
+}
+
 .detalle-solicitud-header-buttom {
   margin: 0.3rem 1rem;
 }
