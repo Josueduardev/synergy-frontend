@@ -85,7 +85,7 @@ export class DetalleSolicitudPage implements OnInit {
     this.invoiceDetails.push({ concept: 'Descuento por Pronto Pago', valor: Currency.format(solicitud.factura.pronto_pago) });
     this.invoiceDetails.push({ concept: 'IVA', valor: Currency.format(solicitud.iva) });
     this.invoiceDetails.push({ concept: 'Subtotal del Descuento', valor: Currency.format(solicitud.subtotal) });
-    this.invoiceDetails.push({ concept: 'Total a Recibir', valor: Currency.format(solicitud.total) });
+    this.invoiceDetails.push({ concept: 'Total a Pagar', valor: Currency.format(solicitud.total) });
 
     // Mostrar fechas según el estado de la solicitud
     if (solicitud.id_estado === Estados.Aprobada) {
