@@ -539,61 +539,44 @@ export class SynergyProvider {
    * @param numeroInicial Número inicial para la numeración incremental
    * @returns Promise<{blob: Blob, filename: string}> - Archivo Excel con los desembolsos y su nombre
    */
-  processRequestsWithFilename(ids: string[], numeroInicial: string = "1", fecha_iso: string = ""): Promise<{blob: Blob, filename: string}> {
-    return new Promise((resolve, reject) => {
-      const sender = {
-        ids: ids,
-        numero_inicial: numeroInicial,
-        fecha_iso: fecha_iso
-      };
+processRequestsWithFilename(
+  ids: string[],
+  numeroInicial: string = "1",
+  fecha_iso: string = "",
+  tipo: 'sv' | 'extranjero' = 'sv'
+): Promise<{ blob: Blob; filename: string }> {
+  return new Promise((resolve, reject) => {
+    const sender = { ids, numero_inicial: numeroInicial, fecha_iso };
+    const endpoint = tipo === 'sv' ? 'solicitud/procesar-solicitudes' : 'solicitud/procesar-solicitudes-ext';
 
-      this.httpProvider.postBlobWithResponse(`solicitud/procesar-solicitudes`, sender).then(response => {
+    this.httpProvider.postBlobWithResponse(endpoint, sender)
+      .then(response => {
         const blob = response.body as Blob;
-        const contentDisposition = response.headers.get('content-disposition');
-        let filename = 'Desembolsos.xlsx'; // Nombre por defecto
 
-        // Logging completo de headers para debug
-        console.log('All response headers:', response.headers);
-        console.log('Content-Disposition header:', contentDisposition);
-        console.log('Response status:', response.status);
+        // Generar el nombre del archivo con fecha actual
+        const fecha = new Date();
+        const dia = String(fecha.getDate()).padStart(2, '0');
+        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+        const año = fecha.getFullYear();
+        const fechaStr = `${dia}${mes}${año}`;
 
-        if (contentDisposition) {
-          // Intentar diferentes patrones para extraer el nombre del archivo
-          // Patrón 1: filename="archivo.xlsx"
-          let filenameMatch = contentDisposition.match(/filename="([^"]+)"/);
-          if (filenameMatch && filenameMatch[1]) {
-            filename = filenameMatch[1];
-          } else {
-            // Patrón 2: filename*=UTF-8''archivo.xlsx
-            filenameMatch = contentDisposition.match(/filename\*=UTF-8''([^;]+)/);
-            if (filenameMatch && filenameMatch[1]) {
-              filename = decodeURIComponent(filenameMatch[1]);
-            } else {
-              // Patrón 3: filename=archivo.xlsx (sin comillas)
-              filenameMatch = contentDisposition.match(/filename=([^;]+)/);
-              if (filenameMatch && filenameMatch[1]) {
-                filename = filenameMatch[1].trim();
-              }
-            }
-          }
-        }
+        let filename = tipo === 'sv' 
+          ? `Desembolsos ${fechaStr}.xlsx` 
+          : `Desembolsos Extranjeros ${fechaStr}.xlsx`;
 
-        console.log('Extracted filename:', filename);
         resolve({ blob, filename });
-        console.log('Response with filename:', { blob, filename });
-      }).catch(error => {
-        // Si el error viene como blob, intentar leer el mensaje de error
-        if (error instanceof Blob) {
-          this.handleBlobError(error).then(errorMessage => {
-            reject(new Error(errorMessage));
-          }).catch(() => {
-            reject(new Error('Error al procesar las solicitudes'));
-          });
-        } else {
-          reject(error);
-        }
-      });
-    });
+      })
+      .catch(error => reject(error));
+  });
+}
+
+
+  exportarSV(ids: string[], numeroInicial: string = "1", fecha_iso: string = "") {
+    return this.processRequestsWithFilename(ids, numeroInicial, fecha_iso, 'sv');
+}
+
+  exportarExtranjeros(ids: string[], numeroInicial: string = "1", fecha_iso: string = "") {
+    return this.processRequestsWithFilename(ids, numeroInicial, fecha_iso, 'extranjero');
   }
 
   /**

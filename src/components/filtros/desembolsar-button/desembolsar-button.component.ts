@@ -104,85 +104,87 @@ export class DesembolsarButtonComponent implements OnInit {
     this.processSolicitudes();
   }
 
-  async processSolicitudes(numeroIngresado: string = this.numeroIngresado?.toString() ?? "1", id_solicitudes: string[] = this.id_solicitudes, _fecha_iso?: string) {
-    this.loading = true;
-    this.id_solicitudes = JSON.parse(localStorage.getItem('solicitudesSeleccionadas') || '[]');
+async processSolicitudes(numeroIngresado: string = this.numeroIngresado?.toString() ?? "1", id_solicitudes: string[] = this.id_solicitudes, _fecha_iso?: string) {
+  this.loading = true;
+  this.id_solicitudes = JSON.parse(localStorage.getItem('solicitudesSeleccionadas') || '[]');
 
-    // Validar que haya solicitudes seleccionadas
-    if (this.id_solicitudes.length === 0) {
-      this.messageService.add({
-        severity: 'warn',
-        summary: 'Advertencia',
-        detail: 'No hay solicitudes seleccionadas para procesar.'
-      });
-      this.loading = false;
-      return;
-    }
-
-    try {
-      // Formatear la fecha seleccionada al formato requerido por el backend (YYYYMMDD)
-      const fecha_iso = this.formatFechaYYYYMMDD(this.fechaSeleccionada);
-      const response = await this.synergyProvider.processRequestsWithFilename(this.id_solicitudes, numeroIngresado, fecha_iso);
-      console.log('Response from processRequestsWithFilename:', response);
-
-      // Verificar que el blob no esté vacío
-      if (response.blob.size === 0) {
-        throw new Error('El archivo generado está vacío');
-      }
-
-      // Crear URL del blob
-      const blobUrl = window.URL.createObjectURL(response.blob);
-
-      // Crear elemento de descarga usando el nombre del archivo del backend
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.download = response.filename; // Usar el nombre del archivo del backend
-
-      // Simular clic para descargar
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Liberar memoria
-      window.URL.revokeObjectURL(blobUrl);
-
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Desembolsar',
-        detail: `Se desembolsarán ${this.id_solicitudes.length} solicitudes seleccionadas. Archivo Excel generado exitosamente.`
-      });
-
-      this.loading = false;
-      this.cerrarModal();
-
-      setTimeout(() => {
-        this.router.navigate(['/desembolso/sin-procesar']);
-      }, 2000);
-    } catch (error: any) {
-      console.error('Error in processSolicitudes:', error);
-
-      // Manejar diferentes tipos de errores
-      let errorMessage = 'Error al procesar las solicitudes';
-      if (error.message) {
-        errorMessage = error.message;
-      } else if (error.detail) {
-        errorMessage = error.detail;
-      } else if (typeof error === 'string') {
-        errorMessage = error;
-      }
-
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error al procesar solicitudes',
-        detail: errorMessage
-      });
-
-      this.loading = false;
-      this.cerrarModal();
-    } finally {
-      localStorage.removeItem('solicitudesSeleccionadas');
-    }
+  // Validar que haya solicitudes seleccionadas
+  if (this.id_solicitudes.length === 0) {
+    this.messageService.add({
+      severity: 'warn',
+      summary: 'Advertencia',
+      detail: 'No hay solicitudes seleccionadas para procesar.'
+    });
+    this.loading = false;
+    return;
   }
+
+  try {
+    // Formatear la fecha seleccionada al formato requerido por el backend (YYYYMMDD)
+    const fecha_iso = this.formatFechaYYYYMMDD(this.fechaSeleccionada);
+
+    // Hacer dos solicitudes separadas: SV y Extranjeros
+    const tipos: ('sv' | 'extranjero')[] = ['sv', 'extranjero'];
+
+    for (const tipo of tipos) {
+      try {
+        const response = await this.synergyProvider.processRequestsWithFilename(this.id_solicitudes, numeroIngresado, fecha_iso, tipo);
+
+        if (!response.blob || response.blob.size === 0) {
+          console.warn(`Archivo ${tipo} generado vacío`);
+          continue;
+        }
+
+        // Extraer nombre del archivo del backend
+        let filename = 'Desembolsos.xlsx'; // fallback
+        if (response.filename) {
+          filename = response.filename;
+        }
+
+        // Crear URL del blob
+        const blobUrl = window.URL.createObjectURL(response.blob);
+
+        // Crear elemento de descarga usando el nombre del archivo del backend
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error: any) {
+        console.error(`Error generando archivo ${tipo}:`, error);
+      }
+    }
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Procesar',
+      detail: `Se procesarán ${this.id_solicitudes.length} solicitudes seleccionadas. Archivos Excel generados exitosamente.`
+    });
+
+    setTimeout(() => {
+      this.router.navigate(['/desembolso/sin-procesar']);
+    }, 2000);
+
+  } catch (error: any) {
+    console.error('Error en processSolicitudes:', error);
+    const errorMessage = error?.message || 'Error al procesar las solicitudes';
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error al procesar solicitudes',
+      detail: errorMessage
+    });
+  } finally {
+    this.loading = false;
+    this.cerrarModal();
+    localStorage.removeItem('solicitudesSeleccionadas');
+  }
+}
+
+
 
   /**
    * Convierte un objeto Date a string con formato YYYYMMDD. Si no hay fecha, retorna cadena vacía.
